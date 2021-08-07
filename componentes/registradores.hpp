@@ -9,15 +9,25 @@ using namespace std;
 class Registradores
 {
     private:
-        string* registrador;
+        int** registradores;
         int n = 32; //Número de bits em um registrador
 
-        void preenche(){for(int i = 0; i < n; i++) this->registrador[i] = '0';};
-    public:
-        Registradores(){this->registrador = new string[n];};
-        ~Registradores(){};
+        int data1;
+        int data2;
 
-        string* getRegistrador(){return this->registrador;};
+        int regW;
+        int controlRegW;
+
+    public:
+        Registradores();
+        ~Registradores();
+
+        void busca(int i, int j, int write, int controlData);
+        void writeBack(int* dataW);
+        
+        static int* getRegistradores(){return this->registradores;};
+        int getSaida1(){return this->data1;};
+        int getSaida2(){return this->data2;};
 };
 
 #endif // REGISTRADORES_HPP
