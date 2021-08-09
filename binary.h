@@ -13,13 +13,14 @@ using namespace std;
 class binary
 {
 private:
-   vector<int>* listaDeBinarios ; 
+   vector<int> *listaDeBinarios;
 
 public:
-     binary(string arquivo);
-    ~binary();
-    int translate(int binaryToTranslate);
-    vector<int> * getLista();
+   binary(string arquivo);
+   ~binary();
+   commandTypes translateToCommand(int *binaryToTranslate);
+   vector<int> * getLista();
+   int translateToInt(int binaryToTranslatee);
 };
 
 #endif // BINARY_H

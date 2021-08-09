@@ -1,6 +1,6 @@
 enum commandTypes
 {
-    add,
+    add ,
     sub,
     e, //And e or são palavras reservadas
     ou,
