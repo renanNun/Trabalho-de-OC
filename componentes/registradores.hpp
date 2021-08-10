@@ -9,11 +9,11 @@ using namespace std;
 class Registradores
 {
     private:
-        int** registradores;
+        string** registradores;
         int n = 32; //Número de bits em um registrador
 
-        int data1;
-        int data2;
+        string data1;
+        string data2;
 
         int regW;
         int controlRegW;
@@ -23,11 +23,12 @@ class Registradores
         ~Registradores();
 
         void busca(int i, int j, int write, int controlData);
-        void writeBack(int* dataW);
+        void writeBack(string* dataW);
         
         static int* getRegistradores(){return this->registradores;};
-        int getSaida1(){return this->data1;};
-        int getSaida2(){return this->data2;};
+        string getSaida1(){return this->data1;};
+        string getSaida2(){return this->data2;};
+        int mapeia(string reg);
 };
 
 #endif // REGISTRADORES_HPP
