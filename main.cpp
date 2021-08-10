@@ -19,19 +19,18 @@ int main(int argc, char *argv[])
         cerr << "Erro ao Abrir o Arquivo de Entrada!" << endl;
         exit(1);
     }
-
-    if (!outputFile)
+     if (!outputFile)
     {
         cerr << "Erro ao Abrir o Arquivo de Saida! " << endl;
         exit(1);
     }
-
-    else
+    
+    /*else
     {
         cerr << "O Algoritmo não localizou os arquivos de Entrada ou Saída!" << endl;
         cerr << "Verifique o Formato de entrada <nome_do_executavel> <arquivo_de_entrada> <arquivo_de_saida>" << endl;
         exit(-1);
-    }
+    }*/
 
     cout << "\t\t\tTrabalho de Orrganização de computadores" << endl;
     cout << "Alunos: Luan Reis Ciribelli e Renan Nunes da Costa Gonçalves, João Pedro Lima" << endl;
@@ -41,9 +40,7 @@ int main(int argc, char *argv[])
     outputFile << "Alunos: Luan Reis Ciribelli e Renan Nunes da Costa Gonçalves, João Pedro Lima" << endl;
     outputFile << "Nome do arquivo: " << argv[1] << endl;
 
-    string arquivo = argv[1];
-
-    cout << arquivo;
+    
 
     outputFile.close();
     inputFile.close();
