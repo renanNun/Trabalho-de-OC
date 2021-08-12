@@ -6,21 +6,24 @@
 #include <string>
 #include <vector>
 #include <sstream>
-#include "commandTypes.h"
+
 
 using namespace std;
 
 class binary
 {
 private:
-   vector<int> *listaDeBinarios;
+   vector<string> *listaDeBinarios;
 
 public:
-   binary(string arquivo);
+   binary();
    ~binary();
-   commandTypes translateToCommand(int *binaryToTranslate);
-   vector<int> * getLista();
-   int translateToInt(int binaryToTranslatee);
+   vector<string> * getLista();
+   string translateCommandToBinary(string  &commandToTranslate);
+   string intToBinary (string inteiro);
+   string typeRcommands(vector<string> *lista );
+   string typeIcommands(vector<string> *lista );
+   string typeJcommands(vector<string> *lista );
 };
 
 #endif // BINARY_H

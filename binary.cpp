@@ -1,18 +1,9 @@
 #include "binary.h"
 
-binary::binary(string arquivo)
+binary::binary()
 {
-    listaDeBinarios = new vector<int>();
-    string aux;
-    int aux2;
 
-    for (int i = 0; i < arquivo.size(); i=i+9)
-    {
-        aux= arquivo.substr(i,i+8);
-        aux2= stoi(aux);
-        listaDeBinarios->push_back(aux2);
-    }
-        
+    listaDeBinarios = new vector<string>();
 };
 
 binary::~binary()
@@ -21,36 +12,143 @@ binary::~binary()
     delete[] this->listaDeBinarios;
 };
 
-vector<int> * binary::getLista()
+vector<string> *binary::getLista()
 {
 
     return this->listaDeBinarios;
 };
 
-commandTypes translateToCommand(int * binaryToTranslate){
+string binary::intToBinary(string inteiro){
 
-   return add;
+    string r;
+    int n = stoi(inteiro);
+    while(n!=0) {r=(n%2==0 ?"0":"1")+r; n/=2;}
+    return r;
+
 };
 
-int translateToInt(int binaryToTranslatee){
+string binary::translateCommandToBinary(string &commandToTranslate)
+{
 
- int num = binaryToTranslatee;
-    int dec_value = 0;
- 
-    // Initializing base value to 1, i.e 2^0
-    int base = 1;
- 
-    int temp = num;
-    while (temp) {
-        int last_digit = temp % 10;
-        temp = temp / 10;
- 
-        dec_value += last_digit * base;
- 
-        base = base * 2;
+    string opcode = "";
+    string regSource = "";
+    string regTarget = "";
+    string rd = "";
+    string shamt = "";
+    string funct = "";
+
+    vector<string> *lista = new vector<string>;
+
+    int cont = 0;
+    int aux = 0;
+    int iterator = 0;
+    for (auto &ch : commandToTranslate)
+    {
+        if (ch == ' ')
+        {
+
+            lista[iterator].push_back(commandToTranslate.substr(aux, cont));
+            aux = cont;
+            iterator++;
+        }
+        else
+        {
+            cont++;
+        }
     }
- 
-    return dec_value;
+
+    if (lista->at(0) == "add")
+    {
+
+        opcode = "00000";
+        shamt = "00000";
+        funct = "100000";
+    }
+    else if (lista->at(0) == "sub")
+    {
+        opcode = "00000";
+        shamt = "00000";
+        funct = "100010";
+    }
+    else if (lista->at(0) == "and")
+    {
+        opcode = "00000";
+        shamt = "00000";
+        funct = "100001";
+    }
+    else if (lista->at(0) == "or")
+    {
+        opcode = "00000";
+        shamt = "00000";
+        funct = "100101";
+    }
+    else if (lista->at(0) == "slt")
+    {
+        opcode = "00000";
+        shamt = "00000";
+        funct = "101010";
+    }
+    else if (lista->at(0) == "sll")
+    {
+        opcode = "00000";
+        shamt = intToBinary(lista->at(4));
+        funct = "000000";
+    }
+    else if (lista->at(0) == "addi")
+    {
+        opcode = "001000";
+        shamt = intToBinary(lista->at(4));
+        funct = "100010";
+    }
+    else if (lista->at(0) == "lw")
+    {
+        opcode = "100011";
+        shamt = "";
+        funct = "";
+    }
+    else if (lista->at(0) == "sw")
+    {
+        opcode = "101011";
+        shamt = "";
+        funct = "";
+    }
+    else if (lista->at(0) == "beq")
+    {
+        opcode = "000100";
+        shamt = "";
+        funct = "";
+    }
+    else if (lista->at(0) == "bne")
+    {
+        opcode = "000101";
+        shamt = "";
+        funct = "";
+    }
+    else if (lista->at(0) == "j")
+    {
+        opcode = "000010";
+        shamt = "";
+        funct = "";
+    }
+    else if (lista->at(0) == "jr")
+    {
+        opcode = "000000";
+        shamt = "000000000000000";
+        funct = "001000";
+        regTarget = "";
+
+    }
+    else if (lista->at(0) == "jal")
+    {
+        opcode = "000000";
+        shamt = "00000";
+        funct = "001001";
+    }
+
+    return opcode + regSource + regTarget + rd + shamt + funct;
+};
 
 
-}
+
+
+};
