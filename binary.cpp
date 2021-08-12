@@ -40,10 +40,10 @@ string binary::translateCommandToBinary(string &commandToTranslate)
     string rd = "";
     string shamt = "";
     string funct = "";
-    Registradores reg = Registradores();
-
+    Registradores* reg = new Registradores();
+    cout << "Pegou os registradores por exemplo" << endl;
     vector<string> *lista = new vector<string>;
-
+    cout << "Criou a string " << endl;
     int cont = 0;
     int aux = 0;
     int iterator = 0;
@@ -61,6 +61,8 @@ string binary::translateCommandToBinary(string &commandToTranslate)
             cont++;
         }
     }
+    cout << "Separou a string " << endl;
+    std::cout << lista->at(0) << endl;
 
     if (lista->at(0) == "add")
     {
@@ -68,45 +70,45 @@ string binary::translateCommandToBinary(string &commandToTranslate)
         opcode = "00000";
         shamt = "00000";
         funct = "100000";
-        regSource = reg.mapeia(lista->at(2));
-        regTarget = reg.mapeia(lista->at(4));
-        rd = reg.mapeia(lista->at(1));
+        regSource = reg->mapeia(lista->at(2));
+        regTarget = reg->mapeia(lista->at(4));
+        rd = reg->mapeia(lista->at(1));
     }
     else if (lista->at(0) == "sub")
     {
         opcode = "00000";
         shamt = "00000";
         funct = "100010";
-        regSource = reg.mapeia(lista->at(2));
-        regTarget = reg.mapeia(lista->at(4));
-        rd = reg.mapeia(lista->at(1));
+        regSource = reg->mapeia(lista->at(2));
+        regTarget = reg->mapeia(lista->at(4));
+        rd = reg->mapeia(lista->at(1));
     }
     else if (lista->at(0) == "and")
     {
         opcode = "00000";
         shamt = "00000";
         funct = "100001";
-        regSource = reg.mapeia(lista->at(2));
-        regTarget = reg.mapeia(lista->at(4));
-        rd = reg.mapeia(lista->at(1));
+        regSource = reg->mapeia(lista->at(2));
+        regTarget = reg->mapeia(lista->at(4));
+        rd = reg->mapeia(lista->at(1));
     }
     else if (lista->at(0) == "or")
     {
         opcode = "00000";
         shamt = "00000";
         funct = "100101";
-        regSource = reg.mapeia(lista->at(2));
-        regTarget = reg.mapeia(lista->at(4));
-        rd = reg.mapeia(lista->at(1));
+        regSource = reg->mapeia(lista->at(2));
+        regTarget = reg->mapeia(lista->at(4));
+        rd = reg->mapeia(lista->at(1));
     }
     else if (lista->at(0) == "slt")
     {
         opcode = "00000";
         shamt = "00000";
         funct = "101010";
-        regSource = reg.mapeia(lista->at(2));
-        regTarget = reg.mapeia(lista->at(4));
-        rd = reg.mapeia(lista->at(1));
+        regSource = reg->mapeia(lista->at(2));
+        regTarget = reg->mapeia(lista->at(4));
+        rd = reg->mapeia(lista->at(1));
     }
     else if (lista->at(0) == "sll")
     {
@@ -114,53 +116,53 @@ string binary::translateCommandToBinary(string &commandToTranslate)
     else if (lista->at(0) == "addi")
     {
         string finalString = typeIcommands(lista);
-        reg.~Registradores();
+        reg->~Registradores();
         return finalString;
     }
     else if (lista->at(0) == "lw")
     {
         // string finalString = typeIcommands(lista);
-        // reg.~Registradores();
+        // reg->~Registradores();
         // return finalString;
     }
     else if (lista->at(0) == "sw")
     {
         // string finalString = typeIcommands(lista);
-        // reg.~Registradores();
+        // reg->~Registradores();
         // return finalString;
     }
     else if (lista->at(0) == "beq")
     {
         string finalString = typeIcommands(lista);
-        reg.~Registradores();
+        reg->~Registradores();
         return finalString;
     }
     else if (lista->at(0) == "bne")
     {
         string finalString = typeIcommands(lista);
-        reg.~Registradores();
+        reg->~Registradores();
         return finalString;
     }
     else if (lista->at(0) == "j")
     {
         string finalString = typeJcommands(lista);
-        reg.~Registradores();
+        reg->~Registradores();
         return finalString;
     }
     else if (lista->at(0) == "jr")
     {
         string finalString = typeJcommands(lista);
-        reg.~Registradores();
+        reg->~Registradores();
         return finalString;
     }
     else if (lista->at(0) == "jal")
     {
         string finalString = typeJcommands(lista);
-        reg.~Registradores();
+        reg->~Registradores();
         return finalString;
     }
 
-    reg.~Registradores();
+    reg->~Registradores();
     return opcode + regSource + regTarget + rd + shamt + funct;
 };
 
@@ -170,33 +172,33 @@ string binary::typeIcommands(vector<string> *lista)
     string regSource = "";
     string regTarget = "";
     string offset = "";
-    Registradores reg = Registradores();
+    Registradores* reg = new Registradores();
 
     if (lista->at(0) == "addi")
     {
         opcode = "001000";
-        regSource = reg.mapeia(lista->at(2));
-        regTarget = reg.mapeia(lista->at(1));
+        regSource = reg->mapeia(lista->at(2));
+        regTarget = reg->mapeia(lista->at(1));
         offset = intToBinary(lista->at(3));
     }
    
     else if (lista->at(0) == "beq")
     {
         opcode = "000100";
-        regSource = reg.mapeia(lista->at(2));
-        regTarget = reg.mapeia(lista->at(1));
+        regSource = reg->mapeia(lista->at(2));
+        regTarget = reg->mapeia(lista->at(1));
         offset = intToBinary(lista->at(3));
     }
     else if (lista->at(0) == "bne")
     {
         opcode = "000101";
-        regSource = reg.mapeia(lista->at(2));
-        regTarget = reg.mapeia(lista->at(1));
+        regSource = reg->mapeia(lista->at(2));
+        regTarget = reg->mapeia(lista->at(1));
         offset = intToBinary(lista->at(3));
     }
 
     return opcode + regSource + regTarget + offset;
 };
-/*string binary::typeJcommands(vector<string> *lista){
-
-};*/
+string binary::typeJcommands(vector<string> *lista){
+    return "";
+};

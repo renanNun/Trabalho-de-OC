@@ -3,7 +3,7 @@
 #include <string>
 #include <sstream>
 
-//#include "binary.h"
+#include "binary.h"
 
 std::fstream inputFile;
 std::fstream outputFile;
@@ -12,7 +12,7 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
-    
+
     inputFile.open(argv[1], ios::in);   //Abre o Arquivo de Entrada
     outputFile.open(argv[2], ios::out); //Abre o Arquivo de Saida
 
@@ -47,6 +47,10 @@ int main(int argc, char *argv[])
     getline(inputFile,line);
     cout << line << endl;
 
+    binary* bin = new binary();
+    cout << "Instancia" << endl;
+    string verify = bin->translateCommandToBinary(line);
+    cout << verify << endl;
 
     outputFile.close();
     inputFile.close();
