@@ -138,4 +138,6 @@ string Registradores::mapeia(string reg)
     }else{
         cout << "Erro na busca do registrador " << reg << endl;
     }
+
+    return "";
 }
