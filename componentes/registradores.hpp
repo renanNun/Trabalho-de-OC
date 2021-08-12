@@ -21,6 +21,7 @@ class Registradores
     public:
         Registradores();
         ~Registradores();
+        
 
         void busca(int i, int j, int write, int controlData);
         void writeBack(string* dataW);
