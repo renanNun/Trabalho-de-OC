@@ -197,6 +197,6 @@ string binary::typeIcommands(vector<string> *lista)
 
     return opcode + regSource + regTarget + offset;
 };
-string binary::typeJcommands(vector<string> *lista){
+/*string binary::typeJcommands(vector<string> *lista){
 
-};
+};*/
