@@ -43,105 +43,99 @@ void Registradores::writeBack(string* dataW)
 string Registradores::mapeia(string reg)
 {
 
-    switch(reg){
-        case "$zero": // 0
+    if(reg == "$zero"){
             return "00000";
-            break;
-        case "$at": // 1
+    }else if(reg == "$at"){
             return "00001";
-            break;
-        case "$v0": // 2
+    }else if(reg =="$v0" ){
             return "00010"
-            break;
-        case "$v1": // 3
-            return "00011"
-            break;
-        case "$a0": // 4
-            return "00100";
-            break;
-        case "$a1":// 5
+    }else if(reg == "$v1")
+    {
+        return "00011"
+    }else if(reg == "$a0")
+    {
+        return "00100";
+    }else if(reg == "$a1"){
             return "00101";
-            break;
-        case "$a2": // 6
-            return "00110";
-            break;
-        case "$a3": // 7
-            return "00111";
-            break;
-        case "$t0": // 8
-            return "01000";
-            break;
-        case "$t1": // 9
-            return "01001";
-            break;
-        case "$t2": // 10
+    }else if(reg == "$a2")
+    {
+        return "00110";
+    }else if(reg == "$a3")
+    {
+        return "00111";
+    }else if(reg == "$t0")
+    {
+        return "01000";
+    }else if(reg == "$t1")
+    {
+        return "01001";
+    }else if(reg == "$t2")
+    {
             return "01010";
-            break;
-        case "$t3": // 11
+    }else if(reg == "$t3")
+    {
             return "01011";
-            break;
-        case "$t4": // 12
-            return "01100";
-            break;
-        case "$t5": // 13
-            return "01101";
-            break;
-        case "$t6": // 14
+    }else if(reg == "$t4")
+    {
+        return "01100";
+    }else if(reg == "$t5")
+    {
+        return "01101";
+    }else if(reg == "$t6")
+    {
             return "01110";
-            break;
-        case "$t7": // 15
-            return "01111";
-            break;
-        case "$s0": // 16
-            return "10000";
-            break;
-        case "$s1": // 17
-            return "10001";
-            break;
-        case "$s2": // 18
+    }else if(reg == "$t7")
+    {
+        return "01111";
+    }else if(reg == "$s0")
+    {
+        return "10000";
+    }else if(reg == "$s1")
+    {
+        return "10001";
+    }else if(reg == "$s2")
+    {
             return "10010";
-            break;
-        case "$s3": // 19
+    }else if(reg == "$s3")
+    {
             return "10011";
-            break;
-        case "$s4": // 20
-            return "10100";
-            break;
-        case "$s5": // 21
+    }else if(reg == "$s4")
+    {
+        return "10100";
+    }else if(reg == "$s5")
+    {
             return "10101";
-            break;
-        case "$s6": // 22
+    }else if(reg == "$s6")
+    {
             return "10110";
-            break;
-        case "$s7": // 23
-            return "10111";
-            break;
-        case "$t8": // 24
-            return "11000";
-            break;
-        case "$t9": // 25
-            return "11001";
-            break;
-        case "$k0": // 26
+    }else if(reg == "$s7")
+    {
+        return "10111";
+    }else if(reg == "$t8")
+    {
+        return "11000";
+    }else if(reg == "$t9")
+    {
+        return "11001";
+    }else if(reg == "$k0")
+    {
             return "";
-            break;
-        case "$k1": // 27
-            return "";
-            break;
-        case "$gp": // 28
-            return "11100";
-            break;
-        case "$sp": // 29
-            return "11101";
-            break; 
-        case "$fp": // 30
-            return "11110";
-            break;
-        case "$ra": // 31
-            return "11111";
-            break;
-        default: 
-            cout << "Erro na busca do registrador " << reg << endl;
-            break;
+    }else if(reg == "$k1")
+    {
+        return "";
+    }else if(reg == "$gp")
+    {
+        return "11100";
+    }else if(reg == "$sp")
+    {
+        return "11101";
+    }else if(reg == "$fp")
+    {
+        return "11110";
+    }else if(reg == "$ra")
+    {
+        return "11111";
+    }else{
+        cout << "Erro na busca do registrador " << reg << endl;
     }
 }
