@@ -28,6 +28,18 @@ string binary::intToBinary(string inteiro)
         r = (n % 2 == 0 ? "0" : "1") + r;
         n /= 2;
     }
+
+   string sixteenbits ;
+
+    if(r.size()<16){
+
+        for (int i = r.size(); i < 16; i++)
+        {
+            sixteenbits = "0" + sixteenbits;
+        }
+
+        r = sixteenbits + r;
+    }
     return r;
 };
 
@@ -65,11 +77,11 @@ string binary::translateCommandToBinary(string &commandToTranslate)
 
 
     vector<string> lista =  explode(commandToTranslate,' ');
-    
+
 
     if (lista.at(0) == "add")
     {
-       
+
 
         opcode = "000000";
         shamt = "00000";
@@ -191,14 +203,14 @@ string binary::typeIcommands(vector<string> lista)
         opcode = "000100";
         regSource = reg->mapeia(lista.at(2));
         regTarget = reg->mapeia(lista.at(1));
-        offset = intToBinary(lista.at(3));
+         offset = ""; //TODO
     }
     else if (lista.at(0) == "bne")
     {
         opcode = "000101";
         regSource = reg->mapeia(lista.at(2));
         regTarget = reg->mapeia(lista.at(1));
-        offset = intToBinary(lista.at(3));
+        offset = ""; //TODO
     }
 
     return opcode + regSource + regTarget + offset;
