@@ -5,13 +5,13 @@ Registradores::Registradores()
     this->registradores = new string*[n];
     for(int i = 0; i < n; i++)
     {
-        this->registradores[i] = new s[n];
+        this->registradores[i] = new string[n];
         for(int j = 0; j < n; j++)
             this->registradores[i][j] = "0";
     }
 
-    this->data1 = "0";
-    this->data2 = "0";
+    this->data1;
+    this->data2;
     this->regW = 0;
     this->controlRegW = 0;
 };
@@ -44,14 +44,14 @@ string Registradores::mapeia(string reg)
 {
 
     if(reg == "$zero"){
-            return "00000";
+        return "00000";
     }else if(reg == "$at"){
-            return "00001";
+        return "00001";
     }else if(reg =="$v0" ){
-            return "00010"
+        return "00010";
     }else if(reg == "$v1")
     {
-        return "00011"
+        return "00011";
     }else if(reg == "$a0")
     {
         return "00100";
@@ -104,10 +104,10 @@ string Registradores::mapeia(string reg)
         return "10100";
     }else if(reg == "$s5")
     {
-            return "10101";
+        return "10101";
     }else if(reg == "$s6")
     {
-            return "10110";
+        return "10110";
     }else if(reg == "$s7")
     {
         return "10111";

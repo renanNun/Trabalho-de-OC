@@ -12,8 +12,8 @@ class Registradores
         string** registradores;
         int n = 32; //Número de bits em um registrador
 
-        string data1;
-        string data2;
+        string* data1;
+        string* data2;
 
         int regW;
         int controlRegW;
@@ -27,8 +27,8 @@ class Registradores
         void writeBack(string* dataW);
         
         string** getRegistradores(){return registradores;};
-        string getSaida1(){return this->data1;};
-        string getSaida2(){return this->data2;};
+        string* getSaida1(){return this->data1;};
+        string* getSaida2(){return this->data2;};
         string mapeia(string reg);
 };
 

@@ -3,6 +3,8 @@
 #include <string>
 #include <sstream>
 
+#include "binary.h"
+
 std::fstream inputFile;
 std::fstream outputFile;
 
@@ -32,15 +34,16 @@ int main(int argc, char *argv[])
         exit(-1);
     }*/
 
-    cout << "\t\t\tTrabalho de Orrganização de computadores" << endl;
+    cout << "\t\t\tTrabalho de Organização de computadores" << endl;
     cout << "Alunos: Luan Reis Ciribelli e Renan Nunes da Costa Gonçalves, João Pedro Lima" << endl;
     cout << "Nome do arquivo: " << argv[1] << endl;
 
-    outputFile << "\t\t\tTTrabalho de Orrganização de computadores" << endl;
+    outputFile << "\t\t\tTTrabalho de Organização de computadores" << endl;
     outputFile << "Alunos: Luan Reis Ciribelli e Renan Nunes da Costa Gonçalves, João Pedro Lima" << endl;
     outputFile << "Nome do arquivo: " << argv[1] << endl;
 
     
+
 
     outputFile.close();
     inputFile.close();
