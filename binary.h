@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 #include <sstream>
-
+#include "componentes/registradores.hpp"
 
 using namespace std;
 
