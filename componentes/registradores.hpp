@@ -21,12 +21,12 @@ class Registradores
     public:
         Registradores();
         ~Registradores();
-        
+
 
         void busca(int i, int j, int write, int controlData);
         void writeBack(string* dataW);
         
-        static string** getRegistradores(){return this->registradores;};
+        static string** getRegistradores(){return registradores;};
         string getSaida1(){return this->data1;};
         string getSaida2(){return this->data2;};
         string mapeia(string reg);
