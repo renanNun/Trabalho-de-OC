@@ -40,9 +40,7 @@ int main(int argc, char *argv[])
     outputFile << "Alunos: Luan Reis Ciribelli e Renan Nunes da Costa Gonçalves, João Pedro Lima" << endl;
     outputFile << "Nome do arquivo: " << argv[1] << endl;
 
-    string arquivo = argv[1];
-
-    cout << arquivo;
+    
 
     outputFile.close();
     inputFile.close();
