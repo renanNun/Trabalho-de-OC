@@ -25,10 +25,10 @@ class Registradores
         void busca(int i, int j, int write, int controlData);
         void writeBack(string* dataW);
         
-        static int* getRegistradores(){return this->registradores;};
+        static string** getRegistradores(){return this->registradores;};
         string getSaida1(){return this->data1;};
         string getSaida2(){return this->data2;};
-        int mapeia(string reg);
+        string mapeia(string reg);
 };
 
 #endif // REGISTRADORES_HPP
