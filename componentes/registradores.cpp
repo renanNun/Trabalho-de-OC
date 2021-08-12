@@ -42,6 +42,7 @@ void Registradores::writeBack(string* dataW)
 
 string Registradores::mapeia(string reg)
 {
+
     switch(reg){
         case "$zero": // 0
             return "00000";
