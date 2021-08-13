@@ -41,7 +41,6 @@ int main(int argc, char *argv[])
     cout << line << endl;
 
     binary* bin = new binary();
-    cout << "Instancia" << endl;
     string verify = bin->translateCommandToBinary(line);
     cout << verify << endl;
 

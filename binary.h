@@ -21,7 +21,8 @@ public:
    ~binary();
    vector<string> * getLista();
    string translateCommandToBinary(string  &commandToTranslate);
-   string intToBinary (string inteiro);
+   string intToBinary16B (string inteiro);
+   string intToBinary5B (string inteiro);
    string typeIcommands(vector<string> lista );
    string typeJcommands(vector<string> lista );
 };
