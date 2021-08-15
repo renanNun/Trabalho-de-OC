@@ -2,7 +2,13 @@
 #include <fstream>
 #include <string>
 #include <sstream>
-#include "binary.h"
+#include "processador.hpp"
+
+#ifdef _WIN32
+#include <windows.h>
+#else
+#include <unistd.h>
+#endif
 
 std::fstream inputFile;
 std::fstream outputFile;
@@ -25,24 +31,37 @@ int main(int argc, char *argv[])
         cerr << "Erro ao Abrir o Arquivo de Saida! " << endl;
         exit(1);
     }
-   
-
-    // cout << "\t\t\tTrabalho de Orrganização de computadores" << endl;
-    // cout << "Alunos: Luan Reis Ciribelli e Renan Nunes da Costa Gonçalves, João Pedro Lima" << endl;
-    // cout << "Nome do arquivo: " << argv[1] << endl;
-
-    // outputFile << "\t\t\tTTrabalho de Orrganização de computadores" << endl;
-    // outputFile << "Alunos: Luan Reis Ciribelli e Renan Nunes da Costa Gonçalves, João Pedro Lima" << endl;
-    // outputFile << "Nome do arquivo: " << argv[1] << endl;
 
     string line;
-
-   getline(inputFile,line);
+    int cycle = 10;
+    getline(inputFile,line);
     cout << line << endl;
 
-    binary* bin = new binary();
-    string verify = bin->translateCommandToBinary(line);
-    cout << verify << endl;
+    Processador* processor = new Processador();
+
+    while(true)
+    {
+        processor->IF();
+        Sleep(cycle);
+        processor->ID();
+        Sleep(cycle);
+        processor->EX();
+        Sleep(cycle);
+
+        if(processor->getUnityControl()->getMemRead() == 1 
+            || processor->getUnityControl()->getMemWrite() == 1
+        ){
+            processor->MEM();
+            Sleep(cycle);
+        }
+
+        if(processor->getUnityControl()->getMemWrite() == 1)
+        {
+            processor->MR();
+            Sleep(cycle);
+        }
+    }
+
 
     outputFile.close();
     inputFile.close();
