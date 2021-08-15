@@ -7,6 +7,7 @@
 #include "PC.hpp"
 #include "unityControl.hpp"
 #include "ALU.hpp"
+#include "binary.hpp"
 
 using namespace std;
 
@@ -15,6 +16,7 @@ class Processador
     private:
         PC* pc;
         ALU* alu;
+        UnityControl uc;
 
         string instructions;
 
@@ -27,7 +29,71 @@ class Processador
             return "-1";
         };
 
+        void controlSignals()
+        {
+            binary* bin = new binary();
+            string mips = bin->translateCommandToBinary(instructions);
 
+            string opcode;
+            string funct;
+
+            if(opcode == "000000" && funct != "001000")
+            {
+                // Tipo R
+                this->uc.PCWriteCond = "x";
+                this->uc.PCWrite = "x";
+                this->uc.IorD = "0";
+                this->uc.MemRead = "x";
+                this->uc.MemWrite = "x";
+                this->uc.MemReg = "0";
+                this->uc.IRWrite = "x";
+                this->uc.PCSource = "00";
+                this->uc.ALUOp = "10";
+                this->uc.ALUSrcB = "00";
+                this->uc.ALUSrcA = "1";
+                this->uc.RegWrite = "1";
+                this->uc.RegDst = "1";
+            }else if(opcode == "100011" || opcode == "100000")
+            {
+                // Tipo Load
+                this->uc.PCWriteCond = "x";
+                this->uc.PCWrite = "x";
+                this->uc.IorD = "1";
+                this->uc.MemRead = "1";
+                this->uc.MemWrite = "x";
+                this->uc.MemReg = "1";
+                this->uc.IRWrite = "x";
+                this->uc.PCSource = "00";
+                this->uc.ALUOp = "00";
+                this->uc.ALUSrcB = "10";
+                this->uc.ALUSrcA = "1";
+                this->uc.RegWrite = "1";
+                this->uc.RegDst = "0";
+            }else if(opcode == "000010" || opcode == "000011" ||
+                     (opcode == "000000" && funct == "001000"))
+            {
+                // Instrução de desvio
+            }else if(opcode == "000100" || opcode == "000101")
+            {
+                // Instrução de desvio
+            }else{
+                // Instrução do tipo I
+                this->uc.PCWriteCond = "x";
+                this->uc.PCWrite = "x";
+                this->uc.IorD = "0";
+                this->uc.MemRead = "x";
+                this->uc.MemWrite = "x";
+                this->uc.MemReg = "0";
+                this->uc.IRWrite = "x";
+                this->uc.PCSource = "00";
+                this->uc.ALUOp = "10";
+                this->uc.ALUSrcB = "10";
+                this->uc.ALUSrcA = "1";
+                this->uc.RegWrite = "1";
+                this->uc.RegDst = "0";
+            }
+
+        }
 
     public:
         Processador(string instructions){
@@ -45,19 +111,19 @@ class Processador
         void printID()
         {
             cout << "ID:\n"
-                 << "PCWriteCondition -> " << UnityControl::PCWriteCond
-                 << "PCWrite -> " <<  UnityControl::PCWrite
-                 << "IorD -> " << UnityControl::IorD
-                 << "MemRead -> " <<  UnityControl::MemRead
-                 << "MemWrite -> " <<  UnityControl::MemWrite
-                 << "MemReg -> " <<  UnityControl::MemReg
-                 << "IRWrite -> " <<  UnityControl::IRWrite
-                 << "PCSource -> " <<  UnityControl::PCSource
-                 << "ALUOp -> " <<  UnityControl::ALUOp
-                 << "ALUSrcB -> " <<  UnityControl::ALUSrcB
-                 << "ALUSrcA -> " <<  UnityControl::ALUSrcA
-                 << "RegWrite -> " <<  UnityControl::RegWrite
-                 << "RegDst -> " <<  UnityControl::RegDst
+                 << "PCWriteCondition -> " << this->uc.PCWriteCond
+                 << "PCWrite -> " <<  this->uc.PCWrite
+                 << "IorD -> " << this->uc.IorD
+                 << "MemRead -> " <<  this->uc.MemRead
+                 << "MemWrite -> " <<  this->uc.MemWrite
+                 << "MemReg -> " <<  this->uc.MemReg
+                 << "IRWrite -> " <<  this->uc.IRWrite
+                 << "PCSource -> " <<  this->uc.PCSource
+                 << "ALUOp -> " <<  this->uc.ALUOp
+                 << "ALUSrcB -> " <<  this->uc.ALUSrcB
+                 << "ALUSrcA -> " <<  this->uc.ALUSrcA
+                 << "RegWrite -> " <<  this->uc.RegWrite
+                 << "RegDst -> " <<  this->uc.RegDst
                  << endl;
         };
 
@@ -73,7 +139,7 @@ class Processador
         {
             cout << "MEM:\n"
                  << "\tEndereco -> " << alu->getALUResult()
-                 << "\n\tDado-> " << 
+                 << "\n\tDado-> "
                  << endl;
         };
 
@@ -118,8 +184,8 @@ class Processador
 
         };
 
-        UnityControl getUnityControlMemWrite(){return UnityControl::MemWrite;};
-         UnityControl getUnityControlMemRead(){return UnityControl::MemRead;};
+       string getUnityControlMemWrite(){return this->uc.MemWrite;};
+       string getUnityControlMemRead(){return this->uc.MemRead;};
 };
 
 
