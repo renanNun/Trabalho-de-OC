@@ -14,8 +14,9 @@ class Processador
 {
     private:
         PC* pc;
-        UnityControl* uc;
         ALU* alu;
+
+        string instructions;
 
         string Mux(string entrada0, string entrada1, string opcode)
         {
@@ -26,11 +27,14 @@ class Processador
             return "-1";
         };
 
+
+
     public:
-        Processador(){
-            pc = new PC();
-            uc = new UnityControl();
-            alu = new ALU(512);
+        Processador(string instructions){
+            this->pc = new PC();
+            this->alu = new ALU(512);
+
+            this->instructions = instructions;
         };
 
         void printIF()
@@ -41,19 +45,19 @@ class Processador
         void printID()
         {
             cout << "ID:\n"
-                 << "PCWriteCondition -> " 
-                 << "IorD -> "
-                 << "MemRead -> "
-                 << "MemWrite -> "
-                 << "MemReg -> "
-                 << "IRWrite -> "
-                 << "CauseWrite -> "
-                 << "IntCause -> "
-                 << "EPCWrite -> "
-                 << "PCSource -> "
-                 << "AluOP -> "
-                 << "RegWrite -> "
-                 << "RegDst -> "
+                 << "PCWriteCondition -> " << UnityControl::PCWriteCond
+                 << "PCWrite -> " <<  UnityControl::PCWrite
+                 << "IorD -> " << UnityControl::IorD
+                 << "MemRead -> " <<  UnityControl::MemRead
+                 << "MemWrite -> " <<  UnityControl::MemWrite
+                 << "MemReg -> " <<  UnityControl::MemReg
+                 << "IRWrite -> " <<  UnityControl::IRWrite
+                 << "PCSource -> " <<  UnityControl::PCSource
+                 << "ALUOp -> " <<  UnityControl::ALUOp
+                 << "ALUSrcB -> " <<  UnityControl::ALUSrcB
+                 << "ALUSrcA -> " <<  UnityControl::ALUSrcA
+                 << "RegWrite -> " <<  UnityControl::RegWrite
+                 << "RegDst -> " <<  UnityControl::RegDst
                  << endl;
         };
 
@@ -67,7 +71,10 @@ class Processador
 
         void printMEM()
         {
-
+            cout << "MEM:\n"
+                 << "\tEndereco -> " << alu->getALUResult()
+                 << "\n\tDado-> " << 
+                 << endl;
         };
 
         void printWR()
@@ -83,8 +90,12 @@ class Processador
         void IF(){
             if(pc->getPC() < 0)
             {
-                
+                this->printRegistradores();
+                exit(0);
             }
+            this->pc->incremetPC();
+            //Pegar a primeira Instrução aqui
+            this->printIF();
         };
 
         void ID()
@@ -107,7 +118,8 @@ class Processador
 
         };
 
-        UnityControl* getUnityControl(){return this->uc;};
+        UnityControl getUnityControlMemWrite(){return UnityControl::MemWrite;};
+         UnityControl getUnityControlMemRead(){return UnityControl::MemRead;};
 };
 
 

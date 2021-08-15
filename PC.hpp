@@ -16,7 +16,7 @@ class PC
         ~PC(){};
 
         int getPC(){return this->value;};
-        void incremetPC(){this->value = this->value + 4;};
+        void incremetPC(){this->value = this->value + 1;};
 };
 
 #endif // PROGRAMCOUNTER_H

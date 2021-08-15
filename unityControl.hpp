@@ -1,17 +1,15 @@
-#ifndef UNITYCONTROL_H
-#define UNITYCONTROL_H
-
-#include <iostream>
-#include <string>
-
-using namespace std;
-
-class UnityControl
-{       
-    public:
-        
+enum UnityControl {
+    PCWriteCond,
+    PCWrite,
+    IorD,
+    MemRead,
+    MemWrite,
+    MemReg,
+    IRWrite,
+    PCSource,
+    ALUOp,
+    ALUSrcB,
+    ALUSrcA,
+    RegWrite,
+    RegDst
 };
-
-
-
-#endif // UNITYCONTROL_H

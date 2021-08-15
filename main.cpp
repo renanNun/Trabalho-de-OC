@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
     getline(inputFile,line);
     cout << line << endl;
 
-    Processador* processor = new Processador();
+    Processador* processor = new Processador(line);
 
     while(true)
     {
@@ -48,14 +48,14 @@ int main(int argc, char *argv[])
         processor->EX();
         Sleep(cycle);
 
-        if(processor->getUnityControl()->getMemRead() == 1 
-            || processor->getUnityControl()->getMemWrite() == 1
+        if(processor->getUnityControlMemRead() == 1 
+            || processor->getUnityControlMemWrite() == 1
         ){
             processor->MEM();
             Sleep(cycle);
         }
 
-        if(processor->getUnityControl()->getMemWrite() == 1)
+        if(processor->getUnityControlMemWrite() == 1)
         {
             processor->MR();
             Sleep(cycle);
