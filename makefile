@@ -1,14 +1,18 @@
+TARGET=main
 
-all: clean executable clean
+CC=g++
 
-executable: components main
-			g++ *.o -o main
+OBJS=*.o
+
+RM= rm -rf
+
+all: exec main clean
+		
+
 main:
-			g++ -c *.cpp
-
-components: 
-			g++ -c componentes/*.cpp
-
+		$(CC) $(OBJS) -o $(TARGET)
+exec: 
+		$(CC) -c *.cpp
+			
 clean:
-			rm -rf *.o
-			rm -rf main
+			$(RM) *.o
