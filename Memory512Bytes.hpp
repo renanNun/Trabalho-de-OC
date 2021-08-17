@@ -56,6 +56,9 @@ public:
             }
         }
     };
+    string getMemData(){
+        return memData;
+    }
 };
 
 #endif
