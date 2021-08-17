@@ -15,6 +15,8 @@ class binary
 {
 private:
    vector<string> *listaDeBinarios;
+   static string opcode ;
+   static string funct  ;
 
 public:
    binary();
@@ -25,6 +27,8 @@ public:
    string intToBinary5B (string inteiro);
    string typeIcommands(vector<string> lista );
    string typeJcommands(vector<string> lista );
+   string getFunct();
+   string getOP();
 };
 
 #endif // BINARY_H
