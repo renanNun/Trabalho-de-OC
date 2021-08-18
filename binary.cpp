@@ -4,6 +4,8 @@ binary::binary()
 {
 
     listaDeBinarios = new vector<string>();
+    opcode = "";
+    funct = "";
 };
 
 binary::~binary()
@@ -99,20 +101,14 @@ const vector<string> explode(const string &s, const char &c)
 
 string binary::translateCommandToBinary(string &commandToTranslate)
 {
- 
-    string opcode = "";
+
     string regSource = "";
     string regTarget = "";
     string rd = "";
     string shamt = "";
-    string funct = "";
     Registradores *reg = new Registradores();
 
-   
-
     vector<string> lista = explode(commandToTranslate, ' ');
-
-    
 
     if (lista.at(0) == "add")
     {
@@ -228,7 +224,7 @@ string binary::translateCommandToBinary(string &commandToTranslate)
 
 string binary::typeIcommands(vector<string> lista)
 {
-    string opcode = "";
+
     string regSource = "";
     string regTarget = "";
     string offset = "";
@@ -282,12 +278,10 @@ string binary::typeIcommands(vector<string> lista)
 string binary::typeJcommands(vector<string> lista)
 {
 
-    string opcode;
-    string shamt;
-    string funct;
-    string rt;
-    string rd;
-    string rs;
+    string shamt = "";
+    string rt = "";
+    string rd = "";
+    string rs = "";
     Registradores *reg = new Registradores();
     if (lista.at(0) == "j")
     {
@@ -298,4 +292,16 @@ string binary::typeJcommands(vector<string> lista)
     {
     }
     return "";
+};
+
+string binary::getFunct()
+{
+
+    return this->opcode;
+};
+
+string binary::getOP()
+{
+
+    return this->funct;
 };

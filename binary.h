@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 #include <sstream>
+#include <fstream>
 #include "componentes/registradores.hpp"
 
 
@@ -15,8 +16,8 @@ class binary
 {
 private:
    vector<string> *listaDeBinarios;
-   static string opcode ;
-   static string funct  ;
+    string opcode ;
+    string funct  ;
 
 public:
    binary();
