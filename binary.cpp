@@ -275,7 +275,7 @@ string binary::typeIcommands(vector<string> lista)
         {
 
             int end = stoi(endereco);
-            int off =end / 4;// (PC::getPC() + 4 - end) / 4;
+            int off = (PC::getInstance().getPC() + 4 - end) / 4;
             offset = intToBinary16B(to_string(off));
         }
         else
