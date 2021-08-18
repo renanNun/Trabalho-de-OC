@@ -10,3 +10,4 @@ void Processador::IF()
     //translateCommandToBinary(string &commandToTranslate);
     PC::getInstance().incremetPC();
 }
+
