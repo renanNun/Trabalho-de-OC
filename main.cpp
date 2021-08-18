@@ -33,12 +33,10 @@ int main(int argc, char *argv[])
         exit(1);
     }
 
-    /*string line;
-    int cycle = 10;
-
-    Processador* processor = new Processador(line);
-
-    while(true)
+    Processador* processor = new Processador(ListadeComandos);
+    processor->IF();
+    
+    /*while(true)
     {
         processor->IF();
         Sleep(cycle);
@@ -59,9 +57,8 @@ int main(int argc, char *argv[])
             processor->MR();
             Sleep(cycle);
         }
-    }*/
-
-
+    }
+    
     binary *bin = new binary();
 
         for (int i = 0; i < ListadeComandos.size(); i++)
@@ -73,7 +70,7 @@ int main(int argc, char *argv[])
     {
         string verify = bin->translateCommandToBinary(ListadeComandos.at(i)); 
         cout << verify << endl;
-    }
+    }*/
 
     outputFile.close();
 
