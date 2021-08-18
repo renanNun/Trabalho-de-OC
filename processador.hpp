@@ -34,8 +34,8 @@ class Processador
             binary* bin = new binary();
             string mips = bin->translateCommandToBinary(instructions);
 
-            string opcode;
-            string funct;
+            string opcode = bin->getOP();
+            string funct = bin->getFunct();
 
             if(opcode == "000000" && funct != "001000")
             {
