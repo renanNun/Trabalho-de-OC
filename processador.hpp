@@ -14,7 +14,7 @@ using namespace std;
 class Processador
 {
     private:
-        PC* pc;
+        //PC* pc;
         ALU* alu;
         UnityControl uc;
 
@@ -138,7 +138,7 @@ class Processador
 
     public:
         Processador(string instructions){
-            this->pc = new PC();
+           // this->pc = new PC();
             this->alu = new ALU(512);
 
             this->instructions = instructions;
@@ -146,7 +146,7 @@ class Processador
 
         void printIF()
         {
-            cout << "IF:\n\tPC -> " << pc->getPC() << endl;
+            //cout << "IF:\n\tPC -> " << pc->getPC() << endl;
         };
 
         void printID()
@@ -195,12 +195,12 @@ class Processador
         };
 
         void IF(){
-            if(pc->getPC() >= 10 || pc->getPC() < 0)
+            /*if(pc->getPC() >= 10 || pc->getPC() < 0)
             {
                 this->printRegistradores();
                 exit(0);
-            }
-            this->pc->incremetPC();
+            }*/
+            // this->pc->incremetPC();
             //Pegar a primeira Instrução aqui
             this->printIF();
         };
@@ -214,7 +214,7 @@ class Processador
         {
             if(this->uc.ALUSrcA == "0")
             {
-                this->alu->
+               
             }else{
 
             }
