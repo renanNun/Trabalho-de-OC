@@ -53,6 +53,21 @@ class Processador
                 this->uc.ALUSrcA = "1";
                 this->uc.RegWrite = "1";
                 this->uc.RegDst = "1";
+            }else if(opcode == "101011" || opcode == "101000"){
+                // Tipo Store
+                this->uc.PCWriteCond = "x";
+                this->uc.PCWrite = "x";
+                this->uc.IorD = "1";
+                this->uc.MemRead = "x";
+                this->uc.MemWrite = "1";
+                this->uc.MemReg = "x";
+                this->uc.IRWrite = "x";
+                this->uc.PCSource = "00";
+                this->uc.ALUOp = "00";
+                this->uc.ALUSrcB = "10";
+                this->uc.ALUSrcA = "1";
+                this->uc.RegWrite = "x";
+                this->uc.RegDst = "x";
             }else if(opcode == "100011" || opcode == "100000")
             {
                 // Tipo Load
@@ -72,10 +87,36 @@ class Processador
             }else if(opcode == "000010" || opcode == "000011" ||
                      (opcode == "000000" && funct == "001000"))
             {
-                // Instrução de desvio
+                // Instrução de Jr
+                this->uc.PCWriteCond = "x";
+                this->uc.PCWrite = "x";
+                this->uc.IorD = "0";
+                this->uc.MemRead = "x";
+                this->uc.MemWrite = "x";
+                this->uc.MemReg = "x";
+                this->uc.IRWrite = "x";
+                this->uc.PCSource = "10";
+                this->uc.ALUOp = "00";
+                this->uc.ALUSrcB = "11";
+                this->uc.ALUSrcA = "0";
+                this->uc.RegWrite = "x";
+                this->uc.RegDst = "x";
             }else if(opcode == "000100" || opcode == "000101")
             {
-                // Instrução de desvio
+                // Instrução do tipo J
+                this->uc.PCWriteCond = "x";
+                this->uc.PCWrite = "x";
+                this->uc.IorD = "0";
+                this->uc.MemRead = "x";
+                this->uc.MemWrite = "x";
+                this->uc.MemReg = "x";
+                this->uc.IRWrite = "x";
+                this->uc.PCSource = "01";
+                this->uc.ALUOp = "01";
+                this->uc.ALUSrcB = "00";
+                this->uc.ALUSrcA = "1";
+                this->uc.RegWrite = "x";
+                this->uc.RegDst = "x";
             }else{
                 // Instrução do tipo I
                 this->uc.PCWriteCond = "x";
@@ -154,7 +195,7 @@ class Processador
         };
 
         void IF(){
-            if(pc->getPC() < 0)
+            if(pc->getPC() >= 10 || pc->getPC() < 0)
             {
                 this->printRegistradores();
                 exit(0);
