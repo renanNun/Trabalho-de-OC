@@ -563,4 +563,7 @@ FodyWeavers.xsd
 # End of https://www.toptal.com/developers/gitignore/api/visualstudio,c++,codeblocks,clion,executable,text
 .vscode/
 
+
 .main
+
+*.json
