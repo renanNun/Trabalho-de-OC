@@ -7,14 +7,25 @@ using namespace std;
 
 class PC 
 {
+    public:
+        static PC& getInstance()
+        {
+            static PC instance;
+
+            return instance;
+        }
     private:
+        PC(){};
+        ~PC(){
+            resetValue();
+        };
+
+        PC(PC const&);
+        void operator=(PC const&);
+
         int value;
     public:
-        PC(){
-            this->value = 0;
-        };
-        ~PC(){};
-
+        void resetValue(){value = 0;};
         int getPC(){return this->value;};
         void incremetPC(){this->value = this->value + 4;};
 };

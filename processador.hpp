@@ -212,7 +212,12 @@ class Processador
 
         void EX()
         {
+            if(this->uc.ALUSrcA == "0")
+            {
+                this->alu->
+            }else{
 
+            }
         };
 
         void MEM()
