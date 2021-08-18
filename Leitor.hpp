@@ -14,10 +14,11 @@ class Leitor
 public:
     Leitor(string Caminho);
     vector<string> getVector();
+    string Linha(string procurado, string command);
 
 private:
     fstream inputFile;
-    vector<string>  ListadeComandos;
+    vector<string> ListadeComandos;
     void leString(string Caminho);
 };
 

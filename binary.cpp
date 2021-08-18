@@ -99,6 +99,32 @@ const vector<string> explode(const string &s, const char &c)
     return v;
 }
 
+string binary::Linha(string procurado, string command)
+{
+
+    int contador = 0;
+
+    for (int i = 0; i < listaDeBinarios->size(); i++)
+    {
+        contador = contador + 4;
+        string verify = listaDeBinarios->at(i);
+        if (verify == command)
+        {
+            for (int j = i + 1; j < listaDeBinarios->size(); j++)
+            {
+                contador + 4;
+                string FindCommando = listaDeBinarios->at(j);
+                if (FindCommando.find(command))
+                {
+                    return to_string(contador);
+                }
+            }
+        }
+    }
+
+    return "NotFound";
+};
+
 string binary::translateCommandToBinary(string &commandToTranslate)
 {
 
@@ -219,6 +245,7 @@ string binary::translateCommandToBinary(string &commandToTranslate)
     }
 
     reg->~Registradores();
+    listaDeBinarios->push_back(opcode + regSource + regTarget + rd + shamt + funct);
     return opcode + regSource + regTarget + rd + shamt + funct;
 };
 
@@ -243,14 +270,39 @@ string binary::typeIcommands(vector<string> lista)
         opcode = "000100";
         regSource = reg->mapeia(lista.at(2));
         regTarget = reg->mapeia(lista.at(1));
-        offset = ""; //TODO
+        string endereco = Linha(lista.at(3), lista.at(0) + lista.at(1) + lista.at(2) + lista.at(3));
+        if (endereco != "NotFound")
+        {
+
+            int end = stoi(endereco);
+            int off =end / 4;// (PC::getPC() + 4 - end) / 4;
+            offset = intToBinary16B(to_string(off));
+        }
+        else
+        {
+
+            return "ERRO";
+        }
     }
     else if (lista.at(0) == "bne")
     {
         opcode = "000101";
         regSource = reg->mapeia(lista.at(2));
         regTarget = reg->mapeia(lista.at(1));
-        offset = ""; //TODO
+
+        string endereco = Linha(lista.at(3), lista.at(0) + lista.at(1) + lista.at(2) + lista.at(3));
+        if (endereco != "NotFound")
+        {
+
+            int end = stoi(endereco);
+            int off = end /4 ;//(PC::getPC() + 4 - end) / 4;
+            offset = intToBinary16B(to_string(off));
+        }
+        else
+        {
+
+            return "ERRO";
+        }
     }
     else if (lista.at(0) == "sw")
     {
@@ -272,6 +324,7 @@ string binary::typeIcommands(vector<string> lista)
         regSource = reg->mapeia(lista3.at(0));
     }
 
+    listaDeBinarios->push_back(opcode + regSource + regTarget + offset);
     return opcode + regSource + regTarget + offset;
 };
 
@@ -305,3 +358,4 @@ string binary::getOP()
 
     return this->funct;
 };
+

@@ -20,8 +20,9 @@ using namespace std;
 int main(int argc, char *argv[])
 {
 
+    string caminho = argv[1];
     static vector<string> ListadeComandos;
-    Leitor *leitor = new Leitor(argv[1]);
+    Leitor *leitor = new Leitor(caminho);
     ListadeComandos = leitor->getVector();
 
     outputFile.open(argv[2], ios::out); //Abre o Arquivo de Saida

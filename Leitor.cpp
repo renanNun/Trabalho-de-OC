@@ -21,7 +21,7 @@ void Leitor::leString(string Caminho)
 
     while (getline(inputFile, line))
     {
-        Leitor::ListadeComandos.push_back(line);
+        this->ListadeComandos.push_back(line);
         line = "";
     }
 };
@@ -29,5 +29,30 @@ void Leitor::leString(string Caminho)
 vector<string> Leitor::getVector()
 {
 
-    return Leitor::ListadeComandos;
+    return this->ListadeComandos;
+};
+
+string Leitor::Linha(string procurado, string command)
+{
+
+    int contador = 0;
+
+    for (int i = 0; i < ListadeComandos.size(); i++)
+    {
+        contador = contador + 4;
+        string verify = ListadeComandos.at(i);
+        if (verify == command)
+        {
+            for (int j = i + 1; j < ListadeComandos.size(); j++)
+            {
+                contador+4;
+                string FindCommando = ListadeComandos.at(j);
+                if(FindCommando.find(command)){
+                    return to_string(contador);
+                }
+            }
+        }
+    }
+
+    return "NotFound";
 };
