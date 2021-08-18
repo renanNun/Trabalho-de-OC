@@ -2,7 +2,6 @@
 #include <fstream>
 #include <string>
 #include <sstream>
-#include "processador.hpp"
 
 #ifdef _WIN32
 #include <windows.h>
@@ -10,7 +9,10 @@
 #include <unistd.h>
 #endif
 
-std::fstream inputFile;
+#include "binary.hpp"
+#include "Leitor.hpp"
+#include "processador.hpp"
+
 std::fstream outputFile;
 
 using namespace std;
@@ -18,24 +20,20 @@ using namespace std;
 int main(int argc, char *argv[])
 {
 
-    inputFile.open(argv[1], ios::in);   //Abre o Arquivo de Entrada
+    static vector<string> ListadeComandos;
+    Leitor *leitor = new Leitor(argv[1]);
+    ListadeComandos = leitor->getVector();
+
     outputFile.open(argv[2], ios::out); //Abre o Arquivo de Saida
 
-    if (!inputFile)
-    {
-        cerr << "Erro ao Abrir o Arquivo de Entrada!" << endl;
-        exit(1);
-    }
-     if (!outputFile)
+    if (!outputFile)
     {
         cerr << "Erro ao Abrir o Arquivo de Saida! " << endl;
         exit(1);
     }
 
-    string line;
+    /*string line;
     int cycle = 10;
-    getline(inputFile,line);
-    cout << line << endl;
 
     Processador* processor = new Processador(line);
 
@@ -60,11 +58,23 @@ int main(int argc, char *argv[])
             processor->MR();
             Sleep(cycle);
         }
+    }*/
+
+
+    binary *bin = new binary();
+
+        for (int i = 0; i < ListadeComandos.size(); i++)
+    {
+        cout << ListadeComandos.at(i) << endl;
     }
 
+    for (int i = 0; i < ListadeComandos.size(); i++)
+    {
+        string verify = bin->translateCommandToBinary(ListadeComandos.at(i)); 
+        cout << verify << endl;
+    }
 
     outputFile.close();
-    inputFile.close();
 
     return 0;
 }

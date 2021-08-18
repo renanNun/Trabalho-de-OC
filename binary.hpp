@@ -15,8 +15,8 @@ class binary
 {
 private:
    vector<string> *listaDeBinarios;
-   static string opcode ;
-   static string funct  ;
+    string opcode ;
+    string funct  ;
 
 public:
    binary();
