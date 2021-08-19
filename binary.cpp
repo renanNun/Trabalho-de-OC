@@ -133,7 +133,7 @@ string binary::Linha(string procurado, string command)
     for (int i = 0; i < Leitor::getInstance().size(); i++)
     {
 
-        contador = contador + 4;
+       
         string verify = Leitor::getInstance().at(i);
         //cout << "Verify = " << verify << "Command = " << command << endl;
         if (verify == command)
@@ -154,6 +154,7 @@ string binary::Linha(string procurado, string command)
                 }
             }
         }
+         contador = contador + 4;
     }
 
     return "NotFound";
