@@ -3,6 +3,8 @@
 #include <iostream>
 #include <string>
 
+#include "ALUOp.hpp"
+
 using namespace std;
 
 class ALU
@@ -143,16 +145,6 @@ private:
     }
 
 public:
-    enum ALUOp
-    {
-        ADD,
-        SUB,
-        AND,
-        OR,
-        SLT,
-        SLL,
-    };
-
     ALU(int maxBits) { this->maxBits = maxBits; };
     ~ALU(){};
     bool getZeroSignal() { return zero; };

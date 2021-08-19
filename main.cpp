@@ -35,6 +35,10 @@ int main(int argc, char *argv[])
 
     Processador* processor = new Processador(ListadeComandos);
     processor->IF();
+    Sleep(600);
+    processor->ID();
+    Sleep(600);
+    processor->EX();
     
     /*while(true)
     {
