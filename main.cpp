@@ -39,6 +39,10 @@ int main(int argc, char *argv[])
     processor->ID();
     Sleep(600);
     processor->EX();
+    Sleep(600);
+    processor->MEM();
+    Sleep(600);
+    processor->WR();
     
     /*while(true)
     {

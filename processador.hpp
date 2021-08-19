@@ -128,7 +128,7 @@ class Processador
 
         };
 
-        void EX()
+        void EX() // ISSO AQUI TA MUITO CONFUSO PQ EU NAO SEI ONDE EXECUTA DIREITO
         {
             cout << "\nEX: ";
 
@@ -155,7 +155,47 @@ class Processador
             if(uc.MemRead == "1" || uc.MemWrite == "1")
                 alu->makeOperation(register_1,register_2,ALUOp::ADD);
 
+            if(uc.PCSource == "10")
+            {
+                if(opcode == "000010")
+                    alu->makeOperation(register_1,register_2,ALUOp::ADD);
+            }
+
             cout << "\n\tAluOut: " << alu->getALUResult();
+        }
+
+        void MEM()
+        {
+            if(uc.MemRead == "1")
+            {
+                // LW
+                if(opcode == "100011")
+                {
+
+                }else if(opcode == "100000") //LB
+                {
+
+                }
+            }else if(uc.MemWrite == "1")
+            {
+                // SW
+                if(opcode == "101011")
+                {
+
+                }else if(opcode == "101000") //SB
+                {
+
+                }
+            }
+        }
+
+        void WR()
+        {
+            //if(uc.MemReg == "0")
+            
+            //if(uc.RegDst == "0")
+
+            //if(uc.RegDst == "1")
         }
 
 
