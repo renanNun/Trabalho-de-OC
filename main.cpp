@@ -2,9 +2,17 @@
 #include <fstream>
 #include <string>
 #include <sstream>
-#include "binary.h"
 
-std::fstream inputFile;
+#ifdef _WIN32
+#include <windows.h>
+#else
+#include <unistd.h>
+#endif
+
+#include "binary.hpp"
+#include "Leitor.hpp"
+#include "processador.hpp"
+
 std::fstream outputFile;
 
 using namespace std;
@@ -12,40 +20,62 @@ using namespace std;
 int main(int argc, char *argv[])
 {
 
-    inputFile.open(argv[1], ios::in);   //Abre o Arquivo de Entrada
+    string caminho = argv[1];
+    static vector<string> ListadeComandos;
+    Leitor *leitor = new Leitor(caminho);
+    ListadeComandos = leitor->getVector();
+
     outputFile.open(argv[2], ios::out); //Abre o Arquivo de Saida
 
-    if (!inputFile)
-    {
-        cerr << "Erro ao Abrir o Arquivo de Entrada!" << endl;
-        exit(1);
-    }
-     if (!outputFile)
+    if (!outputFile)
     {
         cerr << "Erro ao Abrir o Arquivo de Saida! " << endl;
         exit(1);
     }
-   
 
-    // cout << "\t\t\tTrabalho de Orrganização de computadores" << endl;
-    // cout << "Alunos: Luan Reis Ciribelli e Renan Nunes da Costa Gonçalves, João Pedro Lima" << endl;
-    // cout << "Nome do arquivo: " << argv[1] << endl;
+    /*string line;
+    int cycle = 10;
 
-    // outputFile << "\t\t\tTTrabalho de Orrganização de computadores" << endl;
-    // outputFile << "Alunos: Luan Reis Ciribelli e Renan Nunes da Costa Gonçalves, João Pedro Lima" << endl;
-    // outputFile << "Nome do arquivo: " << argv[1] << endl;
+    Processador* processor = new Processador(line);
 
-    string line;
+    while(true)
+    {
+        processor->IF();
+        Sleep(cycle);
+        processor->ID();
+        Sleep(cycle);
+        processor->EX();
+        Sleep(cycle);
 
-   getline(inputFile,line);
-    cout << line << endl;
+        if(processor->getUnityControlMemRead() == 1 
+            || processor->getUnityControlMemWrite() == 1
+        ){
+            processor->MEM();
+            Sleep(cycle);
+        }
 
-    binary* bin = new binary();
-    string verify = bin->translateCommandToBinary(line);
-    cout << verify << endl;
+        if(processor->getUnityControlMemWrite() == 1)
+        {
+            processor->MR();
+            Sleep(cycle);
+        }
+    }*/
+
+
+    binary *bin = new binary();
+
+        for (int i = 0; i < ListadeComandos.size(); i++)
+    {
+        cout << ListadeComandos.at(i) << endl;
+    }
+
+    for (int i = 0; i < ListadeComandos.size(); i++)
+    {
+        string verify = bin->translateCommandToBinary(ListadeComandos.at(i)); 
+        cout << verify << endl;
+    }
 
     outputFile.close();
-    inputFile.close();
 
     return 0;
 }

@@ -1,9 +1,11 @@
-#include "binary.h"
+#include "binary.hpp"
 
 binary::binary()
 {
 
     listaDeBinarios = new vector<string>();
+    opcode = "";
+    funct = "";
 };
 
 binary::~binary()
@@ -16,6 +18,32 @@ vector<string> *binary::getLista()
 {
 
     return this->listaDeBinarios;
+};
+
+string binary::intToBinary26B(string inteiro)
+{
+
+    string r;
+    int n = stoi(inteiro);
+    while (n != 0)
+    {
+        r = (n % 2 == 0 ? "0" : "1") + r;
+        n /= 2;
+    }
+
+    string twentysixbits;
+
+    if (r.size() < 26)
+    {
+
+        for (int i = r.size(); i < 26; i++)
+        {
+            twentysixbits = "0" + twentysixbits;
+        }
+
+        r = twentysixbits + r;
+    }
+    return r;
 };
 
 string binary::intToBinary16B(string inteiro)
@@ -97,22 +125,51 @@ const vector<string> explode(const string &s, const char &c)
     return v;
 }
 
+string binary::Linha(string procurado, string command)
+{
+
+    int contador = 0;
+
+    for (int i = 0; i < Leitor::getInstance().size(); i++)
+    {
+
+       
+        string verify = Leitor::getInstance().at(i);
+        //cout << "Verify = " << verify << "Command = " << command << endl;
+        if (verify == command)
+        {
+
+            //cout << "Contador no if: " << contador << endl;
+            for (int j = i + 1; j < Leitor::getInstance().size(); j++)
+            {
+                contador += 4;
+
+                vector<string> FindCommando = explode(Leitor::getInstance().at(j), ' ');
+                //cout << "Contador no for: " << contador << endl;
+                //cout << "commando no for: " << FindCommando.at(0) << endl;
+                //cout << "commando procurado: " << procurado << endl;
+                if (FindCommando.at(0) == procurado)
+                {
+                    return to_string(contador);
+                }
+            }
+        }
+         contador = contador + 4;
+    }
+
+    return "NotFound";
+};
+
 string binary::translateCommandToBinary(string &commandToTranslate)
 {
- 
-    string opcode = "";
+
     string regSource = "";
     string regTarget = "";
     string rd = "";
     string shamt = "";
-    string funct = "";
     Registradores *reg = new Registradores();
 
-   
-
     vector<string> lista = explode(commandToTranslate, ' ');
-
-    
 
     if (lista.at(0) == "add")
     {
@@ -221,14 +278,20 @@ string binary::translateCommandToBinary(string &commandToTranslate)
         reg->~Registradores();
         return finalString;
     }
+    else
+    {
+
+        return "";
+    }
 
     reg->~Registradores();
+    listaDeBinarios->push_back(opcode + regSource + regTarget + rd + shamt + funct);
     return opcode + regSource + regTarget + rd + shamt + funct;
 };
 
 string binary::typeIcommands(vector<string> lista)
 {
-    string opcode = "";
+
     string regSource = "";
     string regTarget = "";
     string offset = "";
@@ -245,16 +308,38 @@ string binary::typeIcommands(vector<string> lista)
     else if (lista.at(0) == "beq")
     {
         opcode = "000100";
-        regSource = reg->mapeia(lista.at(2));
-        regTarget = reg->mapeia(lista.at(1));
-        offset = ""; //TODO
+        regSource = reg->mapeia(lista.at(1));
+        regTarget = reg->mapeia(lista.at(2));
+        string endereco = Linha(lista.at(3), lista.at(0) + " " + lista.at(1) + " " + lista.at(2) + " " + lista.at(3));
+        if (endereco != "NotFound")
+        {
+
+            int end = stoi(endereco);
+            int off = (end - PC::getInstance().getPC() + 4) / 4;
+            offset = intToBinary16B(to_string(off));
+        }
+        else
+        {
+
+            return "Não foi possivel encontrar a estrutura";
+        }
     }
     else if (lista.at(0) == "bne")
     {
         opcode = "000101";
-        regSource = reg->mapeia(lista.at(2));
-        regTarget = reg->mapeia(lista.at(1));
-        offset = ""; //TODO
+        regSource = reg->mapeia(lista.at(1));
+        regTarget = reg->mapeia(lista.at(2));
+        string endereco = Linha(lista.at(3), lista.at(0) + " " + lista.at(1) + " " + lista.at(2) + " " + lista.at(3));
+        if (endereco != "NotFound")
+        {
+            int end = stoi(endereco);
+            int off = (end - PC::getInstance().getPC() + 4) / 4;
+            offset = intToBinary16B(to_string(off));
+        }
+        else
+        {
+            return "Não foi possivel encontrar a estrutura";
+        }
     }
     else if (lista.at(0) == "sw")
     {
@@ -276,26 +361,57 @@ string binary::typeIcommands(vector<string> lista)
         regSource = reg->mapeia(lista3.at(0));
     }
 
+    listaDeBinarios->push_back(opcode + regSource + regTarget + offset);
     return opcode + regSource + regTarget + offset;
 };
 
 string binary::typeJcommands(vector<string> lista)
 {
 
-    string opcode;
-    string shamt;
-    string funct;
-    string rt;
-    string rd;
-    string rs;
-    Registradores *reg = new Registradores();
+    string offset = "";
+
     if (lista.at(0) == "j")
     {
 
         opcode = "000010";
+        string endereco = Linha(lista.at(1), lista.at(0) + " " + lista.at(1));
+        if (endereco != "NotFound")
+        {
+            int end = stoi(endereco);
+            int off = (end) / 4;
+            offset = intToBinary26B(to_string(off));
+        }
+        else
+        {
+            return "Não foi possivel encontrar a estrutura";
+        }
     }
     else
     {
+        opcode = "000011";
+        string endereco = Linha(lista.at(1), lista.at(0) + " " + lista.at(1));
+        if (endereco != "NotFound")
+        {
+            int end = stoi(endereco);
+            int off = (end) / 4;
+            offset = intToBinary26B(to_string(off));
+        }
+        else
+        {
+            return "Não foi possivel encontrar a estrutura";
+        }
     }
-    return "";
+    return opcode + offset;
+};
+
+string binary::getFunct()
+{
+
+    return this->opcode;
+};
+
+string binary::getOP()
+{
+
+    return this->funct;
 };
