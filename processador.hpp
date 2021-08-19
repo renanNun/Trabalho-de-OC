@@ -4,12 +4,14 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <sstream>
 
 #include "PC.hpp"
 #include "unityControl.hpp"
 #include "ALU.hpp"
 #include "binary.hpp"
 #include "ALUOp.hpp"
+#include "Memory512Bytes.hpp"
 
 using namespace std;
 
@@ -20,6 +22,14 @@ class Processador
         UnityControl uc;
 
         vector<string> instructions;
+
+        bool strToBool(string s)
+        {
+            bool b = 0;
+            istringstream ss(s);
+            ss >> b;
+            return b;
+        }
 
         string Mux(string entrada0, string entrada1, string code)
         {
@@ -91,6 +101,7 @@ class Processador
         {
             this->instructions = instructions;
             alu = new ALU(512);
+            Memory512Bytes mem = new Memory512Bytes();
         };
         ~Processador(){};
 
@@ -171,7 +182,7 @@ class Processador
                 // LW
                 if(opcode == "100011")
                 {
-
+                    mem->makeOperation(string address, string writeData, strToBool(uc.MemRead),strToBool(uc.MemWrite))
                 }else if(opcode == "100000") //LB
                 {
 
@@ -187,6 +198,8 @@ class Processador
 
                 }
             }
+
+            cout << "Memoria: ";
         }
 
         void WR()
