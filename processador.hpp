@@ -20,7 +20,7 @@ class Processador
     private:
         ALU* alu;
         UnityControl uc;
-
+        Memory512Bytes* mem;
         vector<string> instructions;
 
         bool strToBool(string s)
@@ -101,7 +101,7 @@ class Processador
         {
             this->instructions = instructions;
             alu = new ALU(512);
-            Memory512Bytes mem = new Memory512Bytes();
+            mem = new Memory512Bytes();
         };
         ~Processador(){};
 
@@ -182,13 +182,14 @@ class Processador
             string address = Mux(PC::getInstance().getPC(),aluOUT,uc.IorD);
 
             string write_data;
-
+            // Pra pegar o Write Data, eu preciso do Memory data register,
+            // que eu consigo só na segunda interação?
             if(uc.MemRead == "1")
             {
                 // LW
                 if(opcode == "100011")
                 {
-                    mem->makeOperation(address, string writeData, strToBool(uc.MemRead),strToBool(uc.MemWrite))
+                    mem->makeOperation(address, write_data, strToBool(uc.MemRead),strToBool(uc.MemWrite));
                 }else if(opcode == "100000") //LB
                 {
 
