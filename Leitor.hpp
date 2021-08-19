@@ -15,10 +15,18 @@ public:
     Leitor(string Caminho);
     vector<string> getVector();
     string Linha(string procurado, string command);
+    vector<string> ListadeComandos;
+
+    static vector<string> &getInstance()
+    {
+        static vector<string> ListadeComandos;
+
+        return ListadeComandos;
+    };
 
 private:
     fstream inputFile;
-    vector<string> ListadeComandos;
+
     void leString(string Caminho);
 };
 
