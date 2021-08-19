@@ -177,12 +177,18 @@ class Processador
 
         void MEM()
         {
+            string aluOUT = alu->getALUResult();
+
+            string address = Mux(PC::getInstance().getPC(),aluOUT,uc.IorD);
+
+            string write_data;
+
             if(uc.MemRead == "1")
             {
                 // LW
                 if(opcode == "100011")
                 {
-                    mem->makeOperation(string address, string writeData, strToBool(uc.MemRead),strToBool(uc.MemWrite))
+                    mem->makeOperation(address, string writeData, strToBool(uc.MemRead),strToBool(uc.MemWrite))
                 }else if(opcode == "100000") //LB
                 {
 
