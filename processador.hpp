@@ -281,8 +281,11 @@ public:
 
         if (uc.ALUSrcA == "0")
             register_1 = reg->getReg(convertBin(intToBinary16B(to_string(PC::getInstance().getPC()))));
-        else
+        else{
+            cout << "RS: " << rs << endl;
             register_1 = reg->getReg(convertBin(rs));
+        }
+            
 
         if (uc.ALUSrcB == "00")
             register_2 = reg->getReg(convertBin(rt));
@@ -390,8 +393,8 @@ public:
         string aux = to_string(PC::getInstance().getPC());
         string address = aluOUT;
         string SLtwo = shiftLeftLogical(sinalExtends, "0000000000000010");
-        write_data = MuxSourceB(register_2, "4", sinalExtends, SLtwo, uc.ALUSrcB);
-        cout << "ADDRESS: " << address << endl;
+        write_data = register_2;
+        cout << "WD: " << write_data << endl;
         int value;
         string aux2;
         string aux3;
@@ -474,11 +477,12 @@ public:
 
         if (uc.RegDst == "0")
         {
-
-            reg->escreve(convertBin(split(16, 20, line)), write_data);
+            cout << "\nEntrou em A: " << convertBin(split(11, 15, line)) << endl;
+            reg->escreve(convertBin(split(11, 15, line)), write_data);
         }
         if (uc.RegDst == "1")
         {
+            cout << "\nEntrou em A: " << rd << endl;
             reg->escreve(convertBin(rd), write_data);
         }
 
