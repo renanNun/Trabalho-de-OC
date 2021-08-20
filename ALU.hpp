@@ -19,6 +19,7 @@ private:
 
     void addOperation(string a, string b)
     {
+        //cout << "\nA: " << a << "\nB: " << b << endl;
         bool carry = false;
         for (int i = this->maxBits - 1; i >= 0; i--)
         {
@@ -57,8 +58,8 @@ private:
                     aluResult[i] = '1';
                 }
             }
-            cout << "\nALURESULT: " << aluResult;
-            cout << "\nCARRY: " << carry << endl;
+            //cout << "\nALURESULT: " << aluResult;
+            //cout << "\nCARRY: " << carry << endl;
         }
         overflow = carry;
     }

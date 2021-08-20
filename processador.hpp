@@ -179,6 +179,7 @@ private:
 
     string sinalExtends;
     string write_data;
+    string write_register;
     int k;
     string shiftLeftLogical(string a, string b)
     {
@@ -254,6 +255,10 @@ public:
             rs = split(6, 10, line);
             rt = split(11, 15, line);
             immediate = split(16,31,line);
+            write_register = split(0,15,line);
+            cout << "\n\trs: " << rs
+                 << "\n\trt: " << rt
+                 << "\n\trd: " << immediate;
         }
         else if (type == "J")
         {
@@ -345,8 +350,22 @@ public:
             alu->makeOperation(sinalExtendido,register_1,ALUOp::ADD);
         }
 
-        if (uc.MemRead == "1" || uc.MemWrite == "1")
-            alu->makeOperation(register_1, register_2, ALUOp::ADD);
+        //LW
+        if(type == "L"){
+            cout << "IMEDIATE: " << immediate << endl;
+            string sinalExtendido = signalExtend(immediate);
+            cout << "SINAL EXTEN: " << sinalExtendido << endl;
+            cout << "REG 1: " << register_1 << endl;
+
+            alu->makeOperation(sinalExtendido,register_1,ALUOp::ADD);
+        }
+
+
+        if (uc.MemRead == "1" || uc.MemWrite == "1"){
+            //cout << "Entrou no MEMREAD" << endl;
+            if(type != "Store")
+                alu->makeOperation(register_1, register_2, ALUOp::ADD);
+        }
 
         if (uc.PCSource == "01")
         {
@@ -419,14 +438,14 @@ public:
                 cout << "LW";
                 // address + immediate/4
 
-                value = convertBin(immediate)/4;
-                cout << "Value: " << value << endl;
+                /*value = convertBin(immediate)/4;
+                cout << "\nValue: " << value << endl;
                 aux2 = convertExtend16(value); 
                 cout << "AUX: " << aux2 << endl;
                 alu->makeOperation(address, aux2,ALUOp::ADD);
                 aux3 = alu->getALUResult();
-                cout << "Endereco: " << aux3 << endl;
-                mem.makeOperation(aux3, write_data, validaBoolean(uc.MemRead), validaBoolean(uc.MemWrite));
+                cout << "Endereco: " << aux3 << endl;*/
+                mem.makeOperation(aluOUT, write_data, validaBoolean(uc.MemRead), validaBoolean(uc.MemWrite));
             }
             else if (opcode == "100000") //LB
             {
@@ -475,8 +494,6 @@ public:
 
             r = sixteenbits + r;
         }
-        cout << "16: " << sixteenbits << endl;
-        cout << "R2D2: " << r << endl;
         return r;
     }
 
