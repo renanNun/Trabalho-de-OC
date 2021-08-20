@@ -350,12 +350,12 @@ string binary::typeJcommands(vector<string> lista)
 string binary::getFunct()
 {
 
-    return this->opcode;
+    return this->funct;
 };
 
 string binary::getOP()
 {
 
-    return this->funct;
+    return this->opcode;
 };
 

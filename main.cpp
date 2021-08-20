@@ -35,18 +35,16 @@ int main(int argc, char *argv[])
 
     Processador* processor = new Processador(ListadeComandos);
     int i = 0;
-    while(i < 3){
-        processor->IF();
+    processor->IF();
         //Sleep(600);
-        processor->ID();
+    processor->ID();
         //Sleep(600);
-        processor->EX();
+    processor->EX();
         //Sleep(600);
-        processor->MEM();
+    processor->MEM();
         //Sleep(600);
-        //processor->WR();
-        i++;
-    }
+    processor->WR();
+    i++;
     
     /*while(true)
     {

@@ -30,6 +30,15 @@ class Registradores
         {
             for(int i = 0; i < 32; i++) registradores[pos][i] = aux[i];
         };
+
+        void imprime()
+        {
+            for(int i = 0; i < 32; i++){
+                cout << "\n\t";
+                for(int j = 0; j < 32;j++)
+                    cout << registradores[i][j];
+            }
+        };
         
         string** getRegistradores(){return registradores;};
         string* getSaida1(){return this->data1;};

@@ -23,14 +23,14 @@ class Processador
         Memory512Bytes mem;
         Registradores* reg;
         vector<string> instructions;
-
+        string type;
         bool strToBool(string s)
         {
             bool b = 0;
             istringstream ss(s);
             ss >> b;
             return b;
-        }
+        };
 
         string Mux(string entrada0, string entrada1, string code)
         {
@@ -57,19 +57,20 @@ class Processador
                 aux += line[i];
 
             return aux;
-        }
+        };
 
         string signalExtend(string aux)
         {
             string line = "0000000000000000";
 
             return line + aux;
-        }
+        };
 
         void controlSignals()
         {
             if(opcode == "000000" && funct != "001000"){
                 // Instruções do tipo R
+                type = "R";
                 cout << "\n\tComando do Tipo R";
                 uc.PCWriteCond = " ";
                 uc.PCWrite = " ";
@@ -86,6 +87,7 @@ class Processador
                 uc.RegDst = "1";
             }else if(opcode == "101011" || opcode == "101000"){
                 // Instruções do tipo Store
+                type = "Store";
                 cout << "\n\tComando do Tipo Store";
                 uc.PCWriteCond = " ";
                 uc.PCWrite = " ";
@@ -102,6 +104,7 @@ class Processador
                 uc.RegDst = " ";
             }else if(opcode == "100011" || opcode == "100000"){
                 // Instruções do tipo Load
+                type = "L";
                 cout << "\n\tComando do Tipo Load";
                 uc.PCWriteCond = " ";
                 uc.PCWrite = " ";
@@ -118,6 +121,7 @@ class Processador
                 uc.RegDst = " ";
             }else{
                 // Instrução do tipo I
+                type = "I";
                 cout << "\n\tComando do Tipo I";
                 uc.PCWriteCond = " ";
                 uc.PCWrite = " ";
@@ -156,7 +160,7 @@ class Processador
             }
 
             return result;
-        }
+        };
     public:
         Processador(vector<string> &instructions)
         {
@@ -186,15 +190,26 @@ class Processador
         void ID()
         {
             cout << "\nID:\n" << "\tOpcode: " << opcode << "\n\tFunct: " << funct;
+            controlSignals();
 
-            register_1 = split(21,25,line);
-            register_2 = split(16,20,line);
+            if(type == "R"){
+                register_1 = split(21,25,line);
+                register_2 = split(16,20,line);
+            }else if(type == "Store")
+            {
+
+            }else if(type == "L"){
+
+            }else{
+
+            }
+
 
             cout << "\n\tRead reg 1: " << register_1 << "\n\tRead reg 2: " << register_2;
 
             string inst = split(0,15,line);
 
-            controlSignals();
+            
             string write_register = Mux(register_2,split(11,15,line), this->uc.RegDst);
             cout << "\n\twrite register: " << write_register;
             sinalExtends = signalExtend(inst);
@@ -250,7 +265,7 @@ class Processador
             }
 
             cout << "\n\tAluOut: " << alu->getALUResult();
-        }
+        };
 
         bool validaBoolean(string a)
         {
@@ -260,7 +275,7 @@ class Processador
                 return strToBool(a);
 
             return false;
-        }
+        };
         
         string intToBinary16B(string inteiro)
         {
@@ -320,7 +335,7 @@ class Processador
 
             cout << "\nMemoria: ";
             mem.imprimirMemoria();
-        } 
+        };
 
         void WR()
         {
@@ -334,7 +349,9 @@ class Processador
                 reg->escreve(convertBin(split(16,20,line)),write_data);
             if(uc.RegDst == "1")
                 reg->escreve(convertBin(split(11,15,line)),write_data);
-        }
+
+            reg->imprime();
+        };
 
         int convertBin(string address)
         {
@@ -347,7 +364,7 @@ class Processador
             }
 
             return bin;
-        }
+        };
 
         string getUnityControlMemWrite(){return this->uc.MemWrite;};
         string getUnityControlMemRead(){return this->uc.MemRead;};
