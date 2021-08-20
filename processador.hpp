@@ -20,7 +20,7 @@ class Processador
     private:
         ALU* alu;
         UnityControl uc;
-        Memory512Bytes* mem;
+        Memory512Bytes mem;
         Registradores* reg;
         vector<string> instructions;
 
@@ -161,9 +161,8 @@ class Processador
         Processador(vector<string> &instructions)
         {
             this->instructions = instructions;
-            alu = new ALU(512);
-            mem = new Memory512Bytes();
-            reg = new Registradores();
+            this->alu = new ALU(512);
+            this->reg = new Registradores();
         };
         ~Processador(){};
         
@@ -281,9 +280,7 @@ class Processador
             string aluOUT = alu->getALUResult();
             string aux = to_string(PC::getInstance().getPC());
             string address = Mux(intToBinary16B(aux),aluOUT,uc.IorD);
-            //cout << "\n2";
             string SLtwo = shiftLeftLogical(sinalExtends,"0000000000000010");
-            //cout << "\n3";
             write_data = MuxSourceB(register_2,"4",sinalExtends,SLtwo,uc.ALUSrcB);
             // Pra pegar o Write Data, eu preciso do Memory data register,
             // que eu consigo só na segunda interação?
@@ -294,30 +291,33 @@ class Processador
                 if(opcode == "100011")
                 {
                     cout << "LW";
-                    mem->makeOperation(address, write_data, validaBoolean(uc.MemRead),validaBoolean(uc.MemWrite));
+                    mem.makeOperation(address, write_data, validaBoolean(uc.MemRead),validaBoolean(uc.MemWrite));
                 }else if(opcode == "100000") //LB
                 {
+                    //cout << "\nIMPRIMINDO MEMORIA\n";
+                    //mem.imprimirMemoria();
+
                     cout << "\n\tLB";
                     cout << "\n\tADDRESS: " << address;
                     cout << "\n\twrite_data: " << write_data;
                     cout << "\n\tMEMREAD: " << validaBoolean(uc.MemRead);
                     cout << "\n\tMEMWRITE: " << validaBoolean(uc.MemWrite) << endl;
-                    mem->makeOperation(address, write_data, validaBoolean(uc.MemRead),validaBoolean(uc.MemWrite));
+                    mem.makeOperation(address, write_data, validaBoolean(uc.MemRead),validaBoolean(uc.MemWrite));
                 }
             }else if(uc.MemWrite == "1")
             {
                 // SW
                 if(opcode == "101011")
                 {
-                    mem->makeOperation(address, write_data, validaBoolean(uc.MemRead),validaBoolean(uc.MemWrite));
+                    mem.makeOperation(address, write_data, validaBoolean(uc.MemRead),validaBoolean(uc.MemWrite));
                 }else if(opcode == "101000") //SB
                 {
-                    mem->makeOperation(address, write_data, validaBoolean(uc.MemRead),validaBoolean(uc.MemWrite));
+                    mem.makeOperation(address, write_data, validaBoolean(uc.MemRead),validaBoolean(uc.MemWrite));
                 }
             }
 
             cout << "\nMemoria: ";
-            //mem->imprimirMemoria();
+            mem.imprimirMemoria();
         } 
 
         void WR()

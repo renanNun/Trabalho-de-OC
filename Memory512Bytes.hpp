@@ -10,7 +10,7 @@ class Memory512Bytes
 private:
     const string ZERO = "00000000000000000000000000000000";
     char **memory;
-    string memData = "0"; //"00000000000000000000000000000000";
+    string memData;
 
 public:
     Memory512Bytes()
@@ -20,7 +20,7 @@ public:
         {
             this->memory[i] = new char[32];
         }
-        // this->memData 
+        this->memData = ZERO;
 
         for(int i = 0; i < 128; i++)
         {
@@ -50,17 +50,17 @@ public:
             }
             else
             {
-                // cout << "INT ADDRESS: " << intAddress << endl;
-               // cout << "Entrou no laco para enfiar na mem" << endl;
+                //cout << "INT ADDRESS: " << intAddress << endl;
+                //cout << "\n" << memory[intAddress][0] << endl;
                 for (int i = 0; i < 32; i++)
                 {
-                    cout << "I: " << i << endl;
+                    //cout << "I: " << i << endl;
                     if (memRead)
                     {
-                        cout << "Entra no if" << endl;
-                        cout << "MEM DATA SIZE " << memData.size() << endl;
-                        cout << "MemData " << memData << endl;
-                        memData[i] = this->memory[intAddress][i];
+                        //cout << "Entra no if" << endl;
+                        //cout << "MEM DATA SIZE " << this->memData.size() << endl;
+                        //cout << "MemData " << this->memData << endl;
+                        this->memData[i] = this->memory[intAddress][i];
                     }
                     else
                     {
