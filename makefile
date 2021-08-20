@@ -6,7 +6,7 @@ OBJS=*.o
 
 RM= rm -rf
 
-all: exec main clean
+all: clean exec main 
 		
 
 main:
@@ -16,3 +16,4 @@ exec:
 			
 clean:
 			$(RM) *.o
+			$(RM) main

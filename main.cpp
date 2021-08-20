@@ -11,84 +11,184 @@
 
 #include "binary.hpp"
 #include "Leitor.hpp"
-#include "processador.hpp"
+//#include "processador.hpp"
 
 std::fstream outputFile;
 
 using namespace std;
 
-int main(int argc, char *argv[])
+void Chamamenu();
+void limparTela();
+static vector<string> ListadeComandos;
+void fazLeitura(string argv);
+void lecomandoescrito(vector<string> command);
+void escolheModo();
+
+int main()
 {
 
-    string caminho = argv[1];
-    static vector<string> ListadeComandos;
-    Leitor *leitor = new Leitor(caminho);
-    ListadeComandos = leitor->getVector();
-
-    outputFile.open(argv[2], ios::out); //Abre o Arquivo de Saida
-
-    if (!outputFile)
+    cout << "\t\t\tTrabalho de Orrganização de computadores" << endl;
+    cout << "Alunos: Luan Reis Ciribelli e Renan Nunes da Costa Gonçalves, João Pedro Lima" << endl;
+    bool menu = true;
+    int escolha;
+    vector<string> argv;
+    vector<string> command;
+    string commando;
+    string caminho;
+    bool whi = true;
+    while (menu)
     {
-        cerr << "Erro ao Abrir o Arquivo de Saida! " << endl;
-        exit(1);
-    }
-
-    Processador* processor = new Processador(ListadeComandos);
-    int i = 0;
-    while(i < 10){
-        // Bloco aqui acontece de qualquer maneira
-        processor->IF();
-        processor->ID();
-        processor->EX();
-        
-        if(processor->getUnityControlMemRead() == "1" || processor->getUnityControlMemWrite() == "1"){
-            processor->MEM();
-        }
-
-        if(processor->getUnityControlRegWrite() == "1")
+        Chamamenu();
+        cin >> escolha;
+        switch (escolha)
         {
-            processor->WR();
+        case 1:
+            limparTela();
+            cout << "Favor digitar o caminho Relativo ao arquivo de entrada : " << endl;
+            cin >> caminho;
+            argv.push_back(caminho);
+            cout << "Agora o arquivo onde as informações serão salvas: " << endl;
+            cin >> caminho;
+            argv.push_back(caminho);
+
+            outputFile.open(argv.at(1), ios::out); //Abre o Arquivo de Saida
+
+            if (!outputFile)
+            {
+                cerr << "Erro ao Abrir o Arquivo de Saida! " << endl;
+                exit(1);
+            }
+
+            fazLeitura(argv.at(0));
+            
+            for (int i = 0; i < ListadeComandos.size(); i++)
+            {
+                cout<<ListadeComandos.at(i);
+            }
+            
+            int modo;
+            escolheModo();
+            cin >> modo;
+
+            switch (modo)
+            {
+            case 1:
+                break;
+            case 2:
+                break;
+            default:
+                cout << "Opcao Invalida! Digite Novamente: ";
+                cin >> modo;
+            }
+            
+            break;
+        case 2:
+            limparTela();
+
+            while (whi)
+            {
+
+                cout << endl;
+                cout << "Escreva o comando em FORMATO MIPS ASSEMBLY" << endl;
+                cout << "inicalmente todos os comandos serão aceitos, mas comandos invalidos serão ignorados" << endl;
+                cout << "Separe os comandos utilizando ESPAÇO qualquer outra separação irá impedir a execução do programa" << endl;
+                cout << "Para colocar o comando na lista de comandos aperte 'enter', para parar de digitar comandos pressione '0'" << endl;
+                cout << "comando : " << endl;
+                cin >> commando;
+                if (commando == "0")
+                {
+                    whi = false;
+                }
+                else
+                {
+                    command.push_back(commando);
+                }
+            }
+            lecomandoescrito(command);
+            for (int i = 0; i < ListadeComandos.size(); i++)
+            {
+                cout<<ListadeComandos.at(i);
+            }
+            escolheModo();
+            switch (modo)
+            {
+            case 1:
+                /* code */
+                break;
+            case 2:
+                break;
+            default:
+                cout << "Opcao Invalida! Digite Novamente: ";
+                cin >> modo;
+            }
+            
+            break;
+
+        case 3:
+            limparTela();
+            cout<< "Limpando memoria"<< endl;
+            //sleep(5);
+            ListadeComandos.clear();
+            break;
+        case 0: 
+                return 0;
+        default:
+            cout << "Opcao Invalida! Digite Novamente: ";
+            cin >> escolha;
         }
-        i++;
-    }
-    
-    /*while(true)
-    {
-        processor->IF();
-        Sleep(cycle);
-        processor->ID();
-        Sleep(cycle);
-        processor->EX();
-        Sleep(cycle);
-
-        if(processor->getUnityControlMemRead() == 1 
-            || processor->getUnityControlMemWrite() == 1
-        ){
-            processor->MEM();
-            Sleep(cycle);
-        }
-
-        if(processor->getUnityControlMemWrite() == 1)
-        {
-            processor->MR();
-            Sleep(cycle);
-        }
-    }
-    
-    binary *bin = new binary();
-
-        for (int i = 0; i < ListadeComandos.size(); i++)
-    {
-        cout << ListadeComandos.at(i) << endl;
     }
 
-    for (int i = 0; i < ListadeComandos.size(); i++)
-    {
-        string verify = bin->translateCommandToBinary(ListadeComandos.at(i)); 
-        cout << verify << endl;
-    }*/
+  
 
-    outputFile.close();
 
     return 0;
+};
+
+void Chamamenu()
+{
+
+    cout << "\t\tFuncionalidades:" << endl;
+    cout << "[1] - Ler um arquivo com caminho passado pelo usuario " << endl;
+    cout << "[2] - Escrever manualmente o comando " << endl;
+    cout << "[3] - Resetar a memoria" << endl;
+    cout << "[0] - Parar execução" << endl;
+    cout << "Favor usar os numeros para selecionar a opção pretendida" << endl;
+    cout << endl;
+    cout << "Escolha: " << endl;
+};
+
+void limparTela()
+{
+#ifdef LINUX
+    system("clear");
+#endif // LINUX
+#ifdef _WIN32
+    system("cls");
+#endif // WIN32
+};
+
+void fazLeitura(string argv)
+{
+
+    string caminho = argv;
+    Leitor *leitor = new Leitor(caminho);
+    ListadeComandos = leitor->getVector();
+};
+
+void lecomandoescrito(vector<string> command)
+{
+
+    for (int i = 0; i < command.size(); i++)
+    {
+        ListadeComandos.push_back(command.at(i));
+    }
+};
+
+void escolheModo()
+{
+
+    cout << "Escolher modo de execução : " << endl;
+    cout << "[1] - Direta " << endl;
+    cout << "[2] - Passo a passo" << endl;
+    cout << "Escolha : " << endl;
 }
