@@ -307,15 +307,18 @@ string binary::typeIcommands(vector<string> lista)
 
     else if (lista.at(0) == "beq")
     {
+
+        // 16: beq $t0 $t1 LOOPDOLUAN
+        // 20: LOOPDOLUAN:
         opcode = "000100";
         regSource = reg->mapeia(lista.at(1));
         regTarget = reg->mapeia(lista.at(2));
-        string endereco = Linha(lista.at(3), lista.at(0) + " " + lista.at(1) + " " + lista.at(2) + " " + lista.at(3));
+        string endereco = Linha(lista.at(3) + ":", lista.at(0) + " " + lista.at(1) + " " + lista.at(2) + " " + lista.at(3));
         if (endereco != "NotFound")
         {
 
             int end = stoi(endereco);
-            int off = (end - PC::getInstance().getPC() + 4) / 4;
+            int off = (end - PC::getInstance().getPC() + 4);
             offset = intToBinary16B(to_string(off));
         }
         else
@@ -326,14 +329,15 @@ string binary::typeIcommands(vector<string> lista)
     }
     else if (lista.at(0) == "bne")
     {
+        
         opcode = "000101";
         regSource = reg->mapeia(lista.at(1));
         regTarget = reg->mapeia(lista.at(2));
-        string endereco = Linha(lista.at(3), lista.at(0) + " " + lista.at(1) + " " + lista.at(2) + " " + lista.at(3));
+        string endereco = Linha(lista.at(3) + ":", lista.at(0) + " " + lista.at(1) + " " + lista.at(2) + " " + lista.at(3));
         if (endereco != "NotFound")
         {
             int end = stoi(endereco);
-            int off = (end - PC::getInstance().getPC() + 4) / 4;
+            int off = (end - PC::getInstance().getPC() + 4);
             offset = intToBinary16B(to_string(off));
         }
         else
@@ -374,7 +378,7 @@ string binary::typeJcommands(vector<string> lista)
     {
 
         opcode = "000010";
-        string endereco = Linha(lista.at(1), lista.at(0) + " " + lista.at(1));
+        string endereco = Linha(lista.at(1)+":", lista.at(0) + " " + lista.at(1));
         if (endereco != "NotFound")
         {
             int end = stoi(endereco);
@@ -389,7 +393,7 @@ string binary::typeJcommands(vector<string> lista)
     else
     {
         opcode = "000011";
-        string endereco = Linha(lista.at(1), lista.at(0) + " " + lista.at(1));
+        string endereco = Linha(lista.at(1)+":", lista.at(0) + " " + lista.at(1));
         if (endereco != "NotFound")
         {
             int end = stoi(endereco);

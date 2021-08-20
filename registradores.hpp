@@ -43,7 +43,7 @@ public:
         return line;
     };
 
-void imprime()
+    void imprime()
     {
         for (int i = 0; i < 32; i++)
         {
@@ -58,7 +58,9 @@ void imprime()
                 cout << "$at: ";
                 break;
             case 2:
+
                 cout << "$v0: ";
+
                 break;
             case 3:
                 cout << "$v1: ";
