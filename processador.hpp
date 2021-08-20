@@ -443,6 +443,24 @@ public:
     string getUnityControlMemWrite() { return this->uc.MemWrite; };
     string getUnityControlMemRead() { return this->uc.MemRead; };
     string getUnityControlRegWrite() { return this->uc.RegWrite; };
+
+    void printUnityControl()
+    {
+        cout << "Imprimindo UC\n"
+            << uc.PCWriteCond << "\n"
+            << uc.PCWrite  << "\n"
+            << uc.IorD << "\n"
+            << uc.MemRead  << "\n"
+            << uc.MemWrite << "\n"
+            << uc.MemReg << "\n"
+            << uc.IRWrite  << "\n"
+            << uc.PCSource  << "\n"
+            << uc.ALUOp  << "\n"
+            << uc.ALUSrcB << "\n"
+            << uc.ALUSrcA << "\n"
+            << uc.RegWrite << "\n"
+            << uc.RegDst << "\n";
+    }
 };
 
 #endif // PROCESSADOR_H
