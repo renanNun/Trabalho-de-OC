@@ -19,10 +19,12 @@ private:
    string opcode;
    string funct;
    string Linha(string procurado, string command);
+   string intToBinary26B(string inteiro);
    string intToBinary16B(string inteiro);
    string intToBinary5B(string inteiro);
    string typeIcommands(vector<string> lista);
    string typeJcommands(vector<string> lista);
+
 
 public:
    binary();

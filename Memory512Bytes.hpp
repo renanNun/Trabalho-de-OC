@@ -81,7 +81,11 @@ public:
                 cout << memory[i][j];
             }
         }
-    }
+    };
+
+    string getMemData(){
+        return memData;
+    };
 };
 
-#endif
+#endif // MEMORY_512_BYTES_HPP
