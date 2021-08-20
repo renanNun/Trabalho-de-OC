@@ -282,16 +282,15 @@ public:
             register_1 = reg->getReg(convertBin(rs));
 
         if (uc.ALUSrcB == "00")
-            register_1 = reg->getReg(convertBin(rt));
+            register_2 = reg->getReg(convertBin(rt));
         else if (uc.ALUSrcB == "01")
         {
-            register_1 = "00000000000000000000000000000100";
+            register_2 = "00000000000000000000000000000100";
         }
         else if (uc.ALUSrcB == "10")
-            register_1 = sinalExtends;
+            register_2 = sinalExtends;
         else
-            register_1 = shiftLeftLogical(sinalExtends, "0000000000000010");
-        ;
+            register_2 = shiftLeftLogical(sinalExtends, "0000000000000010");
 
         if (uc.RegDst == "1")
         {
