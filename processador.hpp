@@ -34,9 +34,9 @@ private:
 
     string Mux(string entrada0, string entrada1, string code)
     {
-        if (code == "1")
-            return entrada0;
         if (code == "0")
+            return entrada0; 
+        if (code == "1")
             return entrada1;
 
         return " ";
@@ -261,6 +261,7 @@ public:
         {
             rs = split(6, 10, line);
             rt = split(11, 15, line);
+            immediate = split(16,31,line);
 
             cout << "\n\trs: " << rs
                  << "\n\trt: " << rt;
@@ -312,6 +313,19 @@ public:
             else if (funct == "100101")
             {
                 alu->makeOperation(register_1, register_2, ALUOp::OR);
+            }
+        }
+
+        // Tipo I
+        if(type == "I")
+        {
+            cout << "IMEDIATE: " << immediate << endl;
+            string sinalExtendido = signalExtend(immediate);
+            cout << "SINAL EXTEN: " << sinalExtendido << endl;
+            cout << "REG 1: " << register_1 << endl;
+            if(opcode == "001000")
+            {
+                alu->makeOperation(sinalExtendido,register_1,ALUOp::ADD);
             }
         }
 
@@ -377,7 +391,7 @@ public:
         string address = aluOUT;
         string SLtwo = shiftLeftLogical(sinalExtends, "0000000000000010");
         write_data = MuxSourceB(register_2, "4", sinalExtends, SLtwo, uc.ALUSrcB);
-
+        cout << "ADDRESS: " << address << endl;
         int value;
         string aux2;
         string aux3;
