@@ -285,7 +285,7 @@ string binary::translateCommandToBinary(string &commandToTranslate)
     }
 
     reg->~Registradores();
-    listaDeBinarios->push_back(opcode + regSource + regTarget + rd + shamt + funct);
+   // listaDeBinarios->push_back(opcode + regSource + regTarget + rd + shamt + funct);
     return opcode + regSource + regTarget + rd + shamt + funct;
 };
 
@@ -361,7 +361,7 @@ string binary::typeIcommands(vector<string> lista)
         regSource = reg->mapeia(lista3.at(0));
     }
 
-    listaDeBinarios->push_back(opcode + regSource + regTarget + offset);
+   // listaDeBinarios->push_back(opcode + regSource + regTarget + offset);
     return opcode + regSource + regTarget + offset;
 };
 

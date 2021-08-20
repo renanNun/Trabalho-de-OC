@@ -28,7 +28,10 @@ class Registradores
 
         void escreve(int pos,string aux)
         {
-            for(int i = 0; i < 32; i++) registradores[pos][i] = aux[i];
+          
+            for(int i = 0; i < 32; i++){
+                cout<<"Tamanho do registrador: "<<sizeof(registradores)/sizeof(registradores[0])<<endl;
+             registradores[pos][i] = aux[i];}
         };
 
         string getReg(int pos)
