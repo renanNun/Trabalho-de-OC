@@ -58,7 +58,9 @@ public:
                 cout << "$at: ";
                 break;
             case 2:
-                cout << "v0: ";
+
+                cout << "$v0: ";
+
                 break;
             case 3:
                 cout << "$v1: ";
