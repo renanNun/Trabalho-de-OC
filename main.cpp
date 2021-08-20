@@ -36,7 +36,7 @@ int main()
     string commando;
     string caminho;
     bool whi = true;
-    Processador* processador;
+    Processador *processador;
     int modo, modo2;
     while (menu)
     {
@@ -62,26 +62,28 @@ int main()
             }
 
             fazLeitura(argv.at(0));
-            
+
             for (int i = 0; i < ListadeComandos.size(); i++)
             {
-                cout<<ListadeComandos.at(i) << endl;
+                cout << ListadeComandos.at(i) << endl;
             }
-            
+
             escolheModo();
             cin >> modo;
 
             switch (modo)
             {
             case 1:
+                cout << "Modo Direto escolhido. Começando execução ..." << endl;
                 break;
             case 2:
+                cout << "Modo passo a passo escolhido. Começando execução ..." << endl;
                 break;
             default:
                 cout << "Opcao Invalida! Digite Novamente: ";
                 cin >> modo;
             }
-            
+
             break;
         case 2:
             limparTela();
@@ -112,41 +114,34 @@ int main()
             }
             escolheModo();
             cin >> modo2;
-            cout << "Modo escolhido: " << modo2 << endl;
-            // Inputs/instrucoes.txt
-            // Inputs/saida.txt
-            processador = new Processador(ListadeComandos);
-            switch (modo2)
+            switch (modo)
             {
             case 1:
-            cout << "Case 1" << endl;
-                processador->IF();
+                cout << "Modo Direto escolhido. Começando execução ..." << endl;
                 break;
             case 2:
+                cout << "Modo passo a passo escolhido. Começando execução ..." << endl;
                 break;
             default:
                 cout << "Opcao Invalida! Digite Novamente: ";
                 cin >> modo;
             }
-            
+
             break;
 
         case 3:
             limparTela();
-            cout<< "Limpando memoria"<< endl;
+            cout << "Limpando memoria" << endl;
             //sleep(5);
             ListadeComandos.clear();
             break;
-        case 0: 
-                return 0;
+        case 0:
+            return 0;
         default:
             cout << "Opcao Invalida! Digite Novamente: ";
             cin >> escolha;
         }
     }
-
-  
-
 
     return 0;
 };
