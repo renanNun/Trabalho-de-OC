@@ -328,6 +328,8 @@ public:
             }else if(funct == "000000")
             {
                 alu->makeOperation(register_1, shifamout, ALUOp::SLL);
+            }else{
+                alu->makeOperation(register_1, register_2, ALUOp::SLT);
             }
         }
 
