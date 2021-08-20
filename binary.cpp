@@ -211,7 +211,7 @@ string binary::translateCommandToBinary(string &commandToTranslate)
     }
     else if (lista.at(0) == "slt")
     {
-        opcode = "00000";
+        opcode = "000000";
         shamt = "00000";
         funct = "101010";
         regSource = reg->mapeia(lista.at(2));

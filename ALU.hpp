@@ -178,6 +178,7 @@ public:
         }
         case ALUOp::SLT:
         {
+            //cout << "\nA: " << a << "\nB: " << b << endl;
             setOnLessThan(a, b);
             break;
         }

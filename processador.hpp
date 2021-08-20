@@ -327,8 +327,9 @@ public:
                 alu->makeOperation(register_1, register_2, ALUOp::OR);
             }else if(funct == "000000")
             {
+                register_1 = reg->getReg(convertBin(rt));
                 alu->makeOperation(register_1, shifamout, ALUOp::SLL);
-            }else{
+            }else if(funct == "101010"){
                 alu->makeOperation(register_1, register_2, ALUOp::SLT);
             }
         }
@@ -350,7 +351,7 @@ public:
         if(type == "Store"){
             cout << "IMEDIATE: " << immediate << endl;
             string sinalExtendido = signalExtend(immediate);
-            cout << "SINAL EXTEN: " << sinalExtendido << endl;
+            cout << "SINAL EXTEN: " <<  sinalExtendido << endl;
             cout << "REG 1: " << register_1 << endl;
 
             alu->makeOperation(sinalExtendido,register_1,ALUOp::ADD);
