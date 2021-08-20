@@ -281,7 +281,7 @@ string binary::translateCommandToBinary(string &commandToTranslate)
     else
     {
 
-        return "";
+        return "11111111111111111111111111111111";
     }
 
     reg->~Registradores();

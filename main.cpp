@@ -83,12 +83,17 @@ int main()
                 {
                     cout << endl << ListadeComandos.at(p) << endl;
                     processador->IF();
-                    processador->ID();
-                    processador->EX();
-                    if(processador->getUnityControlMemRead() == "1" || processador->getUnityControlMemWrite() == "1")
-                        processador->MEM();
-                    if(processador->getUnityControlRegWrite() == "1")
-                        processador->WR();
+                    if(!processador->not_exec)
+                    {
+                        processador->ID();
+                        processador->EX();
+                        if(processador->getUnityControlMemRead() == "1" || processador->getUnityControlMemWrite() == "1")
+                            processador->MEM();
+                        if(processador->getUnityControlRegWrite() == "1")
+                            processador->WR();
+                    }else{
+                        cout << "\nEX: " << "\tpula";
+                    }
                     p++;
                 }
                 cout << endl;

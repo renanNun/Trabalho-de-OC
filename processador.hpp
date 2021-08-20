@@ -195,7 +195,7 @@ private:
     };
 
     string rt, rd, rs, immediate,shifamout;
-
+    
 public:
     Processador(vector<string> &instructions)
     {
@@ -206,8 +206,11 @@ public:
     };
     ~Processador(){};
 
+    bool not_exec = false;
+    
     void IF()
     {
+        not_exec = false;
         // Exibição do valor de PC atual
         cout << "\nIF:\n"
              << "\tValor de PC: " << PC::getInstance().getPC() << endl;
@@ -222,7 +225,13 @@ public:
 
         //translateCommandToBinary(string &commandToTranslate);
         PC::getInstance().incremetPC();
+        if(line == "11111111111111111111111111111111"){
+            not_exec = true;
+            PC::getInstance().incremetPC();
+            cout << "\nPULOU!\n";
+        }
         k++;
+
     };
 
     void ID()
