@@ -194,7 +194,7 @@ string binary::translateCommandToBinary(string &commandToTranslate)
     {
         opcode = "000000";
         shamt = "00000";
-        funct = "100001";
+        funct = "100100";
         regSource = reg->mapeia(lista.at(2));
         regTarget = reg->mapeia(lista.at(3));
         rd = reg->mapeia(lista.at(1));

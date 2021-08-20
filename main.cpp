@@ -27,7 +27,7 @@ Processador* processador;
 int main()
 {
 
-    cout << "\t\t\tTrabalho de Orrganização de computadores" << endl;
+    cout << "\t\t\tTrabalho de Organização de computadores" << endl;
     cout << "Alunos: Luan Reis Ciribelli e Renan Nunes da Costa Gonçalves, João Pedro Lima" << endl;
     bool menu = true;
     int escolha;
@@ -78,20 +78,19 @@ int main()
             case 1:
                 cout << "Modo Direto escolhido. Começando execução ..." << endl;
                 p = 0;
-                //cout << "Tamanho da lista de comandos " <<  ListadeComandos.size() << endl;
-                //while(p < ListadeComandos.size())
-                //{
+                cout << "Tamanho da lista de comandos " <<  ListadeComandos.size() << endl;
+                while(p < ListadeComandos.size())
+                {
                     cout << endl << ListadeComandos.at(p) << endl;
                     processador->IF();
                     processador->ID();
                     processador->EX();
-                    processador->printUnityControl();
                     if(processador->getUnityControlMemRead() == "1" || processador->getUnityControlMemWrite() == "1")
                         processador->MEM();
                     if(processador->getUnityControlRegWrite() == "1")
                         processador->WR();
                     p++;
-                //}
+                }
                 cout << endl;
                 break;
             case 2:
