@@ -144,7 +144,7 @@ class Processador
 
         string sinalExtends;
         string write_data;
-
+        int k;
         string shiftLeftLogical(string a, string b)
         {
             string result = "";
@@ -160,6 +160,7 @@ class Processador
     public:
         Processador(vector<string> &instructions)
         {
+            k = 0;
             this->instructions = instructions;
             this->alu = new ALU(512);
             this->reg = new Registradores();
@@ -171,7 +172,7 @@ class Processador
             cout <<"\nIF:\n" << "\tValor de PC: " << PC::getInstance().getPC() << endl;
 
             binary* bin = new binary();
-            line = bin->translateCommandToBinary(this->instructions[0]);
+            line = bin->translateCommandToBinary(this->instructions[k]);
             cout << "\tComando traduzido: " << line;
             
             opcode = bin->getOP();
@@ -179,6 +180,7 @@ class Processador
 
             //translateCommandToBinary(string &commandToTranslate);
             PC::getInstance().incremetPC();
+            k++;
         };
 
         void ID()
