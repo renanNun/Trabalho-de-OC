@@ -427,11 +427,7 @@ public:
         }
         if (uc.RegDst == "1")
         {
-            cout << "Entrou no terceiro IF" << endl;
-            cout<< "RD:" <<rd<<endl;
-            cout<< "RD CONVERTIDO:" << convertBin(rd) <<endl;
             reg->escreve(convertBin(rd), write_data);
-            cout << "Saiu do Terceiro IF" << endl;
         }
 
         cout << "\n\tImprimindo Registradores: \n";

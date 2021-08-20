@@ -8,53 +8,56 @@ using namespace std;
 
 class Registradores
 {
-    private:
-        string** registradores;
-        int n = 32; //Número de bits em um registrador
+private:
+    string **registradores;
+    int n = 32; //Número de bits em um registrador
 
-        string* data1;
-        string* data2;
+    string *data1;
+    string *data2;
 
-        int regW;
-        int controlRegW;
+    int regW;
+    int controlRegW;
 
-    public:
-        Registradores();
-        ~Registradores();
+public:
+    Registradores();
+    ~Registradores();
 
+    void busca(int i, int j, int write, int controlData);
+    void writeBack(string *dataW);
 
-        void busca(int i, int j, int write, int controlData);
-        void writeBack(string* dataW);
+    void escreve(int pos, string aux)
+    {
 
-        void escreve(int pos,string aux)
+        for (int i = 0; i < 32; i++)
         {
-          
-            for(int i = 0; i < 32; i++){
-                cout<<"Tamanho do registrador: "<<sizeof(registradores)/sizeof(registradores[0])<<endl;
-             registradores[pos][i] = aux[i];}
-        };
+            cout << "Tamanho do registrador: " << sizeof(registradores) / sizeof(registradores[0]) << endl;
+            registradores[pos][i] = aux[i];
+        }
+    };
 
-        string getReg(int pos)
+    string getReg(int pos)
+    {
+        string line = "";
+
+        for (int i = 0; i < 32; i++)
+            line += registradores[pos][i];
+        return line;
+    };
+
+    void imprime()
+    {
+        for (int i = 0; i < 32; i++)
         {
-            string line = "";
+            cout << "\n\t";
+            for (int j = 0; j < 32; j++)
+                cout << registradores[i][j];
+        }
+    };
 
-            for(int i = 0; i < 32; i++) line += registradores[pos][i];
-            return line;
-        };
-
-        void imprime()
-        {
-            for(int i = 0; i < 32; i++){
-                cout << "\n\t";
-                for(int j = 0; j < 32;j++)
-                    cout << registradores[i][j];
-            }
-        };
-        
-        string** getRegistradores(){return registradores;};
-        string* getSaida1(){return this->data1;};
-        string* getSaida2(){return this->data2;};
-        string mapeia(string reg);
+    string **getRegistradores() { return registradores; };
+    string *getSaida1() { return this->data1; };
+    string *getSaida2() { return this->data2; };
+    string mapeia(string reg);
 };
 
 #endif // REGISTRADORES_HPP
