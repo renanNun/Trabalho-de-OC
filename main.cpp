@@ -61,6 +61,11 @@ int main()
 
             fazLeitura(argv.at(0));
             
+            for (int i = 0; i < ListadeComandos.size(); i++)
+            {
+                cout<<ListadeComandos.at(i);
+            }
+            
             int modo;
             escolheModo();
             cin >> modo;
@@ -68,7 +73,6 @@ int main()
             switch (modo)
             {
             case 1:
-                /* code */
                 break;
             case 2:
                 break;
@@ -101,6 +105,10 @@ int main()
                 }
             }
             lecomandoescrito(command);
+            for (int i = 0; i < ListadeComandos.size(); i++)
+            {
+                cout<<ListadeComandos.at(i);
+            }
             escolheModo();
             switch (modo)
             {
@@ -118,6 +126,9 @@ int main()
 
         case 3:
             limparTela();
+            cout<< "Limpando memoria"<< endl;
+            sleep(5);
+            ListadeComandos.clear();
             break;
         case 0: 
                 return 0;
