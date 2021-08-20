@@ -76,7 +76,7 @@ int main()
                 cout << "Opcao Invalida! Digite Novamente: ";
                 cin >> modo;
             }
-            menu =false;
+            
             break;
         case 2:
             limparTela();
@@ -85,8 +85,8 @@ int main()
             {
 
                 cout << endl;
-                cout << "Escreva o comando em FORMATO MIPS" << endl
-                     << "inicalmente todos os comandos serão aceitos, mas comandos invalidos serão ignorados" << endl;
+                cout << "Escreva o comando em FORMATO MIPS ASSEMBLY" << endl;
+                cout << "inicalmente todos os comandos serão aceitos, mas comandos invalidos serão ignorados" << endl;
                 cout << "Separe os comandos utilizando ESPAÇO qualquer outra separação irá impedir a execução do programa" << endl;
                 cout << "Para colocar o comando na lista de comandos aperte 'enter', para parar de digitar comandos pressione '0'" << endl;
                 cout << "comando : " << endl;
@@ -113,12 +113,14 @@ int main()
                 cout << "Opcao Invalida! Digite Novamente: ";
                 cin >> modo;
             }
+            
             break;
 
         case 3:
             limparTela();
             break;
-
+        case 0: 
+                return 0;
         default:
             cout << "Opcao Invalida! Digite Novamente: ";
             cin >> escolha;
@@ -138,6 +140,7 @@ void Chamamenu()
     cout << "[1] - Ler um arquivo com caminho passado pelo usuario " << endl;
     cout << "[2] - Escrever manualmente o comando " << endl;
     cout << "[3] - Resetar a memoria" << endl;
+    cout << "[0] - Parar execução" << endl;
     cout << "Favor usar os numeros para selecionar a opção pretendida" << endl;
     cout << endl;
     cout << "Escolha: " << endl;
