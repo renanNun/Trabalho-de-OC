@@ -232,9 +232,9 @@ public:
 
         if (type == "R")
         {
-            rd = split(6, 10, line);
+            rs = split(6, 10, line);
             rt = split(11, 15, line);
-            rs = split(16, 20, line);
+            rd = split(16, 20, line);
 
             cout << "\n\trs: " << rs
                  << "\n\trt: " << rt
@@ -242,9 +242,12 @@ public:
         }
         else if (type == "Store")
         {
-            rd = split(6, 10, line);
+            rs = split(6, 10, line);
             rt = split(11, 15, line);
-            rs = split(16, 20, line);
+            immediate = split(16,31,line);
+            cout << "\n\trs: " << rs
+                 << "\n\trt: " << rt
+                 << "\n\trd: " << immediate;
         }
         else if (type == "L")
         {
@@ -286,9 +289,9 @@ public:
             register_1 = reg->getReg(convertBin(rs));
         }
             
-
-        if (uc.ALUSrcB == "00")
-            register_2 = reg->getReg(convertBin(rt));
+        register_2 = reg->getReg(convertBin(rt));
+        /*if (uc.ALUSrcB == "00")
+            
         else if (uc.ALUSrcB == "01")
         {
             register_2 = "00000000000000000000000000000100";
@@ -296,7 +299,7 @@ public:
         else if (uc.ALUSrcB == "10")
             register_2 = sinalExtends;
         else
-            register_2 = shiftLeftLogical(sinalExtends, "0000000000000010");
+            register_2 = shiftLeftLogical(sinalExtends, "0000000000000010");*/
 
         if (uc.RegDst == "1")
         {
@@ -322,14 +325,24 @@ public:
         // Tipo I
         if(type == "I")
         {
-            cout << "IMEDIATE: " << immediate << endl;
+           // cout << "IMEDIATE: " << immediate << endl;
             string sinalExtendido = signalExtend(immediate);
-            cout << "SINAL EXTEN: " << sinalExtendido << endl;
-            cout << "REG 1: " << register_1 << endl;
+            //cout << "SINAL EXTEN: " << sinalExtendido << endl;
+            //cout << "REG 1: " << register_1 << endl;
             if(opcode == "001000")
             {
                 alu->makeOperation(sinalExtendido,register_1,ALUOp::ADD);
             }
+        }
+
+        //Store
+        if(type == "Store"){
+            cout << "IMEDIATE: " << immediate << endl;
+            string sinalExtendido = signalExtend(immediate);
+            cout << "SINAL EXTEN: " << sinalExtendido << endl;
+            cout << "REG 1: " << register_1 << endl;
+
+            alu->makeOperation(sinalExtendido,register_1,ALUOp::ADD);
         }
 
         if (uc.MemRead == "1" || uc.MemWrite == "1")
@@ -427,6 +440,7 @@ public:
             // SW
             if (opcode == "101011")
             {
+                cout << "\nADDRESS: " << address << endl;
                 mem.makeOperation(address, write_data, validaBoolean(uc.MemRead), validaBoolean(uc.MemWrite));
             }
             else if (opcode == "101000") //SB
@@ -477,12 +491,12 @@ public:
 
         if (uc.RegDst == "0")
         {
-            cout << "\nEntrou em A: " << convertBin(split(11, 15, line)) << endl;
+            //cout << "\nEntrou em A: " << convertBin(split(11, 15, line)) << endl;
             reg->escreve(convertBin(split(11, 15, line)), write_data);
         }
         if (uc.RegDst == "1")
         {
-            cout << "\nEntrou em A: " << rd << endl;
+            //cout << "\nEntrou em A: " << rd << endl;
             reg->escreve(convertBin(rd), write_data);
         }
 

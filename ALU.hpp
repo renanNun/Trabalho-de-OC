@@ -57,6 +57,8 @@ private:
                     aluResult[i] = '1';
                 }
             }
+            cout << "\nALURESULT: " << aluResult;
+            cout << "\nCARRY: " << carry << endl;
         }
         overflow = carry;
     }
