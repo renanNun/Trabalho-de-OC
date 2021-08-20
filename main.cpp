@@ -23,7 +23,7 @@ static vector<string> ListadeComandos;
 void fazLeitura(string argv);
 void lecomandoescrito(vector<string> command);
 void escolheModo();
-
+Processador* processador;
 int main()
 {
 
@@ -37,7 +37,7 @@ int main()
     string caminho;
     bool whi = true;
     Processador *processador;
-    int modo, modo2;
+    int modo,modo2, p;
     while (menu)
     {
         Chamamenu();
@@ -47,10 +47,12 @@ int main()
         case 1:
             limparTela();
             cout << "Favor digitar o caminho Relativo ao arquivo de entrada : " << endl;
-            cin >> caminho;
+            //cin >> caminho;
+            caminho = "Inputs/instrucoes.txt";
             argv.push_back(caminho);
             cout << "Agora o arquivo onde as informações serão salvas: " << endl;
-            cin >> caminho;
+            //cin >> caminho;
+            caminho = "Inputs/saida.txt";
             argv.push_back(caminho);
 
             outputFile.open(argv.at(1), ios::out); //Abre o Arquivo de Saida
@@ -70,11 +72,26 @@ int main()
 
             escolheModo();
             cin >> modo;
-
+            processador = new Processador(ListadeComandos);
             switch (modo)
             {
             case 1:
                 cout << "Modo Direto escolhido. Começando execução ..." << endl;
+                p = 0;
+                //cout << "Tamanho da lista de comandos " <<  ListadeComandos.size() << endl;
+                while(p < ListadeComandos.size())
+                {
+                    cout << endl << ListadeComandos.at(p) << endl;
+                    processador->IF();
+                    processador->ID();
+                    processador->EX();
+                    if(processador->getUnityControlMemRead() == "1" || processador->getUnityControlMemWrite() == "1")
+                        processador->MEM();
+                    if(processador->getUnityControlRegWrite() == "1")
+                        processador->WR();
+                    p++;
+                }
+                cout << endl;
                 break;
             case 2:
                 cout << "Modo passo a passo escolhido. Começando execução ..." << endl;

@@ -192,11 +192,12 @@ class Processador
         void IF(){
             // Exibição do valor de PC atual
             cout <<"\nIF:\n" << "\tValor de PC: " << PC::getInstance().getPC() << endl;
-
+            line = "";
             binary* bin = new binary();
+            //cout << "Começa a instrucao aqui: " << this->instructions[k] << endl;
             line = bin->translateCommandToBinary(this->instructions[k]);
             cout << "\tComando traduzido: " << line;
-            
+
             opcode = bin->getOP();
             funct = bin->getFunct();
 
@@ -211,9 +212,13 @@ class Processador
             controlSignals();
 
             if(type == "R"){
-                rd = split(6,11,line);
-                rt = split(12,17,line);
-                rs = split(18,23,line);
+                rd = split(6,10,line);
+                rt = split(11,15,line);
+                rs = split(16,20,line);
+
+                cout << "\n\trs: " << rs 
+                     << "\n\trt: " << rt
+                     << "\n\trd: " << rd;
             }else if(type == "Store")
             {
                 register_1 = split(21,25,line);
@@ -225,18 +230,20 @@ class Processador
                 //register_1 = split(6,11,line);
                 //register_2 = split(12,17,line);
             }else{
-                register_1 = split(6,11,line);
-                register_2 = split(6,11,line);
+                rs = split(6,10,line);
+                rt = split(11,15,line);
+
+                cout << "\n\trs: " << rs 
+                     << "\n\trt: " << rt;
             }
 
 
-            cout << "\n\tRead reg 1: " << register_1 
-                 << "\n\tRead reg 2: " << register_2;
 
-            string inst = split(0,15,line);
+
+            string inst = split(15,31,line);
 
             
-            string write_register = Mux(register_2,split(11,15,line), this->uc.RegDst);
+            string write_register = Mux(register_2,split(26,31,line), this->uc.RegDst);
             cout << "\n\twrite register: " << write_register;
             sinalExtends = signalExtend(inst);
             cout << "\n\tSignal Extends: " << sinalExtends;
@@ -246,9 +253,24 @@ class Processador
         void EX() // ISSO AQUI TA MUITO CONFUSO PQ EU NAO SEI ONDE EXECUTA DIREITO
         {
             cout << "\nEX: ";
-
-            // Executando Instruções
             
+            if(uc.ALUSrcA == "0")
+                register_1 = reg->getReg(convertBin(intToBinary16B(to_string(PC::getInstance().getPC()))));
+            else
+                register_1 = reg->getReg(convertBin(rs));
+            
+
+            if(uc.ALUSrcB == "00")
+                register_1 = reg->getReg(convertBin(rt));
+            else if(uc.ALUSrcB == "01")
+            {
+                register_1 = "00000000000000000000000000000100";
+            }else if(uc.ALUSrcB == "10")
+                register_1 = sinalExtends;
+            else
+                register_1 = shiftLeftLogical(sinalExtends,"0000000000000010");;
+                
+
             if(uc.RegDst == "1")
             {
                 // Tipo R
@@ -284,7 +306,7 @@ class Processador
                 }else if(opcode == "000011") //  Tipo R
                 {
                     // Jal
-                    reg->escreve(convertBin("0000000000011111"),intToBinary16B(to_string(PC::getInstance().getPC());));
+                    reg->escreve(convertBin("0000000000011111"),intToBinary16B(to_string(PC::getInstance().getPC())));
                 }else{
                     // Junior
                     PC::getInstance().setPC(intToBinary16B(rs));
@@ -341,12 +363,6 @@ class Processador
                 {
                     //cout << "\nIMPRIMINDO MEMORIA\n";
                     //mem.imprimirMemoria();
-
-                    cout << "\n\tLB";
-                    cout << "\n\tADDRESS: " << address;
-                    cout << "\n\twrite_data: " << write_data;
-                    cout << "\n\tMEMREAD: " << validaBoolean(uc.MemRead);
-                    cout << "\n\tMEMWRITE: " << validaBoolean(uc.MemWrite) << endl;
                     mem.makeOperation(address, write_data, validaBoolean(uc.MemRead),validaBoolean(uc.MemWrite));
                 }
             }else if(uc.MemWrite == "1")

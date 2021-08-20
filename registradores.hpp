@@ -31,6 +31,14 @@ class Registradores
             for(int i = 0; i < 32; i++) registradores[pos][i] = aux[i];
         };
 
+        string getReg(int pos)
+        {
+            string line = "";
+
+            for(int i = 0; i < 32; i++) line += registradores[pos][i];
+            return line;
+        };
+
         void imprime()
         {
             for(int i = 0; i < 32; i++){
