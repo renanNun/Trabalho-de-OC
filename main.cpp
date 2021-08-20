@@ -11,7 +11,7 @@
 
 #include "binary.hpp"
 #include "Leitor.hpp"
-//#include "processador.hpp"
+#include "processador.hpp"
 
 std::fstream outputFile;
 
@@ -36,6 +36,8 @@ int main()
     string commando;
     string caminho;
     bool whi = true;
+    Processador* processador;
+    int modo, modo2;
     while (menu)
     {
         Chamamenu();
@@ -63,10 +65,9 @@ int main()
             
             for (int i = 0; i < ListadeComandos.size(); i++)
             {
-                cout<<ListadeComandos.at(i);
+                cout<<ListadeComandos.at(i) << endl;
             }
             
-            int modo;
             escolheModo();
             cin >> modo;
 
@@ -107,13 +108,19 @@ int main()
             lecomandoescrito(command);
             for (int i = 0; i < ListadeComandos.size(); i++)
             {
-                cout<<ListadeComandos.at(i);
+                cout << ListadeComandos.at(i) << endl;
             }
             escolheModo();
-            switch (modo)
+            cin >> modo2;
+            cout << "Modo escolhido: " << modo2 << endl;
+            // Inputs/instrucoes.txt
+            // Inputs/saida.txt
+            processador = new Processador(ListadeComandos);
+            switch (modo2)
             {
             case 1:
-                /* code */
+            cout << "Case 1" << endl;
+                processador->IF();
                 break;
             case 2:
                 break;

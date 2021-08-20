@@ -75,10 +75,10 @@ class Processador
                 uc.PCWriteCond = "x";
                 uc.PCWrite = "x";
                 uc.IorD = "0";
-                uc.MemRead = " ";
-                uc.MemWrite = " ";
+                uc.MemRead = "x";
+                uc.MemWrite = "x";
                 uc.MemReg = "0";
-                uc.IRWrite = " ";
+                uc.IRWrite = "x";
                 uc.PCSource = "00";
                 uc.ALUOp = "10";
                 uc.ALUSrcB = "00";
@@ -89,47 +89,63 @@ class Processador
                 // Instruções do tipo Store
                 type = "Store";
                 cout << "\n\tComando do Tipo Store";
-                uc.PCWriteCond = " ";
-                uc.PCWrite = " ";
+                uc.PCWriteCond = "x";
+                uc.PCWrite = "x";
                 uc.IorD = "1";
-                uc.MemRead = " ";
+                uc.MemRead = "x";
                 uc.MemWrite = "1";
                 uc.MemReg = "0";
-                uc.IRWrite = " ";
+                uc.IRWrite = "x";
                 uc.PCSource = "00";
                 uc.ALUOp = "00";
                 uc.ALUSrcB = "10";
                 uc.ALUSrcA = "1";
-                uc.RegWrite = " ";
-                uc.RegDst = " ";
+                uc.RegWrite = "x";
+                uc.RegDst = "x";
             }else if(opcode == "100011" || opcode == "100000"){
                 // Instruções do tipo Load
                 type = "L";
                 cout << "\n\tComando do Tipo Load";
-                uc.PCWriteCond = " ";
-                uc.PCWrite = " ";
+                uc.PCWriteCond = "x"; 
+                uc.PCWrite = "x";
                 uc.IorD = "1";
                 uc.MemRead = "1";
-                uc.MemWrite = " ";
+                uc.MemWrite = "x";
                 uc.MemReg = "1";
-                uc.IRWrite = " ";
+                uc.IRWrite = "x";
                 uc.PCSource = "00";
                 uc.ALUOp = "00";
                 uc.ALUSrcB = "10";
                 uc.ALUSrcA = "1";
                 uc.RegWrite = "1";
-                uc.RegDst = " ";
+                uc.RegDst = "x";
+            }else if(opcode == "000010" || opcode == "000011"){
+                type = "J";
+                cout << "\n\tComando do Tipo J";
+                uc.PCWriteCond = ""; // voltar
+                uc.PCWrite = ""; // voltar
+                uc.IorD = ""; // voltar
+                uc.MemRead = "0";
+                uc.MemWrite = "0";
+                uc.MemReg = "x";
+                uc.IRWrite = ""; // voltar
+                uc.PCSource = ""; // voltar
+                uc.ALUOp = "x";
+                uc.ALUSrcB = "x";
+                uc.ALUSrcA = "x";
+                uc.RegWrite = "0";
+                uc.RegDst = "x";
             }else{
                 // Instrução do tipo I
                 type = "I";
                 cout << "\n\tComando do Tipo I";
-                uc.PCWriteCond = " ";
-                uc.PCWrite = " ";
+                uc.PCWriteCond = "x";
+                uc.PCWrite = "x";
                 uc.IorD = "0";
-                uc.MemRead = " ";
-                uc.MemWrite = " ";
+                uc.MemRead = "x";
+                uc.MemWrite = "x";
                 uc.MemReg = "0";
-                uc.IRWrite = " ";
+                uc.IRWrite = "x";
                 uc.PCSource = "00";
                 uc.ALUOp = "10";
                 uc.ALUSrcB = "10";
