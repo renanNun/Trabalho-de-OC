@@ -135,14 +135,14 @@ private:
         {
             type = "J";
             cout << "\n\tComando do Tipo J";
-            uc.PCWriteCond = ""; // voltar
-            uc.PCWrite = "";     // voltar
-            uc.IorD = "";        // voltar
+            uc.PCWriteCond = "x"; // voltar
+            uc.PCWrite = "x";     // voltar
+            uc.IorD = "x";        // voltar
             uc.MemRead = "0";
             uc.MemWrite = "0";
             uc.MemReg = "x";
-            uc.IRWrite = "";  // voltar
-            uc.PCSource = ""; // voltar
+            uc.IRWrite = "x";  // voltar
+            uc.PCSource = "x"; // voltar
             uc.ALUOp = "x";
             uc.ALUSrcB = "x";
             uc.ALUSrcA = "x";
@@ -193,14 +193,14 @@ private:
         return result;
     };
 
-    string rt, rd, rs;
+    string rt, rd, rs, immediate;
 
 public:
     Processador(vector<string> &instructions)
     {
         k = 0;
         this->instructions = instructions;
-        this->alu = new ALU(512);
+        this->alu = new ALU(32);
         this->reg = new Registradores();
     };
     ~Processador(){};
@@ -242,18 +242,20 @@ public:
         }
         else if (type == "Store")
         {
-            register_1 = split(21, 25, line);
-            register_2 = split(16, 20, line);
+            rd = split(6, 10, line);
+            rt = split(11, 15, line);
+            rs = split(16, 20, line);
         }
         else if (type == "L")
         {
-            register_1 = split(6, 11, line);
-            register_2 = split(12, 17, line);
+            rs = split(6, 10, line);
+            rt = split(11, 15, line);
+            immediate = split(16,31,line);
         }
         else if (type == "J")
         {
-            //register_1 = split(6,11,line);
-            //register_2 = split(12,17,line);
+            register_1 = split(7,31,line);
+            register_2 = split(7,31,line);
         }
         else
         {
@@ -372,19 +374,29 @@ public:
         cout << "\nMEM:";
         string aluOUT = alu->getALUResult();
         string aux = to_string(PC::getInstance().getPC());
-        string address = Mux(intToBinary16B(aux), aluOUT, uc.IorD);
+        string address = aluOUT;
         string SLtwo = shiftLeftLogical(sinalExtends, "0000000000000010");
         write_data = MuxSourceB(register_2, "4", sinalExtends, SLtwo, uc.ALUSrcB);
-        // Pra pegar o Write Data, eu preciso do Memory data register,
-        // que eu consigo só na segunda interação?
-        //cout << "\nEntrar nos if";
+
+        int value;
+        string aux2;
+        string aux3;
         if (uc.MemRead == "1")
         {
             // LW
             if (opcode == "100011")
             {
                 cout << "LW";
-                mem.makeOperation(address, write_data, validaBoolean(uc.MemRead), validaBoolean(uc.MemWrite));
+                // address + immediate/4
+
+                value = convertBin(immediate)/4;
+                cout << "Value: " << value << endl;
+                aux2 = convertExtend16(value); 
+                cout << "AUX: " << aux2 << endl;
+                alu->makeOperation(address, aux2,ALUOp::ADD);
+                aux3 = alu->getALUResult();
+                cout << "Endereco: " << aux3 << endl;
+                mem.makeOperation(aux3, write_data, validaBoolean(uc.MemRead), validaBoolean(uc.MemWrite));
             }
             else if (opcode == "100000") //LB
             {
@@ -409,6 +421,33 @@ public:
         cout << "\n\tMemoria: \n";
         mem.imprimirMemoria();
     };
+
+    string convertExtend16(int inteiro)
+    {
+        string r = "";
+        int n = inteiro;
+        while (n != 0)
+        {
+            r = (n % 2 == 0 ? "0" : "1") + r;
+            n /= 2;
+        }
+
+        string sixteenbits = "";
+        cout << "R: " << r << endl;
+        if (r.size() < 16)
+        {
+
+            for (int i = r.size(); i < 16; i++)
+            {
+                sixteenbits = "0" + sixteenbits;
+            }
+
+            r = sixteenbits + r;
+        }
+        cout << "16: " << sixteenbits << endl;
+        cout << "R2D2: " << r << endl;
+        return r;
+    }
 
     void WR()
     {
