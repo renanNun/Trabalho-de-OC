@@ -35,16 +35,22 @@ int main(int argc, char *argv[])
 
     Processador* processor = new Processador(ListadeComandos);
     int i = 0;
-    processor->IF();
-        //Sleep(600);
-    processor->ID();
-        //Sleep(600);
-    processor->EX();
-        //Sleep(600);
-    processor->MEM();
-        //Sleep(600);
-    processor->WR();
-    i++;
+    while(i < 10){
+        // Bloco aqui acontece de qualquer maneira
+        processor->IF();
+        processor->ID();
+        processor->EX();
+        
+        if(processor->getUnityControlMemRead() == "1" || processor->getUnityControlMemWrite() == "1"){
+            processor->MEM();
+        }
+
+        if(processor->getUnityControlRegWrite() == "1")
+        {
+            processor->WR();
+        }
+        i++;
+    }
     
     /*while(true)
     {

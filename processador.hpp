@@ -68,12 +68,12 @@ class Processador
 
         void controlSignals()
         {
-            if(opcode == "000000" && funct != "001000"){
+            if(opcode == "000000"){
                 // Instruções do tipo R
                 type = "R";
                 cout << "\n\tComando do Tipo R";
-                uc.PCWriteCond = " ";
-                uc.PCWrite = " ";
+                uc.PCWriteCond = "x";
+                uc.PCWrite = "x";
                 uc.IorD = "0";
                 uc.MemRead = " ";
                 uc.MemWrite = " ";
@@ -161,6 +161,8 @@ class Processador
 
             return result;
         };
+
+        string rt,rd,rs;
     public:
         Processador(vector<string> &instructions)
         {
@@ -193,15 +195,19 @@ class Processador
             controlSignals();
 
             if(type == "R"){
-                register_1 = split(21,25,line);
-                register_2 = split(16,20,line);
+                rd = split(6,11,line);
+                rt = split(12,17,line);
+                rs = split(18,23,line);
             }else if(type == "Store")
             {
-
+                register_1 = split(21,25,line);
+                register_2 = split(16,20,line);
             }else if(type == "L"){
-
+                register_1 = split(6,11,line);
+                register_2 = split(12,17,line);
             }else{
-
+                register_1 = split(6,11,line);
+                register_2 = split(6,11,line);
             }
 
 
@@ -333,7 +339,7 @@ class Processador
                 }
             }
 
-            cout << "\nMemoria: ";
+            cout << "\n\tMemoria: \n";
             mem.imprimirMemoria();
         };
 
@@ -350,6 +356,7 @@ class Processador
             if(uc.RegDst == "1")
                 reg->escreve(convertBin(split(11,15,line)),write_data);
 
+            cout << "\n\tImprimindo Registradores: \n";
             reg->imprime();
         };
 
@@ -368,6 +375,7 @@ class Processador
 
         string getUnityControlMemWrite(){return this->uc.MemWrite;};
         string getUnityControlMemRead(){return this->uc.MemRead;};
+        string getUnityControlRegWrite(){return this->uc.RegWrite;};
 };
 
 
