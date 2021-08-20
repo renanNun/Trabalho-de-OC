@@ -25,6 +25,11 @@ class Registradores
 
         void busca(int i, int j, int write, int controlData);
         void writeBack(string* dataW);
+
+        void escreve(int pos,string aux)
+        {
+            for(int i = 0; i < 32; i++) registradores[pos][i] = aux[i];
+        };
         
         string** getRegistradores(){return registradores;};
         string* getSaida1(){return this->data1;};
