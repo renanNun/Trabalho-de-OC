@@ -49,6 +49,7 @@ class PC
         void resetValue(){value = 0;};
         int getPC(){return this->value;};
         void incremetPC(){this->value = this->value + 4;};
+        void setPC(string _value){int value = convertBin(_value); this->value = value;};
 };
 
 #endif // PROGRAMCOUNTER_H

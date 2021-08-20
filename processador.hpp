@@ -221,13 +221,17 @@ class Processador
             }else if(type == "L"){
                 register_1 = split(6,11,line);
                 register_2 = split(12,17,line);
+            }else if(type == "J"){
+                //register_1 = split(6,11,line);
+                //register_2 = split(12,17,line);
             }else{
                 register_1 = split(6,11,line);
                 register_2 = split(6,11,line);
             }
 
 
-            cout << "\n\tRead reg 1: " << register_1 << "\n\tRead reg 2: " << register_2;
+            cout << "\n\tRead reg 1: " << register_1 
+                 << "\n\tRead reg 2: " << register_2;
 
             string inst = split(0,15,line);
 
@@ -274,14 +278,16 @@ class Processador
 
             if(uc.PCSource == "10")
             {
-                if(opcode == "000010")
+                if(opcode == "000010") // Tipo J
                 {
-                    PC::getInstance().incremetPC();
-                }else if(opcode == "000011")
+                    PC::getInstance().incremetPC(); // J
+                }else if(opcode == "000011") //  Tipo R
                 {
-                    // Fazer Jal
+                    // Jal
+                    reg->escreve(convertBin("0000000000011111"),intToBinary16B(to_string(PC::getInstance().getPC());));
                 }else{
-                    // Fazer Junior
+                    // Junior
+                    PC::getInstance().setPC(intToBinary16B(rs));
                 }
                
             }
