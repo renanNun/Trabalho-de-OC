@@ -75,7 +75,7 @@ public:
     {
         for(int i = 0; i < 128; i++)
         {
-            cout << " \n";
+            cout << " \n\t";
             for(int j = 0; j < 32;j++)
             {
                 cout << memory[i][j];
