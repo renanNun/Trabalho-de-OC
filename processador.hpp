@@ -194,7 +194,7 @@ private:
         return result;
     };
 
-    string rt, rd, rs, immediate;
+    string rt, rd, rs, immediate,shifamout;
 
 public:
     Processador(vector<string> &instructions)
@@ -236,10 +236,11 @@ public:
             rs = split(6, 10, line);
             rt = split(11, 15, line);
             rd = split(16, 20, line);
-
+            shifamout = split(21, 25, line);
             cout << "\n\trs: " << rs
                  << "\n\trt: " << rt
-                 << "\n\trd: " << rd;
+                 << "\n\trd: " << rd
+                 << "\n\tshifaumout: " << shifamout;
         }
         else if (type == "Store")
         {
@@ -324,6 +325,9 @@ public:
             else if (funct == "100101")
             {
                 alu->makeOperation(register_1, register_2, ALUOp::OR);
+            }else if(funct == "000000")
+            {
+                alu->makeOperation(register_1, shifamout, ALUOp::SLL);
             }
         }
 

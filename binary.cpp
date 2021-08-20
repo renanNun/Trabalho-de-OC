@@ -220,7 +220,7 @@ string binary::translateCommandToBinary(string &commandToTranslate)
     }
     else if (lista.at(0) == "sll")
     {
-        opcode = "00000";
+        opcode = "000000";
         shamt = intToBinary5B(lista.at(3));
         funct = "000000";
         regSource = "00000";
