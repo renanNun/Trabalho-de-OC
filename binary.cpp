@@ -291,7 +291,7 @@ string binary::translateCommandToBinary(string &commandToTranslate)
 
 string binary::typeIcommands(vector<string> lista)
 {
-
+    // addi $s0 $s1 -2
     string regSource = "";
     string regTarget = "";
     Registradores *reg = new Registradores();
@@ -301,12 +301,16 @@ string binary::typeIcommands(vector<string> lista)
         opcode = "001000";
         regSource = reg->mapeia(lista.at(2));
         regTarget = reg->mapeia(lista.at(1));
-        if (lista.at(3).find("-"))
+        if (!lista.at(3).find("-"))
         {
+            lista.at(3) = lista.at(3).substr(1,sizeof(lista.at(3)));
             offset = intToBinary16B(lista.at(3));
+            cout << "\nOFFSET 1: " << offset << endl;
             offset = turnInTheSymmetrical(offset);
+            cout << "\nOFFSET 2: " << offset << endl;
         }
         offset = intToBinary16B(lista.at(3));
+        
     }
 
     else if (lista.at(0) == "beq")
