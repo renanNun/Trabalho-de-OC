@@ -79,7 +79,7 @@ int main()
                 cout << "Modo Direto escolhido. Começando execução ..." << endl;
                 p = 0;
                 cout << "Tamanho da lista de comandos " <<  ListadeComandos.size() << endl;
-                while(p < ListadeComandos.size())
+                while(true)
                 {
                     cout << endl << ListadeComandos.at(p) << endl;
                     processador->IF();
@@ -94,7 +94,9 @@ int main()
                     }else{
                         cout << "\nEX: " << "\tpula";
                     }
-                    p++;
+
+                    if(processador->fim)
+                        break;
                 }
                 cout << endl;
                 break;

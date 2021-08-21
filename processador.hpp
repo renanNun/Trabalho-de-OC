@@ -207,7 +207,8 @@ public:
     ~Processador(){};
 
     bool not_exec = false;
-    
+    bool fim = false;
+
     void IF()
     {
         not_exec = false;
@@ -228,10 +229,9 @@ public:
         if(line == "11111111111111111111111111111111"){
             not_exec = true;
             PC::getInstance().incremetPC();
-            cout << "\nPULOU!\n";
+        }else{
+            k++;
         }
-        k++;
-
     };
 
     void ID()
