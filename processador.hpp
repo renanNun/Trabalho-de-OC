@@ -514,7 +514,7 @@ public:
         string address = aluOUT;
         string SLtwo = shiftLeftLogical(sinalExtends, "0000000000000010");
         write_data = register_2;
-        cout << "WD: " << write_data << endl;
+        //cout << "WD: " << write_data << endl;
         int value;
         string aux2;
         string aux3;
@@ -547,7 +547,7 @@ public:
             // SW
             if (opcode == "101011")
             {
-                cout << "\nADDRESS: " << address << endl;
+                //cout << "\nADDRESS: " << address << endl;
                 mem.makeOperation(address, write_data, validaBoolean(uc.MemRead), validaBoolean(uc.MemWrite));
             }
             else if (opcode == "101000") //SB
@@ -556,7 +556,7 @@ public:
             }
         }
 
-        cout << "\n\tMemoria: \n";
+        //cout << "\n\tMemoria: \n";
         mem.imprimirMemoria();
     };
 
@@ -593,7 +593,7 @@ public:
         if (uc.MemReg == "0")
         {
             write_data = alu->getALUResult();
-            cout << "\n\tWrite Data: " << write_data;
+            Log::getInstance().line("\tWrite Data: "+write_data); 
         }
 
         if (uc.RegDst == "0")
@@ -607,9 +607,6 @@ public:
             reg->escreve(convertBin(rd), write_data);
         }
 
-        Arquivo = "";
-        Arquivo = "\n\tImprimindo Registradores: \n";
-        Log::getInstance().line(Arquivo);
         reg->imprime();
     };
 
@@ -625,20 +622,22 @@ public:
 
     void printUnityControl()
     {
-        cout << "Imprimindo UC\n"
-            << uc.PCWriteCond << "\n"
-            << uc.PCWrite  << "\n"
-            << uc.IorD << "\n"
-            << uc.MemRead  << "\n"
-            << uc.MemWrite << "\n"
-            << uc.MemReg << "\n"
-            << uc.IRWrite  << "\n"
-            << uc.PCSource  << "\n"
-            << uc.ALUOp  << "\n"
-            << uc.ALUSrcB << "\n"
-            << uc.ALUSrcA << "\n"
-            << uc.RegWrite << "\n"
-            << uc.RegDst << "\n";
+        Arquivo = "";
+        Arquivo = "Imprimindo UC\n"
+            + uc.PCWriteCond + "\n"
+            + uc.PCWrite  + "\n"
+            + uc.IorD + "\n"
+            + uc.MemRead  + "\n"
+            + uc.MemWrite + "\n"
+            + uc.MemReg + "\n"
+            + uc.IRWrite  + "\n"
+            + uc.PCSource  + "\n"
+            + uc.ALUOp  + "\n"
+            + uc.ALUSrcB + "\n"
+            + uc.ALUSrcA + "\n"
+            + uc.RegWrite + "\n"
+            + uc.RegDst + "\n";
+        Log::getInstance().line(Arquivo);
     }
 };
 
