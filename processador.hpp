@@ -38,7 +38,7 @@ private:
     string Mux(string entrada0, string entrada1, string code)
     {
         if (code == "0")
-            return entrada0; 
+            return entrada0;
         if (code == "1")
             return entrada1;
 
@@ -72,16 +72,18 @@ private:
     {
         string line = "";
         //cout << "AUX: " << aux;
-        if(split(0,0,aux) == "1")
+        if (split(0, 0, aux) == "1")
         {
             //cout << "\nVEMSPC\n" << endl;
-            line = split(0,0,aux) + "1111111111111111" + split(1,15,aux);
+            line = split(0, 0, aux) + "1111111111111111" + split(1, 15, aux);
             //cout << "AUX: " << line << endl;
             return line;
-        }else{
+        }
+        else
+        {
             line = "0000000000000000";
 
-             return line + aux;
+            return line + aux;
         }
     };
 
@@ -209,11 +211,12 @@ private:
         return result;
     };
 
-    string rt, rd, rs, immediate,shifamout;
+    string rt, rd, rs, immediate, shifamout;
     string Linhas_para_pular;
     bool seVaiPular;
     int xd;
     string Arquivo;
+
 public:
     Processador(vector<string> &instructions)
     {
@@ -232,8 +235,8 @@ public:
     {
         not_exec = false;
         // Exibição do valor de PC atual
-        Arquivo = "\nIF:\n\tValor de PC: " +  to_string(PC::getInstance().getPC());
-        
+        Arquivo = "\nIF:\n\tValor de PC: " + to_string(PC::getInstance().getPC());
+
         Log::getInstance().line(Arquivo);
         line = "";
         binary *bin = new binary();
@@ -242,7 +245,7 @@ public:
         Log::getInstance().line(Arquivo);
         line = bin->translateCommandToBinary(this->instructions[k]);
         Arquivo = "";
-        Arquivo =  "\tComando traduzido: " + line;
+        Arquivo = "\tComando traduzido: " + line;
         Log::getInstance().line(Arquivo);
 
         opcode = bin->getOP();
@@ -250,21 +253,14 @@ public:
 
         //translateCommandToBinary(string &commandToTranslate);
         PC::getInstance().incremetPC();
-        if(line == "11111111111111111111111111111111"){
+        if (line == "11111111111111111111111111111111")
+        {
             not_exec = true;
             // PC antigo + linhas pra pular
             PC::getInstance().incremetPC();
-            cout<< "LINHAS PARA PULAR:" <<Linhas_para_pular<<endl;
-            if(split(0,0,Linhas_para_pular) == "1")
-            {
-                xd = stoi(turnInTheSymmetrical(Linhas_para_pular));
-                PC::getInstance().setPCInt((-1) * xd);
-            }else{
-                xd = stoi(Linhas_para_pular);
-                PC::getInstance().setPCInt(xd);
-            }
-            k = PC::getInstance().getPC();
-        }else{
+        }
+        else
+        {
             cout << "\nIncrementando comando\n";
             k++;
         }
@@ -306,7 +302,7 @@ public:
         {
             rs = split(6, 10, line);
             rt = split(11, 15, line);
-            immediate = split(16,31,line);
+            immediate = split(16, 31, line);
             cout << "\n\trs: " << rs
                  << "\n\trt: " << rt
                  << "\n\trd: " << immediate;
@@ -315,22 +311,22 @@ public:
         {
             rs = split(6, 10, line);
             rt = split(11, 15, line);
-            immediate = split(16,31,line);
-            write_register = split(0,15,line);
+            immediate = split(16, 31, line);
+            write_register = split(0, 15, line);
             cout << "\n\trs: " << rs
                  << "\n\trt: " << rt
                  << "\n\trd: " << immediate;
         }
         else if (type == "J")
         {
-            register_1 = split(7,31,line);
-            register_2 = split(7,31,line);
+            register_1 = split(7, 31, line);
+            register_2 = split(7, 31, line);
         }
         else
         {
             rs = split(6, 10, line);
             rt = split(11, 15, line);
-            immediate = split(16,31,line);
+            immediate = split(16, 31, line);
 
             cout << "\n\trs: " << rs
                  << "\n\trt: " << rt;
@@ -352,11 +348,12 @@ public:
 
         if (uc.ALUSrcA == "0")
             register_1 = reg->getReg(convertBin(intToBinary16B(to_string(PC::getInstance().getPC()))));
-        else{
+        else
+        {
             cout << "RS: " << rs << endl;
             register_1 = reg->getReg(convertBin(rs));
         }
-            
+
         register_2 = reg->getReg(convertBin(rt));
         /*if (uc.ALUSrcB == "00")
             
@@ -387,52 +384,57 @@ public:
             else if (funct == "100101")
             {
                 alu->makeOperation(register_1, register_2, ALUOp::OR);
-            }else if(funct == "000000")
+            }
+            else if (funct == "000000")
             {
                 register_1 = reg->getReg(convertBin(rt));
                 alu->makeOperation(register_1, shifamout, ALUOp::SLL);
-            }else if(funct == "101010"){
+            }
+            else if (funct == "101010")
+            {
                 alu->makeOperation(register_1, register_2, ALUOp::SLT);
             }
         }
 
         // Tipo I
-        if(type == "I")
+        if (type == "I")
         {
-           // cout << "IMEDIATE: " << immediate << endl;
+            // cout << "IMEDIATE: " << immediate << endl;
             string sinalExtendido = signalExtend(immediate);
             //cout << "SINAL EXTEN: " << sinalExtendido << endl;
             //cout << "REG 1: " << register_1 << endl;
-            if(opcode == "001000")
+            if (opcode == "001000")
             {
-                alu->makeOperation(sinalExtendido,register_1,ALUOp::ADD);
+                alu->makeOperation(sinalExtendido, register_1, ALUOp::ADD);
             }
         }
 
         //Store
-        if(type == "Store"){
-            cout << "IMEDIATE: " << immediate << endl;
-            string sinalExtendido = signalExtend(immediate);
-            cout << "SINAL EXTEN: " <<  sinalExtendido << endl;
-            cout << "REG 1: " << register_1 << endl;
-
-            alu->makeOperation(sinalExtendido,register_1,ALUOp::ADD);
-        }
-
-        //LW
-        if(type == "L"){
+        if (type == "Store")
+        {
             cout << "IMEDIATE: " << immediate << endl;
             string sinalExtendido = signalExtend(immediate);
             cout << "SINAL EXTEN: " << sinalExtendido << endl;
             cout << "REG 1: " << register_1 << endl;
 
-            alu->makeOperation(sinalExtendido,register_1,ALUOp::ADD);
+            alu->makeOperation(sinalExtendido, register_1, ALUOp::ADD);
         }
 
+        //LW
+        if (type == "L")
+        {
+            cout << "IMEDIATE: " << immediate << endl;
+            string sinalExtendido = signalExtend(immediate);
+            cout << "SINAL EXTEN: " << sinalExtendido << endl;
+            cout << "REG 1: " << register_1 << endl;
 
-        if (uc.MemRead == "1" || uc.MemWrite == "1"){
+            alu->makeOperation(sinalExtendido, register_1, ALUOp::ADD);
+        }
+
+        if (uc.MemRead == "1" || uc.MemWrite == "1")
+        {
             //cout << "Entrou no MEMREAD" << endl;
-            if(type != "Store")
+            if (type != "Store")
                 alu->makeOperation(register_1, register_2, ALUOp::ADD);
         }
 
@@ -461,24 +463,58 @@ public:
         }
 
         // Branch, Beq, Bnq
-        if(opcode == "000101") // BNE
+        if (opcode == "000101") // BNE
         {
             alu->makeOperation(register_1, register_2, ALUOp::SUB);
             Linhas_para_pular = immediate;
             seVaiPular = alu->getZeroSignal();
-        }else if(opcode == "000100"){ // BNQ
+            if (seVaiPular)
+            {
+
+                cout << "LINHAS PARA PULAR:" << Linhas_para_pular << endl;
+                if (split(0, 0, Linhas_para_pular) == "1")
+                {
+                    xd = stoi(turnInTheSymmetrical(Linhas_para_pular));
+                    PC::getInstance().setPCInt((-1) * xd);
+                }
+                else
+                {
+                    xd = stoi(Linhas_para_pular);
+                    PC::getInstance().setPCInt(xd);
+                }
+                k = PC::getInstance().getPC() / 4;
+                seVaiPular = false;
+            }
+        }
+        else if (opcode == "000100")
+        { // BNQ
             alu->makeOperation(register_1, register_2, ALUOp::SUB);
-            cout<<"Imediate:" <<immediate<<endl;
+            cout << "Imediate:" << immediate << endl;
             Linhas_para_pular = immediate;
             seVaiPular = !alu->getZeroSignal();
+            if (seVaiPular)
+            {
+
+                cout << "LINHAS PARA PULAR:" << Linhas_para_pular << endl;
+                if (split(0, 0, Linhas_para_pular) == "1")
+                {
+                    xd = stoi(turnInTheSymmetrical(Linhas_para_pular));
+                    PC::getInstance().setPCInt((-1) * xd);
+                }
+                else
+                {
+                    xd = stoi(Linhas_para_pular);
+                    PC::getInstance().setPCInt(xd);
+                }
+                k = PC::getInstance().getPC() / 4;
+                seVaiPular = false;
+            }
         }
 
         Arquivo = "";
         Arquivo = "\n\tAluOut: " + alu->getALUResult();
         Log::getInstance().line(Arquivo);
-       
     };
-
 
     bool validaBoolean(string a)
     {
@@ -593,7 +629,7 @@ public:
         if (uc.MemReg == "0")
         {
             write_data = alu->getALUResult();
-            Log::getInstance().line("\tWrite Data: "+write_data); 
+            Log::getInstance().line("\tWrite Data: " + write_data);
         }
 
         if (uc.RegDst == "0")
@@ -623,20 +659,7 @@ public:
     void printUnityControl()
     {
         Arquivo = "";
-        Arquivo = "Imprimindo UC\n"
-            + uc.PCWriteCond + "\n"
-            + uc.PCWrite  + "\n"
-            + uc.IorD + "\n"
-            + uc.MemRead  + "\n"
-            + uc.MemWrite + "\n"
-            + uc.MemReg + "\n"
-            + uc.IRWrite  + "\n"
-            + uc.PCSource  + "\n"
-            + uc.ALUOp  + "\n"
-            + uc.ALUSrcB + "\n"
-            + uc.ALUSrcA + "\n"
-            + uc.RegWrite + "\n"
-            + uc.RegDst + "\n";
+        Arquivo = "Imprimindo UC\n" + uc.PCWriteCond + "\n" + uc.PCWrite + "\n" + uc.IorD + "\n" + uc.MemRead + "\n" + uc.MemWrite + "\n" + uc.MemReg + "\n" + uc.IRWrite + "\n" + uc.PCSource + "\n" + uc.ALUOp + "\n" + uc.ALUSrcB + "\n" + uc.ALUSrcA + "\n" + uc.RegWrite + "\n" + uc.RegDst + "\n";
         Log::getInstance().line(Arquivo);
     }
 };

@@ -25,7 +25,7 @@ private:
    string intToBinary5B(string inteiro);
    string typeIcommands(vector<string> lista);
    string typeJcommands(vector<string> lista);
-   string turnInTheSymmetrical(string number);
+   string turnInTheSymmetrical(string number, int size);
 
 public:
    binary();
