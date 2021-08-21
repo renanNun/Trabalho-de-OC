@@ -1,5 +1,14 @@
 #include "binary.hpp"
 
+string split(int inicio, int fim, string line)
+{
+    string aux;
+    for (int i = inicio; i <= fim; i++)
+        aux += line[i];
+
+    return aux;
+};
+
 binary::binary()
 {
 
@@ -299,12 +308,19 @@ string binary::typeIcommands(vector<string> lista)
         opcode = "001000";
         regSource = reg->mapeia(lista.at(2));
         regTarget = reg->mapeia(lista.at(1));
-        if (lista.at(3).find("-"))
+        if (!lista.at(3).find("-"))
+        {
+
+            lista.at(3) = lista.at(3).substr(1, sizeof(lista.at(3)));
+            offset = intToBinary16B(lista.at(3));
+            cout << "OFFSET: " << offset << endl;
+            offset = turnInTheSymmetrical(offset, 16);
+        }
+
+        else
         {
             offset = intToBinary16B(lista.at(3));
-            offset = turnInTheSymmetrical(offset);
         }
-        offset = intToBinary16B(lista.at(3));
     }
 
     else if (lista.at(0) == "beq")
@@ -317,26 +333,23 @@ string binary::typeIcommands(vector<string> lista)
 
         if (endereco != "NotFound")
         {
-
             int end = stoi(endereco);
             int off = (end - PC::getInstance().getPC() + 4);
 
-            if (!lista.at(3).find("-"))
+            if (off < 0)
             {
                 offset = intToBinary16B(to_string(off));
-                offset = turnInTheSymmetrical(offset);
+                offset = turnInTheSymmetrical(offset, 16);
             }
             else
             {
-
                 offset = intToBinary16B(to_string(off));
             }
         }
         else
         {
-
             cout << "\nNão foi possivel encontrar a estrutura\n";
-            exit(-2);
+            exit(-1);
         }
     }
     else if (lista.at(0) == "bne")
@@ -351,10 +364,10 @@ string binary::typeIcommands(vector<string> lista)
             int end = stoi(endereco);
             int off = (end - PC::getInstance().getPC() + 4);
 
-            if (!lista.at(3).find("-"))
+            if (off < 0)
             {
                 offset = intToBinary16B(to_string(off));
-                offset = turnInTheSymmetrical(offset);
+                offset = turnInTheSymmetrical(offset, 16);
             }
             else
             {
@@ -364,7 +377,7 @@ string binary::typeIcommands(vector<string> lista)
         else
         {
             cout << "\nNão foi possivel encontrar a estrutura\n";
-            exit(-2);
+            exit(-1);
         }
     }
     else if (lista.at(0) == "sw")
@@ -407,7 +420,7 @@ string binary::typeJcommands(vector<string> lista)
             if (lista.at(3).find("-"))
             {
                 offset = intToBinary26B(to_string(off));
-                offset = turnInTheSymmetrical(to_string(off));
+                offset = turnInTheSymmetrical(to_string(off), 26);
             }
 
             offset = intToBinary26B(to_string(off));
@@ -429,7 +442,7 @@ string binary::typeJcommands(vector<string> lista)
             if (lista.at(3).find("-"))
             {
                 offset = intToBinary26B(to_string(off));
-                offset = turnInTheSymmetrical(to_string(off));
+                offset = turnInTheSymmetrical(to_string(off), 26);
             }
 
             offset = intToBinary26B(to_string(off));
@@ -460,9 +473,9 @@ string binary::getoffset()
     return this->offset;
 };
 
-string binary::turnInTheSymmetrical(string number)
+string binary::turnInTheSymmetrical(string number, int size)
 {
-    int first1Index = sizeof(number) - 1;
+    int first1Index = size - 1;
     while (number[first1Index] != '1')
     {
         first1Index--;
