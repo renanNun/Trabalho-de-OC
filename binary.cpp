@@ -6,6 +6,7 @@ binary::binary()
     listaDeBinarios = new vector<string>();
     opcode = "";
     funct = "";
+    offset ="";
 };
 
 binary::~binary()
@@ -294,7 +295,6 @@ string binary::typeIcommands(vector<string> lista)
 
     string regSource = "";
     string regTarget = "";
-    string offset = "";
     Registradores *reg = new Registradores();
 
     if (lista.at(0) == "addi")
@@ -372,7 +372,7 @@ string binary::typeIcommands(vector<string> lista)
 string binary::typeJcommands(vector<string> lista)
 {
 
-    string offset = "";
+     
 
     if (lista.at(0) == "j")
     {
@@ -418,4 +418,9 @@ string binary::getOP()
 {
 
     return this->opcode;
+};
+string binary::getoffset()
+{
+
+    return this->offset;
 };

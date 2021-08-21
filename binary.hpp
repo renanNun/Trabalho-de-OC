@@ -18,6 +18,7 @@ private:
    vector<string> *listaDeBinarios;
    string opcode;
    string funct;
+   string offset;
    string Linha(string procurado, string command);
    string intToBinary26B(string inteiro);
    string intToBinary16B(string inteiro);
@@ -33,6 +34,7 @@ public:
    string translateCommandToBinary(string &commandToTranslate);
    string getFunct();
    string getOP();
+   string getoffset();
 };
 
 #endif // BINARY_HPP
