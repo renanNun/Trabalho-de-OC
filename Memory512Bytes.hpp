@@ -2,6 +2,7 @@
 #define MEMORY_512_BYTES_HPP
 #include <iostream>
 #include <string>
+#include "Log.hpp"
 
 using namespace std;
 
@@ -73,13 +74,16 @@ public:
 
     void imprimirMemoria()
     {
+        string line = "";
+        
         for(int i = 0; i < 128; i++)
         {
-            cout << " \n\t";
+            line = "";
             for(int j = 0; j < 32;j++)
             {
-                cout << memory[i][j];
+                line += memory[i][j];
             }
+            Log::getInstance().line(line);
         }
     };
 

@@ -12,6 +12,7 @@
 #include "binary.hpp"
 #include "Leitor.hpp"
 #include "processador.hpp"
+#include "Log.hpp"
 
 std::fstream outputFile;
 
@@ -38,6 +39,8 @@ int main()
     bool whi = true;
     Processador *processador;
     int modo,modo2, p;
+
+
     while (menu)
     {
         Chamamenu();
@@ -54,14 +57,15 @@ int main()
             //cin >> caminho;
             caminho = "Inputs/saida.txt";
             argv.push_back(caminho);
+            
+            Log::getInstance().getInstance().iniciaArquivoSaida(argv.at(1));
+            //outputFile.open(argv.at(1), ios::out); //Abre o Arquivo de Saida
 
-            outputFile.open(argv.at(1), ios::out); //Abre o Arquivo de Saida
-
-            if (!outputFile)
+            /*if (!outputFile)
             {
                 cerr << "Erro ao Abrir o Arquivo de Saida! " << endl;
                 exit(1);
-            }
+            }*/
 
             fazLeitura(argv.at(0));
 
@@ -73,13 +77,14 @@ int main()
             escolheModo();
             cin >> modo;
             processador = new Processador(ListadeComandos);
+            
             switch (modo)
             {
             case 1:
                 cout << "Modo Direto escolhido. Começando execução ..." << endl;
                 p = 0;
                 cout << "Tamanho da lista de comandos " <<  ListadeComandos.size() << endl;
-                while(true)
+                while(p < ListadeComandos.size())
                 {
                     cout << endl << ListadeComandos.at(p) << endl;
                     processador->IF();
@@ -95,8 +100,6 @@ int main()
                         cout << "\nEX: " << "\tpula";
                     }
                     p++;
-                    if(processador->fim)
-                        break;
                 }
                 cout << endl;
                 break;

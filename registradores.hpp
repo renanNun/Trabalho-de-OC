@@ -4,6 +4,8 @@
 #include <iostream>
 #include <string>
 
+#include "Log.hpp"
+
 using namespace std;
 
 class Registradores
@@ -45,116 +47,119 @@ public:
 
     void imprime()
     {
+        string line = "";
+        //Log::getInstance().line(line);
         for (int i = 0; i < 32; i++)
         {
-
-            cout << "\n\t";
+            line = "";
+            line += "\t";
             switch (i)
             {
             case 0:
-                cout << "$zero: ";
+                line += "$zero: ";
                 break;
             case 1:
-                cout << "$at: ";
+                line += "$at: ";
                 break;
             case 2:
 
-                cout << "$v0: ";
+                line += "$v0: ";
 
                 break;
             case 3:
-                cout << "$v1: ";
+                line += "$v1: ";
                 break;
             case 4:
-                cout << "$a0: ";
+                line += "$a0: ";
                 break;
             case 5:
-                cout << "$a1: ";
+                line += "$a1: ";
                 break;
             case 6:
-                cout << "$a2: ";
+                line += "$a2: ";
                 break;
             case 7:
-                cout << "$a3: ";
+                line += "$a3: ";
                 break;
             case 8:
-                cout << "$t0: ";
+                line += "$t0: ";
                 break;
             case 9:
-                cout << "$t1: ";
+                line += "$t1: ";
                 break;
             case 10:
-                cout << "$t2: ";
+                line += "$t2: ";
                 break;
             case 11:
-                cout << "$t3: ";
+                line += "$t3: ";
                 break;
             case 12:
-                cout << "$t4: ";
+                line += "$t4: ";
                 break;
             case 13:
-                cout << "$t5: ";
+                line += "$t5: ";
                 break;
             case 14:
-                cout << "$t6: ";
+                line += "$t6: ";
                 break;
             case 15:
-                cout << "$t7: ";
+                line += "$t7: ";
                 break;
             case 16:
-                cout << "$s0: ";
+                line += "$s0: ";
                 break;
             case 17:
-                cout << "$s1: ";
+                line += "$s1: ";
                 break;
             case 18:
-                cout << "$s2: ";
+                line += "$s2: ";
                 break;
             case 19:
-                cout << "$s3: ";
+                line += "$s3: ";
                 break;
             case 20:
-                cout << "$s4: ";
+                line += "$s4: ";
                 break;
             case 21:
-                cout << "$s5: ";
+                line += "$s5: ";
                 break;
             case 22:
-                cout << "$s6: ";
+                line += "$s6: ";
                 break;
             case 23:
-                cout << "$s7: ";
+                line += "$s7: ";
                 break;
             case 24:
-                cout << "$t8: ";
+                line += "$t8: ";
                 break;
             case 25:
-                cout << "$t9: ";
+                line += "$t9: ";
                 break;
             case 26:
-                cout << "$k0: ";
+                line += "$k0: ";
                 break;
             case 27:
-                cout << "$k1: ";
+                line += "$k1: ";
                 break;
             case 28:
-                cout << "$gp: ";
+                line += "$gp: ";
                 break;
             case 29:
-                cout << "$sp: ";
+                line += "$sp: ";
                 break;
             case 30:
-                cout << "$fp: ";
+                line += "$fp: ";
                 break;
             case 31:
-                cout << "$ra: ";
+                line += "$ra: ";
                 break;
 
             default:
                 break;
             }
             for (int j = 0; j < 32; j++)
-                cout << registradores[i][j];
+                line += registradores[i][j];
+            Log::getInstance().line(line);
         }
     };
 

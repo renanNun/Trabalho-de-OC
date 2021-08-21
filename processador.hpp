@@ -6,12 +6,15 @@
 #include <vector>
 #include <sstream>
 
+#include <fstream>
+
 #include "PC.hpp"
 #include "unityControl.hpp"
 #include "ALU.hpp"
 #include "binary.hpp"
 #include "ALUOp.hpp"
 #include "Memory512Bytes.hpp"
+#include "Log.hpp"
 
 using namespace std;
 
@@ -208,6 +211,7 @@ private:
     string Linhas_para_pular;
     bool seVaiPular;
     int xd;
+    string Arquivo;
 public:
     Processador(vector<string> &instructions)
     {
@@ -218,6 +222,7 @@ public:
     };
     ~Processador(){};
 
+    std::fstream saida;
     bool not_exec = false;
     bool fim = false;
 
@@ -225,13 +230,18 @@ public:
     {
         not_exec = false;
         // Exibição do valor de PC atual
-        cout << "\nIF:\n"
-             << "\tValor de PC: " << PC::getInstance().getPC() << endl;
+        Arquivo = "\nIF:\n\tValor de PC: " +  to_string(PC::getInstance().getPC());
+        
+        Log::getInstance().line(Arquivo);
         line = "";
         binary *bin = new binary();
-        //cout << "Começa a instrucao aqui: " << this->instructions[k] << endl;
+        Arquivo = "";
+        Arquivo = "Começa a instrucao aqui: " + this->instructions[k];
+        Log::getInstance().line(Arquivo);
         line = bin->translateCommandToBinary(this->instructions[k]);
-        cout << "\tComando traduzido: " << line;
+        Arquivo = "";
+        Arquivo =  "\tComando traduzido: " + line;
+        Log::getInstance().line(Arquivo);
 
         opcode = bin->getOP();
         funct = bin->getFunct();
@@ -273,8 +283,9 @@ public:
 
     void ID()
     {
-        cout << "\nID:\n"
-             << "\tOpcode: " << opcode << "\n\tFunct: " << funct;
+        Arquivo = "";
+        Arquivo = "\nID:\n\tOpcode: " + opcode + "\n\tFunct: " + funct;
+        Log::getInstance().line(Arquivo);
         controlSignals();
 
         if (type == "R")
@@ -332,7 +343,9 @@ public:
 
     void EX() // ISSO AQUI TA MUITO CONFUSO PQ EU NAO SEI ONDE EXECUTA DIREITO
     {
-        cout << "\nEX: ";
+        Arquivo = "";
+        Arquivo = "\nEX: ";
+        Log::getInstance().line(Arquivo);
 
         if (uc.ALUSrcA == "0")
             register_1 = reg->getReg(convertBin(intToBinary16B(to_string(PC::getInstance().getPC()))));
@@ -486,7 +499,9 @@ public:
 
     void MEM()
     {
-        cout << "\nMEM:";
+        Arquivo = "";
+        Arquivo = "\nMEM: ";
+        Log::getInstance().line(Arquivo);
         string aluOUT = alu->getALUResult();
         string aux = to_string(PC::getInstance().getPC());
         string address = aluOUT;
@@ -565,7 +580,9 @@ public:
 
     void WR()
     {
-        cout << "\nWR:";
+        Arquivo = "";
+        Arquivo = "\nWR: ";
+        Log::getInstance().line(Arquivo);
         if (uc.MemReg == "0")
         {
             write_data = alu->getALUResult();
@@ -583,7 +600,9 @@ public:
             reg->escreve(convertBin(rd), write_data);
         }
 
-        cout << "\n\tImprimindo Registradores: \n";
+        Arquivo = "";
+        Arquivo = "\n\tImprimindo Registradores: \n";
+        Log::getInstance().line(Arquivo);
         reg->imprime();
     };
 
