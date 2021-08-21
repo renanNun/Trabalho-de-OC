@@ -59,7 +59,7 @@ public:
     };
     void setPCInt(int _value)
     {
-        value = value + (_value * 4);
+        value = value + (_value);
     };
 };
 

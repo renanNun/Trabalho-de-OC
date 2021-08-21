@@ -334,7 +334,7 @@ string binary::typeIcommands(vector<string> lista)
         if (endereco != "NotFound")
         {
             int end = stoi(endereco);
-            int off = (end - PC::getInstance().getPC() + 4);
+            int off = (end - PC::getInstance().getPC() + 4) / 4;
 
             if (off < 0)
             {
@@ -362,7 +362,7 @@ string binary::typeIcommands(vector<string> lista)
         if (endereco != "NotFound")
         {
             int end = stoi(endereco);
-            int off = (end - PC::getInstance().getPC() + 4);
+            int off = (end - PC::getInstance().getPC() + 4) / 4;
 
             if (off < 0)
             {
