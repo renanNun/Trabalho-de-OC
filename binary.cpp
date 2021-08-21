@@ -6,7 +6,7 @@ binary::binary()
     listaDeBinarios = new vector<string>();
     opcode = "";
     funct = "";
-    offset ="";
+    offset = "";
 };
 
 binary::~binary()
@@ -134,7 +134,6 @@ string binary::Linha(string procurado, string command)
     for (int i = 0; i < Leitor::getInstance().size(); i++)
     {
 
-       
         string verify = Leitor::getInstance().at(i);
         //cout << "Verify = " << verify << "Command = " << command << endl;
         if (verify == command)
@@ -155,7 +154,7 @@ string binary::Linha(string procurado, string command)
                 }
             }
         }
-         contador = contador + 4;
+        contador = contador + 4;
     }
 
     return "NotFound";
@@ -286,7 +285,7 @@ string binary::translateCommandToBinary(string &commandToTranslate)
     }
 
     reg->~Registradores();
-   // listaDeBinarios->push_back(opcode + regSource + regTarget + rd + shamt + funct);
+    // listaDeBinarios->push_back(opcode + regSource + regTarget + rd + shamt + funct);
     return opcode + regSource + regTarget + rd + shamt + funct;
 };
 
@@ -302,6 +301,11 @@ string binary::typeIcommands(vector<string> lista)
         opcode = "001000";
         regSource = reg->mapeia(lista.at(2));
         regTarget = reg->mapeia(lista.at(1));
+        if (lista.at(3).find("-"))
+        {
+            offset = intToBinary16B(lista.at(3));
+            offset = turnInTheSymmetrical(offset);
+        }
         offset = intToBinary16B(lista.at(3));
     }
 
@@ -319,7 +323,11 @@ string binary::typeIcommands(vector<string> lista)
 
             int end = stoi(endereco);
             int off = (end - PC::getInstance().getPC() + 4);
-            offset = intToBinary16B(to_string(off));
+             if (lista.at(3).find("-"))
+        {
+            offset = intToBinary16B(lista.at(3));
+            offset = turnInTheSymmetrical(offset);
+        }
         }
         else
         {
@@ -329,7 +337,7 @@ string binary::typeIcommands(vector<string> lista)
     }
     else if (lista.at(0) == "bne")
     {
-        
+
         opcode = "000101";
         regSource = reg->mapeia(lista.at(1));
         regTarget = reg->mapeia(lista.at(2));
@@ -338,6 +346,12 @@ string binary::typeIcommands(vector<string> lista)
         {
             int end = stoi(endereco);
             int off = (end - PC::getInstance().getPC() + 4);
+
+             if (lista.at(3).find("-"))
+        {
+            offset = intToBinary16B(to_string(off));
+            offset = turnInTheSymmetrical(to_string(off));
+        }
             offset = intToBinary16B(to_string(off));
         }
         else
@@ -365,24 +379,29 @@ string binary::typeIcommands(vector<string> lista)
         regSource = reg->mapeia(lista3.at(0));
     }
 
-   // listaDeBinarios->push_back(opcode + regSource + regTarget + offset);
+    // listaDeBinarios->push_back(opcode + regSource + regTarget + offset);
     return opcode + regSource + regTarget + offset;
 };
 
 string binary::typeJcommands(vector<string> lista)
 {
 
-     
-
     if (lista.at(0) == "j")
     {
 
         opcode = "000010";
-        string endereco = Linha(lista.at(1)+":", lista.at(0) + " " + lista.at(1));
+        string endereco = Linha(lista.at(1) + ":", lista.at(0) + " " + lista.at(1));
         if (endereco != "NotFound")
         {
             int end = stoi(endereco);
             int off = (end) / 4;
+            
+                 if (lista.at(3).find("-"))
+        {
+            offset = intToBinary26B(to_string(off));
+            offset = turnInTheSymmetrical(to_string(off));
+        }
+           
             offset = intToBinary26B(to_string(off));
         }
         else
@@ -393,12 +412,19 @@ string binary::typeJcommands(vector<string> lista)
     else
     {
         opcode = "000011";
-        string endereco = Linha(lista.at(1)+":", lista.at(0) + " " + lista.at(1));
+        string endereco = Linha(lista.at(1) + ":", lista.at(0) + " " + lista.at(1));
         if (endereco != "NotFound")
         {
             int end = stoi(endereco);
             int off = (end) / 4;
+                     if (lista.at(3).find("-"))
+        {
             offset = intToBinary26B(to_string(off));
+            offset = turnInTheSymmetrical(to_string(off));
+        }
+           
+            offset = intToBinary26B(to_string(off));
+        
         }
         else
         {
