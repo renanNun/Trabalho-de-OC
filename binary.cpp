@@ -305,9 +305,9 @@ string binary::typeIcommands(vector<string> lista)
         {
             lista.at(3) = lista.at(3).substr(1, sizeof(lista.at(3)));
             offset = intToBinary16B(lista.at(3));
-            cout << "\nOFFSET 1: " << offset << endl;
+           // cout << "\nOFFSET 1: " << offset << endl;
             offset = turnInTheSymmetrical(offset);
-            cout << "\nOFFSET 2: " << offset << endl;
+           // cout << "\nOFFSET 2: " << offset << endl;
         }
         else
         {

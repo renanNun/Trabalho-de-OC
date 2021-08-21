@@ -67,9 +67,19 @@ private:
 
     string signalExtend(string aux)
     {
-        string line = "0000000000000000";
+        string line = "";
+        //cout << "AUX: " << aux;
+        if(split(0,0,aux) == "1")
+        {
+            //cout << "\nVEMSPC\n" << endl;
+            line = split(0,0,aux) + "1111111111111111" + split(1,15,aux);
+            cout << "AUX: " << line << endl;
+            return line;
+        }else{
+            line = "0000000000000000";
 
-        return line + aux;
+             return line + aux;
+        }
     };
 
     void controlSignals()
