@@ -53,19 +53,19 @@ int main()
             cin >> caminho;
             //caminho = "Inputs/instrucoes.txt";
             argv.push_back(caminho);
-            //cout << "Agora o arquivo onde as informações serão salvas: " << endl;
+            cout << "Agora o arquivo onde as informações serão salvas: " << endl;
             cin >> caminho;
-            caminho = "Inputs/saida.txt";
+            /caminho = "Inputs/saida.txt";
             argv.push_back(caminho);
             
             Log::getInstance().getInstance().iniciaArquivoSaida(argv.at(1));
-            //outputFile.open(argv.at(1), ios::out); //Abre o Arquivo de Saida
+            outputFile.open(argv.at(1), ios::out); //Abre o Arquivo de Saida
 
-            /*if (!outputFile)
+            if (!outputFile)
             {
                 cerr << "Erro ao Abrir o Arquivo de Saida! " << endl;
                 exit(1);
-            }*/
+            }
 
             fazLeitura(argv.at(0));
 
@@ -83,7 +83,7 @@ int main()
             case 1:
                 cout << "Modo Direto escolhido. Começando execução ..." << endl;
                 p = 0;
-                cout << "Tamanho da lista de comandos " <<  ListadeComandos.size() << endl;
+                //cout << "Tamanho da lista de comandos " <<  ListadeComandos.size() << endl;
                 while(p < ListadeComandos.size())
                 {
                     cout << endl << ListadeComandos.at(p) << endl;
@@ -145,6 +145,26 @@ int main()
             {
             case 1:
                 cout << "Modo Direto escolhido. Começando execução ..." << endl;
+                p = 0;
+                //cout << "Tamanho da lista de comandos " <<  ListadeComandos.size() << endl;
+                while(p < ListadeComandos.size())
+                {
+                    cout << endl << ListadeComandos.at(p) << endl;
+                    processador->IF();
+                    if(!processador->not_exec)
+                    {
+                        processador->ID();
+                        processador->EX();
+                        if(processador->getUnityControlMemRead() == "1" || processador->getUnityControlMemWrite() == "1")
+                            processador->MEM();
+                        if(processador->getUnityControlRegWrite() == "1")
+                            processador->WR();
+                    }else{
+                        cout << "\nEX: " << "\tpula";
+                    }
+                    p++;
+                }
+                cout << endl;
                 break;
             case 2:
                 cout << "Modo passo a passo escolhido. Começando execução ..." << endl;
