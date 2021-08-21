@@ -57,6 +57,10 @@ public:
         int value = convertBin(_value);
         this->value = value;
     };
+    void setPCInt(int _value)
+    {
+        value = value + (_value * 4);
+    };
 };
 
 #endif // PROGRAMCOUNTER_H

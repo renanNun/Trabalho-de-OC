@@ -73,7 +73,7 @@ private:
         {
             //cout << "\nVEMSPC\n" << endl;
             line = split(0,0,aux) + "1111111111111111" + split(1,15,aux);
-            cout << "AUX: " << line << endl;
+            //cout << "AUX: " << line << endl;
             return line;
         }else{
             line = "0000000000000000";
@@ -207,6 +207,7 @@ private:
     string rt, rd, rs, immediate,shifamout;
     string Linhas_para_pular;
     bool seVaiPular;
+    int xd;
 public:
     Processador(vector<string> &instructions)
     {
@@ -239,13 +240,35 @@ public:
         PC::getInstance().incremetPC();
         if(line == "11111111111111111111111111111111"){
             not_exec = true;
+            // PC antigo + linhas pra pular
             PC::getInstance().incremetPC();
-            PC::getInstance().setPC(bin->getoffset());
+            if(split(0,0,Linhas_para_pular) == "1")
+            {
+                xd = stoi(turnInTheSymmetrical(Linhas_para_pular));
+                PC::getInstance().setPCInt((-1) * xd);
+            }else{
+                xd = stoi(Linhas_para_pular);
+                PC::getInstance().setPCInt(xd);
+            }
             k = convertBin(bin->getoffset());
         }else{
             cout << "\nIncrementando comando\n";
             k++;
         }
+    };
+
+    string turnInTheSymmetrical(string number)
+    {
+        int first1Index = sizeof(number) - 1;
+        while (number[first1Index] != '1')
+        {
+            first1Index--;
+        }
+        for (int i = first1Index - 1; i >= 0; i--)
+        {
+            number[i] = (number[i] == '0') ? '1' : '0';
+        }
+        return number;
     };
 
     void ID()
