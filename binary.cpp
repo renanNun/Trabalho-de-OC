@@ -335,7 +335,8 @@ string binary::typeIcommands(vector<string> lista)
         else
         {
 
-            return "Não foi possivel encontrar a estrutura";
+            cout << "\nNão foi possivel encontrar a estrutura\n";
+            exit(-2);
         }
     }
     else if (lista.at(0) == "bne")
@@ -362,7 +363,8 @@ string binary::typeIcommands(vector<string> lista)
         }
         else
         {
-            return "Não foi possivel encontrar a estrutura";
+            cout << "\nNão foi possivel encontrar a estrutura\n";
+            exit(-2);
         }
     }
     else if (lista.at(0) == "sw")
@@ -412,7 +414,8 @@ string binary::typeJcommands(vector<string> lista)
         }
         else
         {
-            return "Não foi possivel encontrar a estrutura";
+            cout << "\nNão foi possivel encontrar a estrutura\n";
+            exit(-2);
         }
     }
     else
@@ -433,7 +436,8 @@ string binary::typeJcommands(vector<string> lista)
         }
         else
         {
-            return "Não foi possivel encontrar a estrutura";
+            cout << "\nNão foi possivel encontrar a estrutura\n";
+            exit(-2);
         }
     }
     return opcode + offset;
