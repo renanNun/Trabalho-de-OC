@@ -242,6 +242,7 @@ public:
             not_exec = true;
             // PC antigo + linhas pra pular
             PC::getInstance().incremetPC();
+            cout<< "LINHAS PARA PULAR:" <<Linhas_para_pular<<endl;
             if(split(0,0,Linhas_para_pular) == "1")
             {
                 xd = stoi(turnInTheSymmetrical(Linhas_para_pular));
@@ -250,7 +251,7 @@ public:
                 xd = stoi(Linhas_para_pular);
                 PC::getInstance().setPCInt(xd);
             }
-            k = convertBin(bin->getoffset());
+            k = PC::getInstance().getPC();
         }else{
             cout << "\nIncrementando comando\n";
             k++;
@@ -452,6 +453,7 @@ public:
             seVaiPular = alu->getZeroSignal();
         }else if(opcode == "000100"){ // BNQ
             alu->makeOperation(register_1, register_2, ALUOp::SUB);
+            cout<<"Imediate:" <<immediate<<endl;
             Linhas_para_pular = immediate;
             seVaiPular = !alu->getZeroSignal();
         }
