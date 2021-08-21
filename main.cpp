@@ -94,7 +94,7 @@ int main()
                     }else{
                         cout << "\nEX: " << "\tpula";
                     }
-
+                    p++;
                     if(processador->fim)
                         break;
                 }

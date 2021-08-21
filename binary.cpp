@@ -424,3 +424,17 @@ string binary::getoffset()
 
     return this->offset;
 };
+
+string binary::turnInTheSymmetrical(string number)
+{
+    int first1Index = sizeof(number) - 1;
+    while (number[first1Index] != '1')
+    {
+        first1Index--;
+    }
+    for (int i = first1Index - 1; i >= 0; i--)
+    {
+        number[i] = (number[i] == '0') ? '1' : '0';
+    }
+    return number;
+}

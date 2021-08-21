@@ -25,7 +25,7 @@ private:
    string intToBinary5B(string inteiro);
    string typeIcommands(vector<string> lista);
    string typeJcommands(vector<string> lista);
-
+   string turnInTheSymmetrical(string number);
 
 public:
    binary();
@@ -35,6 +35,7 @@ public:
    string getFunct();
    string getOP();
    string getoffset();
+   
 };
 
 #endif // BINARY_HPP

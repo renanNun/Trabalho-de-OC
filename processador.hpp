@@ -195,7 +195,8 @@ private:
     };
 
     string rt, rd, rs, immediate,shifamout;
-    
+    string Linhas_para_pular;
+    bool seVaiPular;
 public:
     Processador(vector<string> &instructions)
     {
@@ -229,7 +230,10 @@ public:
         if(line == "11111111111111111111111111111111"){
             not_exec = true;
             PC::getInstance().incremetPC();
+            PC::getInstance().setPC(bin->getoffset());
+            k = convertBin(bin->getoffset());
         }else{
+            cout << "\nIncrementando comando\n";
             k++;
         }
     };
@@ -407,8 +411,21 @@ public:
             }
         }
 
+        // Branch, Beq, Bnq
+        if(opcode == "000101") // BNE
+        {
+            alu->makeOperation(register_1, register_2, ALUOp::SUB);
+            Linhas_para_pular = immediate;
+            seVaiPular = alu->getZeroSignal();
+        }else if(opcode == "000100"){ // BNQ
+            alu->makeOperation(register_1, register_2, ALUOp::SUB);
+            Linhas_para_pular = immediate;
+            seVaiPular = !alu->getZeroSignal();
+        }
+
         cout << "\n\tAluOut: " << alu->getALUResult();
     };
+
 
     bool validaBoolean(string a)
     {
