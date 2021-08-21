@@ -75,7 +75,7 @@ public:
     void imprimirMemoria()
     {
         string line = "";
-        
+        Log::getInstance().line("Imprimindo Memoria: ");
         for(int i = 0; i < 128; i++)
         {
             line = "";

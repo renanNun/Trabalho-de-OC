@@ -48,7 +48,7 @@ public:
     void imprime()
     {
         string line = "";
-        //Log::getInstance().line(line);
+        Log::getInstance().line("Imprimindo Registradores: ");
         for (int i = 0; i < 32; i++)
         {
             line = "";

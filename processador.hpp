@@ -87,11 +87,12 @@ private:
 
     void controlSignals()
     {
+        Arquivo = "";
         if (opcode == "000000")
         {
             // Instruções do tipo R
             type = "R";
-            cout << "\n\tComando do Tipo R";
+            Arquivo = "\t\t\tComando do Tipo R";
             uc.PCWriteCond = "x";
             uc.PCWrite = "x";
             uc.IorD = "0";
@@ -110,7 +111,7 @@ private:
         {
             // Instruções do tipo Store
             type = "Store";
-            cout << "\n\tComando do Tipo Store";
+            Arquivo = "\t\t\tComando do Tipo Store";
             uc.PCWriteCond = "x";
             uc.PCWrite = "x";
             uc.IorD = "1";
@@ -129,7 +130,7 @@ private:
         {
             // Instruções do tipo Load
             type = "L";
-            cout << "\n\tComando do Tipo Load";
+            Arquivo = "\t\t\tComando do Tipo Load";
             uc.PCWriteCond = "x";
             uc.PCWrite = "x";
             uc.IorD = "1";
@@ -147,7 +148,7 @@ private:
         else if (opcode == "000010" || opcode == "000011")
         {
             type = "J";
-            cout << "\n\tComando do Tipo J";
+            Arquivo = "\t\t\tComando do Tipo J";
             uc.PCWriteCond = "x"; // voltar
             uc.PCWrite = "x";     // voltar
             uc.IorD = "x";        // voltar
@@ -166,7 +167,7 @@ private:
         {
             // Instrução do tipo I
             type = "I";
-            cout << "\n\tComando do Tipo I";
+            Arquivo = "\t\t\tComando do Tipo I";
             uc.PCWriteCond = "x";
             uc.PCWrite = "x";
             uc.IorD = "0";
@@ -181,6 +182,7 @@ private:
             uc.RegWrite = "1";
             uc.RegDst = "0";
         }
+        Log::getInstance().line(Arquivo);
     };
 
     string opcode;
@@ -471,7 +473,10 @@ public:
             seVaiPular = !alu->getZeroSignal();
         }
 
-        cout << "\n\tAluOut: " << alu->getALUResult();
+        Arquivo = "";
+        Arquivo = "\n\tAluOut: " + alu->getALUResult();
+        Log::getInstance().line(Arquivo);
+       
     };
 
 
