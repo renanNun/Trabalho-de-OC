@@ -144,14 +144,12 @@ string binary::Linha(string procurado, string command)
             {
                 contador += 4;
 
-                vector<string> FindCommando = explode(Leitor::getInstance().at(j), ' ');
+                // vector<string> FindCommando = explode(Leitor::getInstance().at(j), ' ');
                 //cout << "Contador no for: " << contador << endl;
                 //cout << "commando no for: " << FindCommando.at(0) << endl;
                 //cout << "commando procurado: " << procurado << endl;
-                if (FindCommando.at(0) == procurado)
-                {
-                    return to_string(contador);
-                }
+
+                return to_string(contador + 4);
             }
         }
         contador = contador + 4;
@@ -291,7 +289,7 @@ string binary::translateCommandToBinary(string &commandToTranslate)
 
 string binary::typeIcommands(vector<string> lista)
 {
-    // addi $s0 $s1 -2
+
     string regSource = "";
     string regTarget = "";
     Registradores *reg = new Registradores();
@@ -301,49 +299,43 @@ string binary::typeIcommands(vector<string> lista)
         opcode = "001000";
         regSource = reg->mapeia(lista.at(2));
         regTarget = reg->mapeia(lista.at(1));
-        if (!lista.at(3).find("-"))
+        if (lista.at(3).find("-"))
         {
-            lista.at(3) = lista.at(3).substr(1, sizeof(lista.at(3)));
             offset = intToBinary16B(lista.at(3));
-           // cout << "\nOFFSET 1: " << offset << endl;
             offset = turnInTheSymmetrical(offset);
-           // cout << "\nOFFSET 2: " << offset << endl;
         }
-        else
-        {
-            offset = intToBinary16B(lista.at(3));
-        }
+        offset = intToBinary16B(lista.at(3));
     }
 
     else if (lista.at(0) == "beq")
     {
 
-        // 16: beq $t0 $t1 LOOPDOLUAN
-        // 20: LOOPDOLUAN:
         opcode = "000100";
         regSource = reg->mapeia(lista.at(1));
         regTarget = reg->mapeia(lista.at(2));
         string endereco = Linha(lista.at(3) + ":", lista.at(0) + " " + lista.at(1) + " " + lista.at(2) + " " + lista.at(3));
+
         if (endereco != "NotFound")
         {
 
             int end = stoi(endereco);
             int off = (end - PC::getInstance().getPC() + 4);
-            if (lista.at(3).find("-"))
+
+            if (!lista.at(3).find("-"))
             {
-                offset = intToBinary16B(lista.at(3));
+                offset = intToBinary16B(to_string(off));
                 offset = turnInTheSymmetrical(offset);
             }
             else
             {
-                offset = intToBinary16B(lista.at(3));
+
+                offset = intToBinary16B(to_string(off));
             }
         }
         else
         {
 
-            cout << "\nNão foi possivel encontrar a estrutura\n";
-            exit(-1);
+            return "Não foi possivel encontrar a estrutura";
         }
     }
     else if (lista.at(0) == "bne")
@@ -358,20 +350,19 @@ string binary::typeIcommands(vector<string> lista)
             int end = stoi(endereco);
             int off = (end - PC::getInstance().getPC() + 4);
 
-            if (lista.at(3).find("-"))
+            if (!lista.at(3).find("-"))
             {
-                offset = intToBinary16B(lista.at(3));
+                offset = intToBinary16B(to_string(off));
                 offset = turnInTheSymmetrical(offset);
             }
             else
             {
-                offset = intToBinary16B(lista.at(3));
+                offset = intToBinary16B(to_string(off));
             }
         }
         else
         {
-            cout << "\nNão foi possivel encontrar a estrutura\n";
-            exit(-1);
+            return "Não foi possivel encontrar a estrutura";
         }
     }
     else if (lista.at(0) == "sw")
@@ -411,19 +402,17 @@ string binary::typeJcommands(vector<string> lista)
             int end = stoi(endereco);
             int off = (end) / 4;
 
-            if (!lista.at(3).find("-"))
+            if (lista.at(3).find("-"))
             {
                 offset = intToBinary26B(to_string(off));
                 offset = turnInTheSymmetrical(to_string(off));
-            }else{
-                offset = intToBinary26B(to_string(off));
             }
 
+            offset = intToBinary26B(to_string(off));
         }
         else
         {
-             cout << "\nNão foi possivel encontrar a estrutura\n";
-            exit(-1);
+            return "Não foi possivel encontrar a estrutura";
         }
     }
     else
@@ -434,18 +423,17 @@ string binary::typeJcommands(vector<string> lista)
         {
             int end = stoi(endereco);
             int off = (end) / 4;
-            if (!lista.at(3).find("-"))
+            if (lista.at(3).find("-"))
             {
                 offset = intToBinary26B(to_string(off));
                 offset = turnInTheSymmetrical(to_string(off));
-            }else{
-                offset = intToBinary26B(to_string(off));
             }
+
+            offset = intToBinary26B(to_string(off));
         }
         else
         {
-             cout << "\nNão foi possivel encontrar a estrutura\n";
-            exit(-1);
+            return "Não foi possivel encontrar a estrutura";
         }
     }
     return opcode + offset;
