@@ -39,9 +39,9 @@ public:
         }
         delete[] memory;
     };
-    void makeOperation(string address, string writeData, bool memRead, bool memWrite)
+    void makeOperation(string address, string writeData, string memRead, string memWrite)
     {
-        if (memRead || memWrite)
+        if (memRead == "1" || memWrite == "1")
         {
             int intAddress = stoi(address, 0, 2);
             if (intAddress > 128)
@@ -56,7 +56,7 @@ public:
                 for (int i = 0; i < 32; i++)
                 {
                     //cout << "I: " << i << endl;
-                    if (memRead)
+                    if (memRead == "1")
                     {
                         //cout << "Entra no if" << endl;
                         //cout << "MEM DATA SIZE " << this->memData.size() << endl;

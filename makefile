@@ -12,7 +12,7 @@ all: clean exec main
 main:
 		$(CC) $(OBJS) -o $(TARGET)
 exec: 
-		$(CC) -c *.cpp
+		$(CC) -c Sources/*.cpp
 			
 clean:
 			$(RM) *.o

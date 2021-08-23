@@ -8,7 +8,7 @@
 
 using namespace std;
 
-class Registradores
+class Registrador
 {
 private:
     string **registradores;
@@ -21,8 +21,8 @@ private:
     int controlRegW;
 
 public:
-    Registradores();
-    ~Registradores();
+    Registrador();
+    ~Registrador();
 
     void busca(int i, int j, int write, int controlData);
     void writeBack(string *dataW);

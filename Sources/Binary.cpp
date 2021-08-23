@@ -1,4 +1,4 @@
-#include "binary.hpp"
+#include "../Headers/Binary.hpp"
 
 string split(int inicio, int fim, string line)
 {
@@ -9,7 +9,7 @@ string split(int inicio, int fim, string line)
     return aux;
 };
 
-binary::binary()
+Binary::Binary()
 {
 
     listaDeBinarios = new vector<string>();
@@ -18,19 +18,19 @@ binary::binary()
     offset = "";
 };
 
-binary::~binary()
+Binary::~Binary()
 {
     listaDeBinarios->~vector();
     delete[] this->listaDeBinarios;
 };
 
-vector<string> *binary::getLista()
+vector<string> *Binary::getLista()
 {
 
     return this->listaDeBinarios;
 };
 
-string binary::intToBinary26B(string inteiro)
+string Binary::intToBinary26B(string inteiro)
 {
 
     string r;
@@ -56,7 +56,7 @@ string binary::intToBinary26B(string inteiro)
     return r;
 };
 
-string binary::intToBinary16B(string inteiro)
+string Binary::intToBinary16B(string inteiro)
 {
 
     string r;
@@ -82,7 +82,7 @@ string binary::intToBinary16B(string inteiro)
     return r;
 };
 
-string binary::intToBinary5B(string inteiro)
+string Binary::intToBinary5B(string inteiro)
 {
 
     string r;
@@ -135,7 +135,7 @@ const vector<string> explode(const string &s, const char &c)
     return v;
 }
 
-string binary::Linha(string procurado, string command)
+string Binary::Linha(string procurado, string command)
 {
 
     int contador = 0;
@@ -167,14 +167,14 @@ string binary::Linha(string procurado, string command)
     return "NotFound";
 };
 
-string binary::translateCommandToBinary(string &commandToTranslate)
+string Binary::translateCommandToBinary(string &commandToTranslate)
 {
 
     string regSource = "";
     string regTarget = "";
     string rd = "";
     string shamt = "";
-    Registradores *reg = new Registradores();
+    Registrador *reg = new Registrador();
 
     vector<string> lista = explode(commandToTranslate, ' ');
 
@@ -237,37 +237,37 @@ string binary::translateCommandToBinary(string &commandToTranslate)
     else if (lista.at(0) == "addi")
     {
         string finalString = typeIcommands(lista);
-        reg->~Registradores();
+        reg->~Registrador();
         return finalString;
     }
     else if (lista.at(0) == "lw")
     {
         string finalString = typeIcommands(lista);
-        reg->~Registradores();
+        reg->~Registrador();
         return finalString;
     }
     else if (lista.at(0) == "sw")
     {
         string finalString = typeIcommands(lista);
-        reg->~Registradores();
+        reg->~Registrador();
         return finalString;
     }
     else if (lista.at(0) == "beq")
     {
         string finalString = typeIcommands(lista);
-        reg->~Registradores();
+        reg->~Registrador();
         return finalString;
     }
     else if (lista.at(0) == "bne")
     {
         string finalString = typeIcommands(lista);
-        reg->~Registradores();
+        reg->~Registrador();
         return finalString;
     }
     else if (lista.at(0) == "j")
     {
         string finalString = typeJcommands(lista);
-        reg->~Registradores();
+        reg->~Registrador();
         return finalString;
     }
     else if (lista.at(0) == "jr")
@@ -282,7 +282,7 @@ string binary::translateCommandToBinary(string &commandToTranslate)
     else if (lista.at(0) == "jal")
     {
         string finalString = typeJcommands(lista);
-        reg->~Registradores();
+        reg->~Registrador();
         return finalString;
     }
     else
@@ -291,17 +291,17 @@ string binary::translateCommandToBinary(string &commandToTranslate)
         return "11111111111111111111111111111111";
     }
 
-    reg->~Registradores();
+    reg->~Registrador();
     // listaDeBinarios->push_back(opcode + regSource + regTarget + rd + shamt + funct);
     return opcode + regSource + regTarget + rd + shamt + funct;
 };
 
-string binary::typeIcommands(vector<string> lista)
+string Binary::typeIcommands(vector<string> lista)
 {
 
     string regSource = "";
     string regTarget = "";
-    Registradores *reg = new Registradores();
+    Registrador *reg = new Registrador();
 
     if (lista.at(0) == "addi")
     {
@@ -404,7 +404,7 @@ string binary::typeIcommands(vector<string> lista)
     return opcode + regSource + regTarget + offset;
 };
 
-string binary::typeJcommands(vector<string> lista)
+string Binary::typeJcommands(vector<string> lista)
 {
 
     if (lista.at(0) == "j")
@@ -456,24 +456,24 @@ string binary::typeJcommands(vector<string> lista)
     return opcode + offset;
 };
 
-string binary::getFunct()
+string Binary::getFunct()
 {
 
     return this->funct;
 };
 
-string binary::getOP()
+string Binary::getOP()
 {
 
     return this->opcode;
 };
-string binary::getoffset()
+string Binary::getoffset()
 {
 
     return this->offset;
 };
 
-string binary::turnInTheSymmetrical(string number, int size)
+string Binary::turnInTheSymmetrical(string number, int size)
 {
     int first1Index = size - 1;
     while (number[first1Index] != '1')

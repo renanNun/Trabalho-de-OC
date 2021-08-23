@@ -6,13 +6,13 @@
 #include <string>
 #include <vector>
 #include <sstream>
-#include "registradores.hpp"
+#include "Registrador.hpp"
 #include "PC.hpp"
 #include "Leitor.hpp"
 
 using namespace std;
 
-class binary
+class Binary
 {
 private:
    vector<string> *listaDeBinarios;
@@ -28,8 +28,8 @@ private:
    string turnInTheSymmetrical(string number, int size);
 
 public:
-   binary();
-   ~binary();
+   Binary();
+   ~Binary();
    vector<string> *getLista();
    string translateCommandToBinary(string &commandToTranslate);
    string getFunct();

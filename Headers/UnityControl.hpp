@@ -11,15 +11,14 @@ class UnityControl
     public:
         string PCWriteCond;
         string PCWrite;
-        string IorD;
+        string Jump;
+        string Branch;
         string MemRead;
         string MemWrite;
-        string MemReg;
+        string MemtoReg;
         string IRWrite;
-        string PCSource;
         string ALUOp;
-        string ALUSrcB;
-        string ALUSrcA;
+        string ALUSrc;
         string RegWrite;
         string RegDst;
 };

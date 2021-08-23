@@ -1,4 +1,4 @@
-#include "Leitor.hpp"
+#include "../Headers/Leitor.hpp"
 
 Leitor::Leitor(string Caminho)
 {

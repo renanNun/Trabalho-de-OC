@@ -150,7 +150,7 @@ private:
 public:
     ALU(int maxBits) { this->maxBits = maxBits; };
     ~ALU(){};
-    bool getZeroSignal() { return zero; };
+    string getZeroSignal() { return (zero) ? "1" : "0"; };
     string getALUResult() { return aluResult; };
     void makeOperation(string a, string b, ALUOp op)
     {

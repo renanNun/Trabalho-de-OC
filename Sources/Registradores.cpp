@@ -1,6 +1,6 @@
-#include "registradores.hpp"
+#include "../Headers/Registrador.hpp"
 
-Registradores::Registradores()
+Registrador::Registrador()
 {
     this->registradores = new string *[n];
     for (int i = 0; i < n; i++)
@@ -16,7 +16,7 @@ Registradores::Registradores()
     this->controlRegW = 0;
 };
 
-Registradores::~Registradores()
+Registrador::~Registrador()
 {
     for (int i = 0; i < n; i++)
         delete[] this->registradores[i];
@@ -24,7 +24,7 @@ Registradores::~Registradores()
     delete[] this->registradores;
 }
 
-void Registradores::busca(int i, int j, int write, int controlData)
+void Registrador::busca(int i, int j, int write, int controlData)
 {
     data1 = this->registradores[i];
     data2 = this->registradores[j];
@@ -33,7 +33,7 @@ void Registradores::busca(int i, int j, int write, int controlData)
     controlRegW = controlData;
 }
 
-void Registradores::writeBack(string *dataW)
+void Registrador::writeBack(string *dataW)
 {
     if (controlRegW == 1)
     {
@@ -42,7 +42,7 @@ void Registradores::writeBack(string *dataW)
     }
 }
 
-string Registradores::mapeia(string reg)
+string Registrador::mapeia(string reg)
 {
 
     if (reg == "$zero")

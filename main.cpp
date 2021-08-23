@@ -24,7 +24,7 @@ static vector<string> ListadeComandos;
 void fazLeitura(string argv);
 void lecomandoescrito(vector<string> command);
 void escolheModo();
-Processador* processador;
+processador* processador;
 int main()
 {
 
