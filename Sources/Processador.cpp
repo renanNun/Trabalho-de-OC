@@ -58,6 +58,7 @@ void Processador::IF()
     /*
         Próximo Comando
     */
+    cout << "\tIF" << endl;
     PC = multiplexador(multiplexador(
                            PC + 1,
                            stoi(instruction_15_0Extended, 0, 2) + PC + 1,
@@ -150,16 +151,14 @@ void Processador::WB()
     */
     if (unityControl.RegWrite == "1")
     {
-        cout << "\t\tInstruction [20-16]: " << instruction_20_16 << endl;
-        cout << "\t\tInstruction [15-11]: " << instruction_15_11 << endl;
-        registrador.escreve(stoi(multiplexador(instruction_20_16, instruction_15_11, unityControl.RegDst)), multiplexador(aluOutput, memoryOutput, unityControl.MemtoReg));
+        registrador.escreve(stoi(multiplexador(instruction_20_16, instruction_15_11, unityControl.RegDst), 0, 2), multiplexador(aluOutput, memoryOutput, unityControl.MemtoReg));
     }
     else
     {
         cout << "Não será escrito no registrador!" << endl;
         exit(-2);
     }
-    cout << "Não ta né" << endl;
+    registrador.imprime();
 }
 
 /*
