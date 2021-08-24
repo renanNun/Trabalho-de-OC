@@ -21,21 +21,23 @@ using namespace std;
 class Processador
 {
 private:
+
+    const string ZERO = "00000000000000000000000000000000";
     int PC;
     int branchNextLine;
     vector<string> instructionMemory;
-    string instruction_25_0;
-    string instruction_31_26;
-    string instruction_25_21;
-    string instruction_20_16;
-    string instruction_15_11;
-    string instruction_15_0;
-    string instruction_5_0;
-    string instruction_15_0Extended;
-    string registerOutput1;
-    string registerOutput2;
-    string aluOutput;
-    string memoryOutput;
+    string instruction_25_0 = ZERO;
+    string instruction_31_26 = ZERO;
+    string instruction_25_21 = ZERO;
+    string instruction_20_16 = ZERO;
+    string instruction_15_11 = ZERO;
+    string instruction_15_0 = ZERO;
+    string instruction_5_0 = ZERO;
+    string instruction_15_0Extended = ZERO;
+    string registerOutput1 = ZERO;
+    string registerOutput2 = ZERO;
+    string aluOutput = ZERO;
+    string memoryOutput = ZERO;
     string multiplexador(string entrada0, string entrada1, string code);
     int multiplexador(int entrada0, int entrada1, string code);
     ALUOp aluControl(string funct);
@@ -45,6 +47,8 @@ private:
     Memory512Bytes memory;
     string split(int inicio, int fim, string line);
     string signExtend(string aux);
+    void controlSignal();
+    string deniedSignal(string entrada, string code);
 
 public:
     Processador(vector<string> &instructions);

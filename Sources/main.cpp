@@ -39,6 +39,7 @@ int main()
     bool whi = true;
     Processador *processador;
     int modo, modo2, p;
+    Binary* binary;
 
     while (menu)
     {
@@ -75,6 +76,11 @@ int main()
 
             escolheModo();
             cin >> modo;
+            binary = new Binary();
+            for(int i = 0; i < ListadeComandos.size(); i++){
+                ListadeComandos[i] = binary->translateCommandToBinary(ListadeComandos.at(i));
+                cout << "Comando " << i << ": " << ListadeComandos[i] << endl;
+            }
             processador = new Processador(ListadeComandos);
 
             switch (modo)
