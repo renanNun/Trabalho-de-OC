@@ -33,6 +33,7 @@ private:
     string instruction_15_11 = ZERO;
     string instruction_15_0 = ZERO;
     string instruction_5_0 = ZERO;
+    string instruction_10_6 = ZERO;
     string instruction_15_0Extended = ZERO;
     string registerOutput1 = ZERO;
     string registerOutput2 = ZERO;
@@ -40,6 +41,7 @@ private:
     string memoryOutput = ZERO;
     string multiplexador(string entrada0, string entrada1, string code);
     int multiplexador(int entrada0, int entrada1, string code);
+    string multiplexador4(string entrada0, string entrada1, string entrada2, string entrada3, string code);
     ALUOp aluControl(string funct);
     Registrador registrador;
     UnityControl unityControl;
