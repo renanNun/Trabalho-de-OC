@@ -3,7 +3,7 @@
 /*
     Funções Auxiliares
 */
-string split(int inicio, int fim, string line)
+string Processador::split(int inicio, int fim, string line)
 {
     string aux;
     for (int i = inicio; i <= fim; i++)
@@ -12,7 +12,7 @@ string split(int inicio, int fim, string line)
     return aux;
 };
 
-string signExtend(string aux)
+string Processador::signExtend(string aux)
 {
     string line = "";
     if (split(0, 0, aux) == "1")
@@ -25,6 +25,7 @@ string signExtend(string aux)
         line = "0000000000000000";
         return line + aux;
     }
+    return line;
 };
 
 /*
@@ -38,8 +39,7 @@ Processador::Processador(vector<string> &instructions)
     alu = new ALU(32);
 };
 
-Processador::~Processador()
-{
+Processador::~Processador(){
 
 };
 
@@ -48,9 +48,9 @@ void Processador::IF()
     /*
         Próximo Comando
     */
-    PC = multiplexador(multiplexador(PC + 1, stoi(instruction_15_0Extended, 0, 2) + PC + 1 , (unityControl.Branch == "1" && alu->getZeroSignal() == "1") ? "1" : "0"), 
-    stoi(instruction_25_0, 0, 2) + 1, 
-    unityControl.Jump);
+    PC = multiplexador(multiplexador(PC + 1, stoi(instruction_15_0Extended, 0, 2) + PC + 1, (unityControl.Branch == "1" && alu->getZeroSignal() == "1") ? "1" : "0"),
+                       stoi(instruction_25_0, 0, 2) + 1,
+                       unityControl.Jump);
 };
 
 void Processador::ID()
@@ -126,12 +126,16 @@ void Processador::WB()
 
 string Processador::multiplexador(string entrada0, string entrada1, string code)
 {
-    if (code == "0"){
+    if (code == "0")
+    {
         return entrada0;
     }
-    else if (code == "1"){
+    else if (code == "1")
+    {
         return entrada1;
-    } else {
+    }
+    else
+    {
         cout << "Não realizar essa operação no multiplexador!" << endl;
         exit(-2);
     }
@@ -139,16 +143,19 @@ string Processador::multiplexador(string entrada0, string entrada1, string code)
 
 int Processador::multiplexador(int entrada0, int entrada1, string code)
 {
-    if (code == "0"){
+    if (code == "0")
+    {
         return entrada0;
     }
-    else if (code == "1"){
+    else if (code == "1")
+    {
         return entrada1;
-    } else {
+    }
+    else
+    {
         cout << "Não realizar essa operação no multiplexador!" << endl;
         exit(-2);
     }
-        
 };
 
 ALUOp Processador::aluControl(string funct)
