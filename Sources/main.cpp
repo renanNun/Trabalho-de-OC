@@ -39,7 +39,7 @@ int main()
     bool whi = true;
     Processador *processador;
     int modo, modo2, p;
-    Binary* binary;
+    Binary *binary;
     vector<string> ListadeComandosB;
 
     while (menu)
@@ -78,7 +78,9 @@ int main()
             escolheModo();
             cin >> modo;
             binary = new Binary();
-            for(int i = 0; i < ListadeComandos.size(); i++){
+            ListadeComandosB = ListadeComandos;
+            for (int i = 0; i < ListadeComandos.size(); i++)
+            {
                 ListadeComandos[i] = binary->translateCommandToBinary(ListadeComandos.at(i));
             }
             processador = new Processador(ListadeComandos);
@@ -89,11 +91,11 @@ int main()
                 cout << "Modo Direto escolhido. Começando execução ..." << endl;
                 p = 0;
                 //cout << "Tamanho da lista de comandos " <<  ListadeComandos.size() << endl;
-                ListadeComandosB = ListadeComandos;
+
                 while (p < ListadeComandos.size())
                 {
                     cout << endl
-                         << ListadeComandos.at(p) << endl;
+                         << ListadeComandosB.at(p) << endl;
                     processador->IF();
                     processador->ID();
                     processador->EX();

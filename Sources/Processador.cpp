@@ -140,6 +140,10 @@ void Processador::MEM()
         Pegar output da memória
     */
     memoryOutput = memory.getMemData();
+    if (unityControl.MemRead=="1" || unityControl.MemWrite == "1")
+    {
+        memory.imprimirMemoria();
+    }
 };
 
 void Processador::WB()
@@ -156,7 +160,6 @@ void Processador::WB()
     else
     {
         cout << "Não será escrito no registrador!" << endl;
-        exit(-2);
     }
     registrador.imprime();
 }
