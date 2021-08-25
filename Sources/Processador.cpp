@@ -88,7 +88,7 @@ void Processador::IF()
     cout << "\tIF" << endl;
     PC = multiplexador(multiplexador(
                            PC + 1,
-                           sBintoi(instruction_15_0Extended, true) + PC + 1,
+                           sBintoi(instruction_15_0Extended, true),
                            (unityControl.Branch == "1" && deniedSignal(alu->getZeroSignal(), unityControl.NotZero) == "1") ? "1" : "0"),
                        sBintoi(instruction_25_0, true) + 1,
                        unityControl.Jump);
@@ -346,7 +346,7 @@ void Processador::controlSignal()
     /*
         Comando lw
     */
-    else if (instruction_31_26 == "101011")
+    else if (instruction_31_26 == "100011")
     {
         unityControl.Jump = "0";
         unityControl.Branch = "0";
