@@ -148,21 +148,11 @@ string Binary::Linha(string procurado, string command)
         if (verify == command)
         {
 
-            //cout << "Contador no if: " << contador << endl;
-            for (int j = i + 1; j < Leitor::getInstance().size(); j++)
-            {
-                contador += 4;
-
-                // vector<string> FindCommando = explode(Leitor::getInstance().at(j), ' ');
-                //cout << "Contador no for: " << contador << endl;
-                //cout << "commando no for: " << FindCommando.at(0) << endl;
-                //cout << "commando procurado: " << procurado << endl;
-
-                return to_string(contador + 4);
-            }
+            return to_string(contador + 1);
         }
-        contador = contador + 4;
+        contador += 1;
     }
+    contador = contador + 1;
 
     return "NotFound";
 };
@@ -313,7 +303,6 @@ string Binary::typeIcommands(vector<string> lista)
 
             lista.at(3) = lista.at(3).substr(1, sizeof(lista.at(3)));
             offset = intToBinary16B(lista.at(3));
-            cout << "OFFSET: " << offset << endl;
             offset = turnInTheSymmetrical(offset, 16);
         }
 
@@ -325,7 +314,7 @@ string Binary::typeIcommands(vector<string> lista)
 
     else if (lista.at(0) == "beq")
     {
-
+        cout << "ENTROU NO BEQ"<<endl;
         opcode = "000100";
         regSource = reg->mapeia(lista.at(1));
         regTarget = reg->mapeia(lista.at(2));
@@ -334,8 +323,9 @@ string Binary::typeIcommands(vector<string> lista)
         if (endereco != "NotFound")
         {
             int end = stoi(endereco);
+            cout << "endereço DO BEQ: " << end << endl;
             int off = (end - PC::getInstance().getPC() + 4) / 4;
-
+            cout << "OFF DO BEQ: " << off << endl;
             if (off < 0)
             {
                 offset = intToBinary16B(to_string(off));
@@ -362,7 +352,9 @@ string Binary::typeIcommands(vector<string> lista)
         if (endereco != "NotFound")
         {
             int end = stoi(endereco);
+            cout << "endereço DO BEQ: " << end << endl;
             int off = (end - PC::getInstance().getPC() + 4) / 4;
+            cout << "OFF DO BEQ: " << off << endl;
 
             if (off < 0)
             {
