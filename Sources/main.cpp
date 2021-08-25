@@ -93,8 +93,9 @@ int main()
                 p = 0;
                 //cout << "Tamanho da lista de comandos " <<  ListadeComandos.size() << endl;
 
-                while (p < ListadeComandos.size())
+                while (p < ListadeComandos.size()-1)
                 {
+                    
                     processador->IF();
                     p = processador->getPC();
                     cout << "COMANDO: " << ListadeComandosB.at(p) << endl;
@@ -103,8 +104,9 @@ int main()
                     processador->EX();
                     processador->MEM();
                     processador->WB();
+                  
                 }
-                cout << endl;
+                cout<<"Foi finalizado a execução do programa" << endl;
                 break;
             case 2:
                 cout << "Modo passo a passo escolhido. Começando execução ..." << endl;
