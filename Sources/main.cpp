@@ -94,15 +94,15 @@ int main()
 
                 while (p < ListadeComandos.size())
                 {
-                    cout << endl
-                         << ListadeComandosB.at(p) << endl;
                     processador->IF();
+                    p = processador->getPC();
+                    cout << "COMANDO: " << ListadeComandosB.at(p) << endl;
+                    cout << "COMANDO EM BINARIO: " << ListadeComandos.at(p) << endl;
                     processador->ID();
                     processador->EX();
                     processador->MEM();
                     processador->WB();
 
-                    p++;
                 }
                 cout << endl;
                 break;

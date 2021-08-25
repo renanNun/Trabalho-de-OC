@@ -12,6 +12,33 @@ string Processador::split(int inicio, int fim, string line)
     return aux;
 };
 
+string turnInTheSymmetrical(string number)
+{
+    int first1Index = number.size() - 1;
+    while (number[first1Index] != '1')
+    {
+        first1Index--;
+    }
+    for (int i = first1Index - 1; i >= 0; i--)
+    {
+        number[i] = (number[i] == '0') ? '1' : '0';
+    }
+    return number;
+};
+
+int sBintoi(string binario, bool canBeNeg)
+{
+    if (binario.at(0) == '0' || !canBeNeg)
+    {
+        return stoi(binario, 0, 2);
+    }
+    else
+    {
+        binario = turnInTheSymmetrical(binario);
+        return (-1*stoi(binario, 0, 2));
+    }
+}
+
 string Processador::signExtend(string aux)
 {
     string line = "";
@@ -61,10 +88,11 @@ void Processador::IF()
     cout << "\tIF" << endl;
     PC = multiplexador(multiplexador(
                            PC + 1,
-                           stoi(instruction_15_0Extended, 0, 2) + PC + 1,
+                           sBintoi(instruction_15_0Extended, true) + PC + 1,
                            (unityControl.Branch == "1" && deniedSignal(alu->getZeroSignal(), unityControl.NotZero) == "1") ? "1" : "0"),
-                       stoi(instruction_25_0, 0, 2) + 1,
+                       sBintoi(instruction_25_0, true) + 1,
                        unityControl.Jump);
+    cout << "\tPC: " << PC << endl;
 };
 
 void Processador::ID()
@@ -95,9 +123,9 @@ void Processador::ID()
     /*
         Pegar output do registrador
     */
-    registerOutput1 = registrador.getReg(stoi(instruction_25_21, 0, 2));
+    registerOutput1 = registrador.getReg(sBintoi(instruction_25_21, false));
     cout << "\t\tRegister Output 1: " << registerOutput1 << endl;
-    registerOutput2 = registrador.getReg(stoi(instruction_20_16, 0, 2));
+    registerOutput2 = registrador.getReg(sBintoi(instruction_20_16, false));
     cout << "\t\tRegister Output 2: " << registerOutput2 << endl;
 
     /*
@@ -140,7 +168,7 @@ void Processador::MEM()
         Pegar output da memória
     */
     memoryOutput = memory.getMemData();
-    if (unityControl.MemRead=="1" || unityControl.MemWrite == "1")
+    if (unityControl.MemRead == "1" || unityControl.MemWrite == "1")
     {
         memory.imprimirMemoria();
     }
@@ -155,7 +183,7 @@ void Processador::WB()
     */
     if (unityControl.RegWrite == "1")
     {
-        registrador.escreve(stoi(multiplexador(instruction_20_16, instruction_15_11, unityControl.RegDst), 0, 2), multiplexador(aluOutput, memoryOutput, unityControl.MemtoReg));
+        registrador.escreve(sBintoi(multiplexador(instruction_20_16, instruction_15_11, unityControl.RegDst), false), multiplexador(aluOutput, memoryOutput, unityControl.MemtoReg));
     }
     else
     {

@@ -60,6 +60,7 @@ public:
     void EX();
     void MEM();
     void WB();
+    int getPC(){return PC;};
 };
 
 #endif
