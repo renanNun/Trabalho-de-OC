@@ -41,6 +41,7 @@ int main()
     int modo, modo2, p;
     Binary *binary;
     vector<string> ListadeComandosB;
+    char next;
 
     while (menu)
     {
@@ -102,12 +103,44 @@ int main()
                     processador->EX();
                     processador->MEM();
                     processador->WB();
-
                 }
                 cout << endl;
                 break;
             case 2:
                 cout << "Modo passo a passo escolhido. Começando execução ..." << endl;
+                while (p < ListadeComandos.size())
+                {
+                    cout << "Precione (y) para continuar..." << endl;
+                    cin >> next;
+                    if (next == 'y')
+                    {
+                        processador->IF();
+                        p = processador->getPC();
+                        cout << "COMANDO: " << ListadeComandosB.at(p) << endl;
+                        cout << "COMANDO EM BINARIO: " << ListadeComandos.at(p) << endl;
+                    }
+                    cout << "Precione (y) para continuar..." << endl;
+                    cin >> next;
+                    if(next == 'y')
+                        processador->ID();
+                        
+                    cout << "Precione (y) para continuar..." << endl;
+                    cin >> next;
+                    if(next == 'y')
+                        processador->EX();
+
+                    cout << "Precione (y) para continuar..." << endl;
+                    cin >> next;
+                    if(next == 'y')
+                        processador->MEM();
+                    
+                    cout << "Precione (y) para continuar..." << endl;
+                    cin >> next;
+                    if(next == 'y')
+                        processador->WB();
+                }
+                cout << endl;
+
                 break;
             default:
                 cout << "Opcao Invalida! Digite Novamente: ";
