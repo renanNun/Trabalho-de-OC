@@ -95,7 +95,6 @@ int main()
 
                 do
                 {
-
                     processador->IF();
                     p = processador->getPC();
                     cout << "COMANDO: " << ListadeComandosB.at(p) << endl;
@@ -104,7 +103,7 @@ int main()
                     processador->EX();
                     processador->MEM();
                     processador->WB();
-                } while (p < ListadeComandos.size());
+                } while (p < ListadeComandos.size()-1);
                 cout << "Foi finalizado a execução do programa" << endl;
                 break;
             case 2:

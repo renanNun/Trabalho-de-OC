@@ -286,7 +286,7 @@ string Binary::translateCommandToBinary(string &commandToTranslate)
 
 string Binary::typeIcommands(vector<string> lista)
 {
-    if(lista.size()<=4){
+    if(lista.size()<4){
 
         cout<< "O comando está escrito de forma incorreta, favor arrumar e iniciar o programa novamente"<<endl;
         exit(-5);
@@ -405,7 +405,7 @@ string Binary::typeJcommands(vector<string> lista)
             int end = stoi(endereco);
             int off = (end) / 4;
 
-            if (lista.at(3).find("-"))
+            if (off<0)
             {
                 offset = intToBinary26B(to_string(off));
                 offset = turnInTheSymmetrical(to_string(off), 26);
@@ -427,7 +427,7 @@ string Binary::typeJcommands(vector<string> lista)
         {
             int end = stoi(endereco);
             int off = (end) / 4;
-            if (lista.at(3).find("-"))
+            if (off<0)
             {
                 offset = intToBinary26B(to_string(off));
                 offset = turnInTheSymmetrical(to_string(off), 26);
