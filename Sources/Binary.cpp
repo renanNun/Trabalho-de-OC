@@ -321,7 +321,6 @@ string Binary::typeIcommands(vector<string> lista)
         regSource = reg->mapeia(lista.at(1));
         regTarget = reg->mapeia(lista.at(2));
         string endereco = Linha(lista.at(3) + ":", lista.at(0) + " " + lista.at(1) + " " + lista.at(2) + " " + lista.at(3));
-        cout << "Endereço";
         if (endereco != "NotFound")
         {
             int end = stoi(endereco);
