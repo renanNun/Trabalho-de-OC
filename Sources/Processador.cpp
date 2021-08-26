@@ -427,5 +427,20 @@ void Processador::controlSignal()
         unityControl.RegWrite = "0";
         unityControl.RegDst = "0";
         unityControl.NotZero = "1";
+    }/*
+        Comando j
+    */
+    else if (instruction_31_26 == "000010")
+    {
+        unityControl.Jump = "1";
+        unityControl.Branch = "0";
+        unityControl.MemRead = "0";
+        unityControl.MemWrite = "0";
+        unityControl.MemtoReg = "0";
+        unityControl.ALUOp = "01";
+        unityControl.ALUSrc = "00";
+        unityControl.RegWrite = "0";
+        unityControl.RegDst = "0";
+        unityControl.NotZero = "0";
     }
 };

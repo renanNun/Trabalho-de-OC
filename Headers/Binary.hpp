@@ -9,6 +9,7 @@
 #include "Registrador.hpp"
 #include "PC.hpp"
 #include "Leitor.hpp"
+#include "Log.hpp"
 
 using namespace std;
 
@@ -19,7 +20,7 @@ private:
    string opcode;
    string funct;
    string offset;
-   string Linha(string procurado, string command);
+   string Linha(string procurado);
    string intToBinary26B(string inteiro);
    string intToBinary16B(string inteiro);
    string intToBinary5B(string inteiro);

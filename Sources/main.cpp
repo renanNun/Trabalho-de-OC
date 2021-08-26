@@ -92,7 +92,6 @@ int main()
                 cout << "Modo Direto escolhido. Começando execução ..." << endl;
                 p = 0;
                 //cout << "Tamanho da lista de comandos " <<  ListadeComandos.size() << endl;
-
                 do
                 {
                     processador->IF();
@@ -108,8 +107,10 @@ int main()
                 break;
             case 2:
                 cout << "Modo passo a passo escolhido. Começando execução ..." << endl;
-                while (p < ListadeComandos.size())
-                {
+               p = 0;
+                
+                do
+                              {
                     cout << "Precione (y) para continuar..." << endl;
                     cin >> next;
                     if (next == 'y')
@@ -138,7 +139,7 @@ int main()
                     cin >> next;
                     if (next == 'y')
                         processador->WB();
-                }
+                }while (p < ListadeComandos.size()-1);
                 cout << endl;
 
                 break;

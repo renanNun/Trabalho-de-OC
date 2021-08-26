@@ -135,7 +135,7 @@ const vector<string> explode(const string &s, const char &c)
     return v;
 }
 
-string Binary::Linha(string procurado, string command)
+string Binary::Linha(string procurado)
 {
 
     int contador = 0;
@@ -143,7 +143,7 @@ string Binary::Linha(string procurado, string command)
     {
 
         string verify = Leitor::getInstance().at(i);
-        if (verify == command)
+        if (verify == procurado)
         {
 
             return to_string(contador + 1);
@@ -320,7 +320,7 @@ string Binary::typeIcommands(vector<string> lista)
         opcode = "000100";
         regSource = reg->mapeia(lista.at(1));
         regTarget = reg->mapeia(lista.at(2));
-        string endereco = Linha(lista.at(3) + ":", lista.at(0) + " " + lista.at(1) + " " + lista.at(2) + " " + lista.at(3));
+        string endereco = Linha(lista.at(3) + ":");
         if (endereco != "NotFound")
         {
             int end = stoi(endereco);
@@ -347,7 +347,7 @@ string Binary::typeIcommands(vector<string> lista)
         opcode = "000101";
         regSource = reg->mapeia(lista.at(1));
         regTarget = reg->mapeia(lista.at(2));
-        string endereco = Linha(lista.at(3) + ":", lista.at(0) + " " + lista.at(1) + " " + lista.at(2) + " " + lista.at(3));
+        string endereco = Linha(lista.at(3) + ":");
         if (endereco != "NotFound")
         {
             int end = stoi(endereco);
@@ -399,7 +399,8 @@ string Binary::typeJcommands(vector<string> lista)
     {
 
         opcode = "000010";
-        string endereco = Linha(lista.at(1) + ":", lista.at(0) + " " + lista.at(1));
+        string endereco = Linha(lista.at(1) + ":");
+ 
         if (endereco != "NotFound")
         {
             int end = stoi(endereco);
@@ -422,7 +423,7 @@ string Binary::typeJcommands(vector<string> lista)
     else
     {
         opcode = "000011";
-        string endereco = Linha(lista.at(1) + ":", lista.at(0) + " " + lista.at(1));
+        string endereco = Linha(lista.at(1) + ":");
         if (endereco != "NotFound")
         {
             int end = stoi(endereco);
