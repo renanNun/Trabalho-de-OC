@@ -61,7 +61,7 @@ int main()
             caminho = "Inputs/saida.txt";
             argv.push_back(caminho);
 
-            Log::getInstance().getInstance().iniciaArquivoSaida(argv.at(1));
+            Log::getInstance().iniciaArquivoSaida(argv.at(1));
             outputFile.open(argv.at(1), ios::out); //Abre o Arquivo de Saida
 
             if (!outputFile)

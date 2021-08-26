@@ -110,7 +110,7 @@ void Processador::IF()
     /*
         Próximo Comando
     */
-    cout << "\tIF" << endl;
+    Log::getInstance().line("\tIF");
     PC = multiplexador4(multiplexador(
                             PC + 1,
                             sBintoi(instruction_15_0Extended, true),
@@ -119,7 +119,7 @@ void Processador::IF()
                         sBintoi(aluOutput, true) + 1,
                         -1,
                         unityControl.Jump);
-    cout << "\tPC: " << PC * 4 << endl;
+    Log::getInstance().line("\tPC: "+to_string(PC * 4));
     if (PC >= instructionMemory.size())
     {
         return;
@@ -134,8 +134,7 @@ void Processador::IF()
 
 void Processador::ID()
 {
-    cout << endl
-         << "\tID" << endl;
+    Log::getInstance().line("\n\tID");
     /*
         Separar comando
     */
@@ -161,9 +160,9 @@ void Processador::ID()
         Pegar output do registrador
     */
     registerOutput1 = registrador.getReg(sBintoi(instruction_25_21, false));
-    cout << "\t\tRegister Output 1: " << registerOutput1 << endl;
+    Log::getInstance().line("\t\tRegister Output 1: "+registerOutput1);
     registerOutput2 = registrador.getReg(sBintoi(instruction_20_16, false));
-    cout << "\t\tRegister Output 2: " << registerOutput2 << endl;
+    Log::getInstance().line("\t\tRegister Output 1: "+registerOutput2);
 
     /*
         Extender instruction_15_0 para cálculo de funções de jump 
@@ -175,12 +174,23 @@ void Processador::ID()
         Configurar unidade de controle
     */
     controlSignal();
+
+    // Salvando no memory Data
+    memData.instruction_25_0 = instruction_25_0;
+    memData.instruction_31_26 = instruction_31_26;
+    memData.instruction_25_0 = instruction_25_0;
+    memData.instruction_20_16 = instruction_20_16;
+    memData.instruction_15_11 = instruction_15_11;
+    memData.instruction_15_0 = instruction_15_0;
+    memData.instruction_10_6 = instruction_10_6;
+    memData.instruction_5_0 = instruction_5_0;
+    memData.registerOutput1 = registerOutput1;
+    memData.registerOutput2 = registerOutput2;
 };
 
 void Processador::EX()
 {
-    cout << endl
-         << "\tEX" << endl;
+    Log::getInstance().line("\n\tEX");
     /*
         Definir Operação na ALU
     */
@@ -194,12 +204,12 @@ void Processador::EX()
         Pegar output da ALU
     */
     aluOutput = alu->getALUResult();
+    Log::getInstance().line("\tALUResult: "+aluOutput);
 };
 
 void Processador::MEM()
 {
-    cout << endl
-         << "\tMEM" << endl;
+    Log::getInstance().line("\n\tMEM");
     /*
         Fazer operção na memória
     */
@@ -217,8 +227,7 @@ void Processador::MEM()
 
 void Processador::WB()
 {
-    cout << endl
-         << "\tWB" << endl;
+    Log::getInstance().line("\n\tWB");
     /*
         Escrever no registrador se RegWrite
     */
