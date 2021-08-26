@@ -93,9 +93,9 @@ int main()
                 p = 0;
                 //cout << "Tamanho da lista de comandos " <<  ListadeComandos.size() << endl;
 
-                while (p < ListadeComandos.size()-1)
+                while (p < ListadeComandos.size() - 1)
                 {
-                    
+
                     processador->IF();
                     p = processador->getPC();
                     cout << "COMANDO: " << ListadeComandosB.at(p) << endl;
@@ -104,9 +104,8 @@ int main()
                     processador->EX();
                     processador->MEM();
                     processador->WB();
-                  
                 }
-                cout<<"Foi finalizado a execução do programa" << endl;
+                cout << "Foi finalizado a execução das instruções" << endl;
                 break;
             case 2:
                 cout << "Modo passo a passo escolhido. Começando execução ..." << endl;
@@ -123,22 +122,22 @@ int main()
                     }
                     cout << "Precione (y) para continuar..." << endl;
                     cin >> next;
-                    if(next == 'y')
+                    if (next == 'y')
                         processador->ID();
-                        
+
                     cout << "Precione (y) para continuar..." << endl;
                     cin >> next;
-                    if(next == 'y')
+                    if (next == 'y')
                         processador->EX();
 
                     cout << "Precione (y) para continuar..." << endl;
                     cin >> next;
-                    if(next == 'y')
+                    if (next == 'y')
                         processador->MEM();
-                    
+
                     cout << "Precione (y) para continuar..." << endl;
                     cin >> next;
-                    if(next == 'y')
+                    if (next == 'y')
                         processador->WB();
                 }
                 cout << endl;
@@ -185,7 +184,7 @@ int main()
                 cout << "Modo Direto escolhido. Começando execução ..." << endl;
                 p = 0;
                 //cout << "Tamanho da lista de comandos " <<  ListadeComandos.size() << endl;
-                while (p < ListadeComandos.size())
+                while (p < ListadeComandos.size()-1)
                 {
                     cout << endl
                          << ListadeComandosB.at(p) << endl;

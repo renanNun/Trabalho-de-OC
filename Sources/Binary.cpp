@@ -139,12 +139,10 @@ string Binary::Linha(string procurado, string command)
 {
 
     int contador = 0;
-
     for (int i = 0; i < Leitor::getInstance().size(); i++)
     {
 
         string verify = Leitor::getInstance().at(i);
-        //cout << "Verify = " << verify << "Command = " << command << endl;
         if (verify == command)
         {
 
@@ -288,6 +286,11 @@ string Binary::translateCommandToBinary(string &commandToTranslate)
 
 string Binary::typeIcommands(vector<string> lista)
 {
+    if(lista.size()<=4){
+
+        cout<< "O comando está escrito de forma incorreta, favor arrumar e iniciar o programa novamente"<<endl;
+        exit(-5);
+    }
 
     string regSource = "";
     string regTarget = "";
@@ -314,12 +317,11 @@ string Binary::typeIcommands(vector<string> lista)
 
     else if (lista.at(0) == "beq")
     {
-        cout << "ENTROU NO BEQ"<<endl;
         opcode = "000100";
         regSource = reg->mapeia(lista.at(1));
         regTarget = reg->mapeia(lista.at(2));
         string endereco = Linha(lista.at(3) + ":", lista.at(0) + " " + lista.at(1) + " " + lista.at(2) + " " + lista.at(3));
-
+        cout << "Endereço";
         if (endereco != "NotFound")
         {
             int end = stoi(endereco);
@@ -352,10 +354,7 @@ string Binary::typeIcommands(vector<string> lista)
         if (endereco != "NotFound")
         {
             int end = stoi(endereco);
-            cout << "endereço DO BEQ: " << end << endl;
             int off = (end - PC::getInstance().getPC() + 4) / 4;
-            cout << "OFF DO BEQ: " << off << endl;
-
             if (off < 0)
             {
                 offset = intToBinary16B(to_string(off));
