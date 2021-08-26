@@ -404,7 +404,7 @@ string Binary::typeJcommands(vector<string> lista)
         if (endereco != "NotFound")
         {
             int end = stoi(endereco);
-            int off = (end) / 4;
+            int off = (end);
 
             if (off<0)
             {
@@ -427,7 +427,7 @@ string Binary::typeJcommands(vector<string> lista)
         if (endereco != "NotFound")
         {
             int end = stoi(endereco);
-            int off = (end) / 4;
+            int off = (end);
             if (off<0)
             {
                 offset = intToBinary26B(to_string(off));

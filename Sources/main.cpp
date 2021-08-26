@@ -32,6 +32,7 @@ int main()
     cout << "Alunos: Luan Reis Ciribelli e Renan Nunes da Costa Gonçalves, João Pedro Lima" << endl;
     bool menu = true;
     int escolha;
+    int clock;
     vector<string> argv;
     vector<string> command;
     string commando;
@@ -91,11 +92,17 @@ int main()
             case 1:
                 cout << "Modo Direto escolhido. Começando execução ..." << endl;
                 p = 0;
+                clock = 0;
                 //cout << "Tamanho da lista de comandos " <<  ListadeComandos.size() << endl;
                 do
                 {
+                    cout << "CLOCK: " << clock << endl;
                     processador->IF();
                     p = processador->getPC();
+                    if(p >= ListadeComandosB.size()){
+                        cout << "FIM!" << endl;
+                        break;
+                    }
                     cout << "COMANDO: " << ListadeComandosB.at(p) << endl;
                     cout << "COMANDO EM BINARIO: " << ListadeComandos.at(p) << endl;
                     processador->ID();

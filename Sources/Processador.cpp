@@ -90,9 +90,12 @@ void Processador::IF()
                            PC + 1,
                            sBintoi(instruction_15_0Extended, true),
                            (unityControl.Branch == "1" && deniedSignal(alu->getZeroSignal(), unityControl.NotZero) == "1") ? "1" : "0"),
-                       sBintoi(instruction_25_0, true) + 1,
+                       sBintoi(instruction_25_0, true),
                        unityControl.Jump);
     cout << "\tPC: " << PC*4 << endl;
+    if(PC >= instructionMemory.size()){
+        return;
+    }
     if(this->instructionMemory[PC] == LABEL){
         cout << "LABEL FOUND!" << endl;
         PC = PC + 1;
