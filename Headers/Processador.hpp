@@ -26,6 +26,7 @@ private:
     const string ZERO = "00000000000000000000000000000000";
     int PC;
     int branchNextLine;
+    ALUOp aluOP;
     vector<string> instructionMemory;
     string instruction_25_0 = ZERO;
     string instruction_31_26 = ZERO;
@@ -43,6 +44,7 @@ private:
     string multiplexador(string entrada0, string entrada1, string code);
     int multiplexador(int entrada0, int entrada1, string code);
     string multiplexador4(string entrada0, string entrada1, string entrada2, string entrada3, string code);
+    int multiplexador4(int entrada0, int entrada1, int entrada2, int entrada3, string code);
     ALUOp aluControl(string funct);
     Registrador registrador;
     UnityControl unityControl;

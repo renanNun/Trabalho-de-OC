@@ -93,10 +93,9 @@ int main()
                 cout << "Modo Direto escolhido. Começando execução ..." << endl;
                 p = 0;
                 clock = 0;
-                //cout << "Tamanho da lista de comandos " <<  ListadeComandos.size() << endl;
                 do
                 {
-                    cout << "CLOCK: " << clock << endl;
+                    cout << "CLOCK: " << ++clock << endl;
                     processador->IF();
                     p = processador->getPC();
                     if(p >= ListadeComandosB.size()){

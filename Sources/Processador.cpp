@@ -3,6 +3,31 @@
 /*
     Funções Auxiliares
 */
+string intToBinary32B(int inteiro)
+{
+
+    string r;
+    while (inteiro != 0)
+    {
+        r = (inteiro % 2 == 0 ? "0" : "1") + r;
+        inteiro /= 2;
+    }
+
+    string thirthyTwoBits;
+
+    if (r.size() < 32)
+    {
+
+        for (int i = r.size(); i < 32; i++)
+        {
+            thirthyTwoBits = "0" + thirthyTwoBits;
+        }
+
+        r = thirthyTwoBits + r;
+    }
+    return r;
+};
+
 string Processador::split(int inicio, int fim, string line)
 {
     string aux;
@@ -35,7 +60,7 @@ int sBintoi(string binario, bool canBeNeg)
     else
     {
         binario = turnInTheSymmetrical(binario);
-        return (-1*stoi(binario, 0, 2));
+        return (-1 * stoi(binario, 0, 2));
     }
 }
 
@@ -64,7 +89,7 @@ Processador::Processador(vector<string> &instructions)
     PC = -1;
     instructionMemory = instructions;
     alu = new ALU(32);
-    unityControl.Jump = "0";
+    unityControl.Jump = "00";
     unityControl.Branch = "0";
     unityControl.MemRead = "0";
     unityControl.MemWrite = "0";
@@ -86,20 +111,24 @@ void Processador::IF()
         Próximo Comando
     */
     cout << "\tIF" << endl;
-    PC = multiplexador(multiplexador(
-                           PC + 1,
-                           sBintoi(instruction_15_0Extended, true),
-                           (unityControl.Branch == "1" && deniedSignal(alu->getZeroSignal(), unityControl.NotZero) == "1") ? "1" : "0"),
-                       sBintoi(instruction_25_0, true),
-                       unityControl.Jump);
-    cout << "\tPC: " << PC*4 << endl;
-    if(PC >= instructionMemory.size()){
+    PC = multiplexador4(multiplexador(
+                            PC + 1,
+                            sBintoi(instruction_15_0Extended, true),
+                            (unityControl.Branch == "1" && deniedSignal(alu->getZeroSignal(), unityControl.NotZero) == "1") ? "1" : "0"),
+                        sBintoi(instruction_25_0, true),
+                        sBintoi(aluOutput, true) + 1,
+                        -1,
+                        unityControl.Jump);
+    cout << "\tPC: " << PC * 4 << endl;
+    if (PC >= instructionMemory.size())
+    {
         return;
     }
-    if(this->instructionMemory[PC] == LABEL){
+    if (this->instructionMemory[PC] == LABEL)
+    {
         cout << "LABEL FOUND!" << endl;
         PC = PC + 1;
-        cout << "\tPC: " << PC*4 << endl;
+        cout << "\tPC: " << PC * 4 << endl;
     }
 };
 
@@ -153,9 +182,13 @@ void Processador::EX()
     cout << endl
          << "\tEX" << endl;
     /*
+        Definir Operação na ALU
+    */
+    this->aluOP = aluControl(instruction_5_0);
+    /*
         Fazer operação na ALU
     */
-    alu->makeOperation(registerOutput1, multiplexador4(registerOutput2, instruction_15_0Extended, instruction_10_6, "", unityControl.ALUSrc), aluControl(instruction_5_0));
+    alu->makeOperation(registerOutput1, multiplexador4(registerOutput2, instruction_15_0Extended, instruction_10_6, "", unityControl.ALUSrc), aluOP);
 
     /*
         Pegar output da ALU
@@ -191,7 +224,14 @@ void Processador::WB()
     */
     if (unityControl.RegWrite == "1")
     {
-        registrador.escreve(sBintoi(multiplexador(instruction_20_16, instruction_15_11, unityControl.RegDst), false), multiplexador(aluOutput, memoryOutput, unityControl.MemtoReg));
+        if (unityControl.Jump == "01")
+        {
+            registrador.escreve(31, intToBinary32B(PC));
+        }
+        else
+        {
+            registrador.escreve(sBintoi(multiplexador(instruction_20_16, instruction_15_11, unityControl.RegDst), false), multiplexador(aluOutput, memoryOutput, unityControl.MemtoReg));
+        }
     }
     else
     {
@@ -251,6 +291,20 @@ string Processador::multiplexador4(string entrada0, string entrada1, string entr
     return " ";
 };
 
+int Processador::multiplexador4(int entrada0, int entrada1, int entrada2, int entrada3, string code)
+{
+    if (code == "00")
+        return entrada0;
+    if (code == "01")
+        return entrada1;
+    if (code == "10")
+        return entrada2;
+    if (code == "11")
+        return entrada3;
+    cout << "Opção não existente em multiplexador 4!" << endl;
+    exit(-3);
+};
+
 string Processador::deniedSignal(string entrada, string code)
 {
     if (code == "0")
@@ -294,7 +348,13 @@ ALUOp Processador::aluControl(string funct)
         }
         else if (funct == "000000")
         {
+            unityControl.ALUSrc = "10";
             return ALUOp::SLL;
+        }
+        else if (funct == "001000")
+        {
+            unityControl.Jump = "10";
+            return ALUOp::ADD;
         }
         else
         {
@@ -320,11 +380,11 @@ ALUOp Processador::aluControl(string funct)
 void Processador::controlSignal()
 {
     /*
-        Tipo R (add, sub, and, or, slt)
+        Tipo R (add, sub, and, or, slt, sll, jr)
     */
     if (instruction_31_26 == "000000")
     {
-        unityControl.Jump = "0";
+        unityControl.Jump = "00";
         unityControl.Branch = "0";
         unityControl.MemRead = "0";
         unityControl.MemWrite = "0";
@@ -340,7 +400,7 @@ void Processador::controlSignal()
     */
     else if (instruction_31_26 == "101011")
     {
-        unityControl.Jump = "0";
+        unityControl.Jump = "00";
         unityControl.Branch = "0";
         unityControl.MemRead = "0";
         unityControl.MemWrite = "1";
@@ -356,7 +416,7 @@ void Processador::controlSignal()
     */
     else if (instruction_31_26 == "100011")
     {
-        unityControl.Jump = "0";
+        unityControl.Jump = "00";
         unityControl.Branch = "0";
         unityControl.MemRead = "1";
         unityControl.MemWrite = "0";
@@ -372,7 +432,7 @@ void Processador::controlSignal()
     */
     else if (instruction_31_26 == "001000")
     {
-        unityControl.Jump = "0";
+        unityControl.Jump = "00";
         unityControl.Branch = "0";
         unityControl.MemRead = "0";
         unityControl.MemWrite = "0";
@@ -384,27 +444,11 @@ void Processador::controlSignal()
         unityControl.NotZero = "1";
     }
     /*
-        Comando sll
-    */
-    else if (instruction_31_26 == "001000")
-    {
-        unityControl.Jump = "0";
-        unityControl.Branch = "0";
-        unityControl.MemRead = "0";
-        unityControl.MemWrite = "0";
-        unityControl.MemtoReg = "0";
-        unityControl.ALUOp = "10";
-        unityControl.ALUSrc = "10";
-        unityControl.RegWrite = "1";
-        unityControl.RegDst = "0";
-        unityControl.NotZero = "1";
-    }
-    /*
         Comando beq
     */
     else if (instruction_31_26 == "000100")
     {
-        unityControl.Jump = "0";
+        unityControl.Jump = "00";
         unityControl.Branch = "1";
         unityControl.MemRead = "0";
         unityControl.MemWrite = "0";
@@ -420,7 +464,7 @@ void Processador::controlSignal()
     */
     else if (instruction_31_26 == "000101")
     {
-        unityControl.Jump = "0";
+        unityControl.Jump = "00";
         unityControl.Branch = "1";
         unityControl.MemRead = "0";
         unityControl.MemWrite = "0";
@@ -430,12 +474,13 @@ void Processador::controlSignal()
         unityControl.RegWrite = "0";
         unityControl.RegDst = "0";
         unityControl.NotZero = "1";
-    }/*
+    }
+    /*
         Comando j
     */
     else if (instruction_31_26 == "000010")
     {
-        unityControl.Jump = "1";
+        unityControl.Jump = "01";
         unityControl.Branch = "0";
         unityControl.MemRead = "0";
         unityControl.MemWrite = "0";
@@ -443,6 +488,22 @@ void Processador::controlSignal()
         unityControl.ALUOp = "01";
         unityControl.ALUSrc = "00";
         unityControl.RegWrite = "0";
+        unityControl.RegDst = "0";
+        unityControl.NotZero = "0";
+    }
+    /*
+        Comando jal
+    */
+    else if (instruction_31_26 == "000011")
+    {
+        unityControl.Jump = "01";
+        unityControl.Branch = "0";
+        unityControl.MemRead = "0";
+        unityControl.MemWrite = "0";
+        unityControl.MemtoReg = "0";
+        unityControl.ALUOp = "01";
+        unityControl.ALUSrc = "00";
+        unityControl.RegWrite = "1";
         unityControl.RegDst = "0";
         unityControl.NotZero = "0";
     }

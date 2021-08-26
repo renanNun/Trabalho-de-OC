@@ -261,7 +261,7 @@ string Binary::translateCommandToBinary(string &commandToTranslate)
     else if (lista.at(0) == "jr")
     {
         opcode = "000000";
-        shamt = "000000";
+        shamt = "00000";
         funct = "001000";
         regTarget = "00000";
         rd = "00000";
