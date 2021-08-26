@@ -22,6 +22,7 @@ class Processador
 {
 private:
 
+    const string LABEL = "11111111111111111111111111111111";
     const string ZERO = "00000000000000000000000000000000";
     int PC;
     int branchNextLine;

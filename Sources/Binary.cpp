@@ -323,9 +323,7 @@ string Binary::typeIcommands(vector<string> lista)
         if (endereco != "NotFound")
         {
             int end = stoi(endereco);
-            cout << "endereço DO BEQ: " << end << endl;
             int off = (end - PC::getInstance().getPC() + 4) / 4;
-            cout << "OFF DO BEQ: " << off << endl;
             if (off < 0)
             {
                 offset = intToBinary16B(to_string(off));
@@ -352,9 +350,7 @@ string Binary::typeIcommands(vector<string> lista)
         if (endereco != "NotFound")
         {
             int end = stoi(endereco);
-            cout << "endereço DO BEQ: " << end << endl;
             int off = (end - PC::getInstance().getPC() + 4) / 4;
-            cout << "OFF DO BEQ: " << off << endl;
 
             if (off < 0)
             {

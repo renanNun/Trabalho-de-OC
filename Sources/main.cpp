@@ -93,7 +93,7 @@ int main()
                 p = 0;
                 //cout << "Tamanho da lista de comandos " <<  ListadeComandos.size() << endl;
 
-                while (p < ListadeComandos.size()-1)
+                do
                 {
                     
                     processador->IF();
@@ -105,7 +105,7 @@ int main()
                     processador->MEM();
                     processador->WB();
                   
-                }
+                }while (p < ListadeComandos.size());
                 cout<<"Foi finalizado a execução do programa" << endl;
                 break;
             case 2:

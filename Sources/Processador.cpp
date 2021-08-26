@@ -92,7 +92,12 @@ void Processador::IF()
                            (unityControl.Branch == "1" && deniedSignal(alu->getZeroSignal(), unityControl.NotZero) == "1") ? "1" : "0"),
                        sBintoi(instruction_25_0, true) + 1,
                        unityControl.Jump);
-    cout << "\tPC: " << PC << endl;
+    cout << "\tPC: " << PC*4 << endl;
+    if(this->instructionMemory[PC] == LABEL){
+        cout << "LABEL FOUND!" << endl;
+        PC = PC + 1;
+        cout << "\tPC: " << PC*4 << endl;
+    }
 };
 
 void Processador::ID()
@@ -394,7 +399,7 @@ void Processador::controlSignal()
     /*
         Comando beq
     */
-    else if (instruction_31_26 == "001000")
+    else if (instruction_31_26 == "000100")
     {
         unityControl.Jump = "0";
         unityControl.Branch = "1";
