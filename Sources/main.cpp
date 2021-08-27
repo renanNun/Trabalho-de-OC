@@ -53,12 +53,12 @@ int main()
         case 1:
             limparTela();
             cout << "Favor digitar o caminho Relativo ao arquivo de entrada : " << endl;
-            cin >> caminho;
-            // caminho = "Inputs/instrucoes.txt";
+            //cin >> caminho;
+            caminho = "Inputs/instrucoes.txt";
             argv.push_back(caminho);
             cout << "Agora o arquivo onde as informações serão salvas: " << endl;
-            cin >> caminho;
-            //caminho = "Inputs/saida.txt";
+            //cin >> caminho;
+            caminho = "Inputs/saida.txt";
             argv.push_back(caminho);
 
             Log::getInstance().iniciaArquivoSaida(argv.at(1));
@@ -113,6 +113,9 @@ int main()
                     k = processador->getPC();
                     if (k >= ListadeComandosB.size())
                     {
+                        processador->EX();
+                        processador->MEM();
+                        processador->WB();
                         cout << "FIM!" << endl;
                         break;
                     }
