@@ -218,8 +218,8 @@ string Binary::translateCommandToBinary(string &commandToTranslate)
         opcode = "000000";
         shamt = intToBinary5B(lista.at(3));
         funct = "000000";
-        regSource = "00000";
-        regTarget = reg->mapeia(lista.at(2));
+        regSource = reg->mapeia(lista.at(2));
+        regTarget = "00000";
         rd = reg->mapeia(lista.at(1));
     }
     else if (lista.at(0) == "addi")
