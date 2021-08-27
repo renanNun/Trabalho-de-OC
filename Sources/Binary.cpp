@@ -286,7 +286,7 @@ string Binary::translateCommandToBinary(string &commandToTranslate)
 
 string Binary::typeIcommands(vector<string> lista)
 {
-    if(lista.size()<4){
+    if(lista.size()<3){
 
         cout<< "O comando está escrito de forma incorreta, favor arrumar e iniciar o programa novamente"<<endl;
         exit(-5);
