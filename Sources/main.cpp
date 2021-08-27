@@ -52,13 +52,13 @@ int main()
         {
         case 1:
             limparTela();
-            //cout << "Favor digitar o caminho Relativo ao arquivo de entrada : " << endl;
-            //cin >> caminho;
-            caminho = "Inputs/instrucoes.txt";
+            cout << "Favor digitar o caminho Relativo ao arquivo de entrada : " << endl;
+            cin >> caminho;
+            // caminho = "Inputs/instrucoes.txt";
             argv.push_back(caminho);
-            //cout << "Agora o arquivo onde as informações serão salvas: " << endl;
-            //cin >> caminho;
-            caminho = "Inputs/saida.txt";
+            cout << "Agora o arquivo onde as informações serão salvas: " << endl;
+            cin >> caminho;
+            //caminho = "Inputs/saida.txt";
             argv.push_back(caminho);
 
             Log::getInstance().iniciaArquivoSaida(argv.at(1));
@@ -99,7 +99,8 @@ int main()
                     cout << "CLOCK: " << ++clock << endl;
                     processador->IF();
                     p = processador->getPC();
-                    if(p >= ListadeComandosB.size()){
+                    if (p >= ListadeComandosB.size())
+                    {
                         cout << "FIM!" << endl;
                         break;
                     }
@@ -110,12 +111,12 @@ int main()
                     processador->ID();
                     processador->IF();
                     k = processador->getPC();
-                    if(k >= ListadeComandosB.size()){
+                    if (k >= ListadeComandosB.size())
+                    {
                         cout << "FIM!" << endl;
                         break;
                     }
 
-                    
                     cout << "COMANDO: " << ListadeComandosB.at(k) << endl;
                     cout << "COMANDO EM BINARIO: " << ListadeComandos.at(k) << endl;
 
@@ -126,15 +127,15 @@ int main()
                     processador->EX();
                     processador->MEM();
                     processador->WB();
-                } while (p < ListadeComandos.size()-1);
+                } while (p < ListadeComandos.size() - 1);
                 cout << "Foi finalizado a execução do programa" << endl;
                 break;
             case 2:
                 cout << "Modo passo a passo escolhido. Começando execução ..." << endl;
-               p = 0;
-                
+                p = 0;
+
                 do
-                              {
+                {
                     cout << "Precione (y) para continuar..." << endl;
                     cin >> next;
                     if (next == 'y')
@@ -163,7 +164,7 @@ int main()
                     cin >> next;
                     if (next == 'y')
                         processador->WB();
-                }while (p < ListadeComandos.size()-1);
+                } while (p < ListadeComandos.size() - 1);
                 cout << endl;
 
                 break;
@@ -173,58 +174,140 @@ int main()
             }
 
             break;
-        case 2:
-            limparTela();
 
-            while (whi)
+        case 2:
+            cout << endl;
+            cout << "Escreva o comando em FORMATO MIPS ASSEMBLY" << endl;
+            cout << "inicalmente todos os comandos serão aceitos, mas comandos invalidos serão ignorados" << endl;
+            cout << "Separe os comandos utilizando ESPAÇO qualquer outra separação irá impedir a execução do programa" << endl;
+            cout << "Para colocar o comando na lista de comandos aperte 'enter', para parar de digitar comandos pressione '0'" << endl;
+            cout << "comando : " << endl;
+            do
             {
 
-                cout << endl;
-                cout << "Escreva o comando em FORMATO MIPS ASSEMBLY" << endl;
-                cout << "inicalmente todos os comandos serão aceitos, mas comandos invalidos serão ignorados" << endl;
-                cout << "Separe os comandos utilizando ESPAÇO qualquer outra separação irá impedir a execução do programa" << endl;
-                cout << "Para colocar o comando na lista de comandos aperte 'enter', para parar de digitar comandos pressione '0'" << endl;
-                cout << "comando : " << endl;
-                cin >> commando;
+                std::getline(std::cin, commando);
+
                 if (commando == "0")
                 {
                     whi = false;
                 }
                 else
                 {
-                    command.push_back(commando);
+                    if (!commando.empty())
+                    {
+                        command.push_back(commando);
+                        cout << endl;
+                        cout << "Escreva o comando em FORMATO MIPS ASSEMBLY" << endl;
+                        cout << "inicalmente todos os comandos serão aceitos, mas comandos invalidos serão ignorados" << endl;
+                        cout << "Separe os comandos utilizando ESPAÇO qualquer outra separação irá impedir a execução do programa" << endl;
+                        cout << "Para colocar o comando na lista de comandos aperte 'enter', para parar de digitar comandos pressione '0'" << endl;
+                        cout << "comando : " << endl;
+                    }
                 }
-            }
+            } while (whi);
+
             lecomandoescrito(command);
+
+            binary = new Binary();
+            ListadeComandosB = ListadeComandos;
             for (int i = 0; i < ListadeComandos.size(); i++)
             {
-                cout << ListadeComandos.at(i) << endl;
+                ListadeComandos[i] = binary->translateCommandToBinary(ListadeComandos.at(i));
             }
+
+            // cout << "TAMANHO DA LISTA DE COMANDOS:" << ListadeComandos.size() << endl;
+            processador = new Processador(ListadeComandos);
+            for (int i = 0; i < ListadeComandos.size(); i++)
+            {
+                cout << ListadeComandosB.at(i) << endl;
+            }
+            cout << endl;
+            cout << endl;
+            cout << endl;
+
             escolheModo();
             cin >> modo2;
-            switch (modo)
+            switch (modo2)
             {
             case 1:
                 cout << "Modo Direto escolhido. Começando execução ..." << endl;
                 p = 0;
-                //cout << "Tamanho da lista de comandos " <<  ListadeComandos.size() << endl;
-                while (p < ListadeComandos.size() - 1)
+                k = 0;
+                clock = 0;
+                do
                 {
-                    cout << endl
-                         << ListadeComandosB.at(p) << endl;
+                    cout << "CLOCK: " << ++clock << endl;
                     processador->IF();
+                    p = processador->getPC();
+                    if (p >= ListadeComandosB.size())
+                    {
+                        cout << "FIM!" << endl;
+                        break;
+                    }
+
+                    cout << "COMANDO: " << ListadeComandosB.at(p) << endl;
+                    cout << "COMANDO EM BINARIO: " << ListadeComandos.at(p) << endl;
+
                     processador->ID();
+                    processador->IF();
+                    k = processador->getPC();
+                    if (k >= ListadeComandosB.size())
+                    {
+                        cout << "FIM!" << endl;
+                        break;
+                    }
+
+                    cout << "COMANDO: " << ListadeComandosB.at(k) << endl;
+                    cout << "COMANDO EM BINARIO: " << ListadeComandos.at(k) << endl;
+
+                    processador->EX();
+                    processador->ID();
+                    processador->MEM();
+                    processador->WB();
                     processador->EX();
                     processador->MEM();
                     processador->WB();
-
-                    p++;
-                }
-
-                cout << endl;
+                } while (p < ListadeComandos.size() - 1);
+                cout << "Foi finalizado a execução do programa" << endl;
                 break;
+
             case 2:
                 cout << "Modo passo a passo escolhido. Começando execução ..." << endl;
+                p = 0;
+
+                do
+                {
+                    cout << "Precione (y) para continuar..." << endl;
+                    cin >> next;
+                    if (next == 'y')
+                    {
+                        processador->IF();
+                        p = processador->getPC();
+                        cout << "COMANDO: " << ListadeComandosB.at(p) << endl;
+                        cout << "COMANDO EM BINARIO: " << ListadeComandos.at(p) << endl;
+                    }
+                    cout << "Precione (y) para continuar..." << endl;
+                    cin >> next;
+                    if (next == 'y')
+                        processador->ID();
+
+                    cout << "Precione (y) para continuar..." << endl;
+                    cin >> next;
+                    if (next == 'y')
+                        processador->EX();
+
+                    cout << "Precione (y) para continuar..." << endl;
+                    cin >> next;
+                    if (next == 'y')
+                        processador->MEM();
+
+                    cout << "Precione (y) para continuar..." << endl;
+                    cin >> next;
+                    if (next == 'y')
+                        processador->WB();
+                } while (p < ListadeComandos.size() - 1);
+                cout << endl;
+
                 break;
             default:
                 cout << "Opcao Invalida! Digite Novamente: ";
