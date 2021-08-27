@@ -18,6 +18,32 @@
 
 using namespace std;
 
+class MemoryData{
+    public:
+        string instruction_25_0;
+        string instruction_31_26;
+        string instruction_25_21;
+        string instruction_20_16;
+        string instruction_15_11;
+        string instruction_15_0;
+        string instruction_5_0;
+        string instruction_10_6;
+
+        string registerOutput1;
+        string registerOutput2;
+};
+
+class ALUOut{
+    public:
+        string aluOut;
+        string RegDst;
+        string MemtoReg;
+        string RegWrite;
+        string jump;
+        string MemWrite;
+        string MemRead;
+};
+
 class Processador
 {
 private:
@@ -54,7 +80,8 @@ private:
     string signExtend(string aux);
     void controlSignal();
     string deniedSignal(string entrada, string code);
-
+    MemoryData memData;
+    ALUOut memAlu;
 public:
     Processador(vector<string> &instructions);
     ~Processador();

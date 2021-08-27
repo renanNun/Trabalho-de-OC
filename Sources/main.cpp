@@ -39,7 +39,7 @@ int main()
     string caminho;
     bool whi = true;
     Processador *processador;
-    int modo, modo2, p;
+    int modo, modo2, p, k;
     Binary *binary;
     vector<string> ListadeComandosB;
     char next;
@@ -61,7 +61,7 @@ int main()
             caminho = "Inputs/saida.txt";
             argv.push_back(caminho);
 
-            Log::getInstance().getInstance().iniciaArquivoSaida(argv.at(1));
+            Log::getInstance().iniciaArquivoSaida(argv.at(1));
             outputFile.open(argv.at(1), ios::out); //Abre o Arquivo de Saida
 
             if (!outputFile)
@@ -92,6 +92,7 @@ int main()
             case 1:
                 cout << "Modo Direto escolhido. Começando execução ..." << endl;
                 p = 0;
+                k = 0;
                 clock = 0;
                 do
                 {
@@ -102,9 +103,26 @@ int main()
                         cout << "FIM!" << endl;
                         break;
                     }
+
                     cout << "COMANDO: " << ListadeComandosB.at(p) << endl;
                     cout << "COMANDO EM BINARIO: " << ListadeComandos.at(p) << endl;
+
                     processador->ID();
+                    processador->IF();
+                    k = processador->getPC();
+                    if(k >= ListadeComandosB.size()){
+                        cout << "FIM!" << endl;
+                        break;
+                    }
+
+                    
+                    cout << "COMANDO: " << ListadeComandosB.at(k) << endl;
+                    cout << "COMANDO EM BINARIO: " << ListadeComandos.at(k) << endl;
+
+                    processador->EX();
+                    processador->ID();
+                    processador->MEM();
+                    processador->WB();
                     processador->EX();
                     processador->MEM();
                     processador->WB();
