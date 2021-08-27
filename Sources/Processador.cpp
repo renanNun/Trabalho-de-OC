@@ -119,7 +119,7 @@ void Processador::IF()
                         sBintoi(aluOutput, true) + 1,
                         -1,
                         unityControl.Jump);
-    Log::getInstance().line("\tPC: "+to_string(PC * 4));
+    Log::getInstance().line("\tPC: " + to_string(PC * 4));
     if (PC >= instructionMemory.size())
     {
         return;
@@ -160,9 +160,9 @@ void Processador::ID()
         Pegar output do registrador
     */
     registerOutput1 = registrador.getReg(sBintoi(instruction_25_21, false));
-    Log::getInstance().line("\t\tRegister Output 1: "+registerOutput1);
+    Log::getInstance().line("\t\tRegister Output 1: " + registerOutput1);
     registerOutput2 = registrador.getReg(sBintoi(instruction_20_16, false));
-    Log::getInstance().line("\t\tRegister Output 1: "+registerOutput2);
+    Log::getInstance().line("\t\tRegister Output 1: " + registerOutput2);
 
     /*
         Extender instruction_15_0 para cálculo de funções de jump 
@@ -174,6 +174,10 @@ void Processador::ID()
         Configurar unidade de controle
     */
     controlSignal();
+};
+
+void Processador::EX()
+{
 
     // Salvando no memory Data
     memData.instruction_25_0 = instruction_25_0;
@@ -186,10 +190,7 @@ void Processador::ID()
     memData.instruction_5_0 = instruction_5_0;
     memData.registerOutput1 = registerOutput1;
     memData.registerOutput2 = registerOutput2;
-};
 
-void Processador::EX()
-{
     Log::getInstance().line("\n\tEX");
     /*
         Definir Operação na ALU
@@ -198,13 +199,23 @@ void Processador::EX()
     /*
         Fazer operação na ALU
     */
-    alu->makeOperation(registerOutput1, multiplexador4(registerOutput2, instruction_15_0Extended, instruction_10_6, "", unityControl.ALUSrc), aluOP);
+    alu->makeOperation(registerOutput1, multiplexador4(memData.registerOutput2, instruction_15_0Extended, memData.instruction_10_6, "", unityControl.ALUSrc), aluOP);
 
     /*
         Pegar output da ALU
     */
     aluOutput = alu->getALUResult();
-    Log::getInstance().line("\tALUResult: "+aluOutput);
+    Log::getInstance().line("\tALUResult: " + aluOutput);
+
+    // Salvando ALUOut
+    memAlu.aluOut = aluOutput;
+    memAlu.RegDst = unityControl.RegDst;
+    memAlu.MemtoReg = unityControl.MemtoReg;
+    memAlu.RegWrite = unityControl.RegWrite;
+    memAlu.jump = unityControl.Jump;
+    memAlu.MemWrite = unityControl.MemWrite;
+    memAlu.MemRead = unityControl.MemRead;
+
 };
 
 void Processador::MEM()
@@ -213,13 +224,13 @@ void Processador::MEM()
     /*
         Fazer operção na memória
     */
-    memory.makeOperation(aluOutput, registerOutput2, unityControl.MemRead, unityControl.MemWrite);
+    memory.makeOperation(memAlu.aluOut, memData.registerOutput2,  memAlu.MemRead, memAlu.MemWrite);
 
     /*
         Pegar output da memória
     */
     memoryOutput = memory.getMemData();
-    if (unityControl.MemRead == "1" || unityControl.MemWrite == "1")
+    if ( memAlu.MemRead == "1" || memAlu.MemWrite == "1")
     {
         memory.imprimirMemoria();
     }
@@ -231,15 +242,15 @@ void Processador::WB()
     /*
         Escrever no registrador se RegWrite
     */
-    if (unityControl.RegWrite == "1")
+    if (memAlu.RegWrite == "1")
     {
-        if (unityControl.Jump == "01")
+        if (memAlu.jump == "01")
         {
             registrador.escreve(31, intToBinary32B(PC));
         }
         else
         {
-            registrador.escreve(sBintoi(multiplexador(instruction_20_16, instruction_15_11, unityControl.RegDst), false), multiplexador(aluOutput, memoryOutput, unityControl.MemtoReg));
+            registrador.escreve(sBintoi(multiplexador(memData.instruction_20_16, memData.instruction_15_11, memAlu.RegDst), false), multiplexador(memAlu.aluOut, memoryOutput, memAlu.MemtoReg));
         }
     }
     else

@@ -36,6 +36,12 @@ class MemoryData{
 class ALUOut{
     public:
         string aluOut;
+        string RegDst;
+        string MemtoReg;
+        string RegWrite;
+        string jump;
+        string MemWrite;
+        string MemRead;
 };
 
 class Processador
@@ -75,6 +81,7 @@ private:
     void controlSignal();
     string deniedSignal(string entrada, string code);
     MemoryData memData;
+    ALUOut memAlu;
 public:
     Processador(vector<string> &instructions);
     ~Processador();
